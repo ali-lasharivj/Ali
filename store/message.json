@@ -205,5 +205,45 @@
       "status": "PENDING"
     },
     "timestamp": 1758232081000
+  },
+  {
+    "id": "9C46421BD8BB28705E52CACA0AFEC138",
+    "jid": "919088873712:1@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "919088873712:1@s.whatsapp.net",
+        "fromMe": true,
+        "id": "9C46421BD8BB28705E52CACA0AFEC138"
+      },
+      "message": {
+        "imageMessage": {
+          "url": "https://mmg.whatsapp.net/o1/v/t24/f2/m269/AQNPgYJ_SASdHSLIStsbLd1y55JLpzKxJKxqcRDghVjj5OtrnaRtzWGa4Mly8SKofem34D8Pti7lPJQM6Tx3w34NDqQnBtnAbArIbr5Qpw?ccb=9-4&oh=01_Q5Aa2gFaFCYCP-EvFT80_RCXNR4cWtmNzX-IiTWuHw27A1MFqA&oe=68F405DB&_nc_sid=e6ed6c&mms3=true",
+          "mimetype": "image/jpeg",
+          "caption": "*𝐂𝐎𝐍𝐍𝐄𝐂𝐓𝐄𝐃 𝐒𝐔𝐂𝐂𝐄𝐒𝐒𝐅𝐔𝐋𝐋𝐘!*\n*╭───────────────────⊷*\n*│• 𝐓𝐘𝐏𝐄 .𝐌𝐄𝐍𝐔 𝐓𝐎 𝐒𝐄𝐄 𝐋𝐈𝐒𝐓 •*\n*│• 𝐁𝐎𝐓 𝐀𝐌𝐀𝐙𝐈𝐍𝐆 𝐅𝐄𝐀𝐓𝐔𝐑𝐄𝐒 •*\n*│• 🌸𝐃𝐄𝐕𝐄𝐋𝐎𝐏𝐄𝐑: 𝐀ɭīī-𝐈𝐍𝅦𝐗īī𝐃𝐄*\n*│• 🧮𝐏𝐑𝐄𝐒𝐄𝐍𝐂𝐄: online*\n*│• 📜𝐏𝐑𝐄𝐅𝐈𝐗: .*\n*│• 🪾𝐌𝐎𝐃𝐄: public*\n*│• 🪄𝐒𝐓𝐀𝐓𝐔𝐒 𝐕𝐈𝐄𝐖𝐒: true*\n*│• 🫟𝐒𝐔𝐃𝐎𝐒: No Sudos set*\n*╰───────────────────⊷*",
+          "fileSha256": "wPrIRZTglWQzIOZCy3e812BfYIU60K781cA+abQNyHI=",
+          "fileLength": "143158",
+          "height": 1600,
+          "width": 1600,
+          "mediaKey": "CTo+9NSTWagysoYhrvaA5ttBrb4be1cu8XAW+ZVEMkU=",
+          "fileEncSha256": "EuQkfQvVW2+1p4zVL1pnuouNGp2hMOT/OS0ISTQzh0c=",
+          "directPath": "/o1/v/t24/f2/m269/AQNPgYJ_SASdHSLIStsbLd1y55JLpzKxJKxqcRDghVjj5OtrnaRtzWGa4Mly8SKofem34D8Pti7lPJQM6Tx3w34NDqQnBtnAbArIbr5Qpw?ccb=9-4&oh=01_Q5Aa2gFaFCYCP-EvFT80_RCXNR4cWtmNzX-IiTWuHw27A1MFqA&oe=68F405DB&_nc_sid=e6ed6c",
+          "mediaKeyTimestamp": "1758232303",
+          "jpegThumbnail": "/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAAgACADASIAAhEBAxEB/8QAGAABAAMBAAAAAAAAAAAAAAAAAwIEBQf/xAApEAACAQMDAwMEAwAAAAAAAAABAgMABBEFEiExQXETFGEGIiNRgZGx/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwArgp7yXeEwACSwH+1W91aO4SOSIk8DHmg+oy4L7WwC4DeMVlrpl2V3+nlc4yDn+fFB0mNpsENGqgDj7s5ob4sYkyBjeOR4NUG1VNH0i096zyzMgAA5LfOf6qaanDqdnHLErr+TGHHwagxrzbPPMjKGVh0qMUM+wKjBVI2urDg/I/VHFeelPv2K/fDVbGtOqBRHHjx85qhL+G21C3ijuGKtEMK6HkdO3fpQWiJZXRt0ZjGmChZic5HPHSs+SZ5JmfOM9qlHO3qBmPQYoP/Z",
+          "contextInfo": {
+            "forwardingScore": 5,
+            "isForwarded": true,
+            "expiration": 100,
+            "forwardedNewsletterMessageInfo": {
+              "newsletterJid": "120363318387454868@newsletter",
+              "serverMessageId": 143,
+              "newsletterName": "𓆩ု᪳𝐀ɭīī 𝐌Ɗှ᪳𓆪"
+            }
+          }
+        }
+      },
+      "messageTimestamp": "1758232303",
+      "status": "PENDING"
+    },
+    "timestamp": 1758232303000
   }
 ]
