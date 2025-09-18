@@ -24,7 +24,7 @@ const {
 
 const express = require("express"), 
       app = express(), 
-      port = process.env.PORT || 8000, 
+      port = process.env.PORT || 5000, 
       fs = require('fs'), 
       P = require('pino'),
       path = require('path'), 
@@ -145,13 +145,69 @@ const Gifted = GiftedConnect({
         auth: state,
         version
         })
+
+
+
+
+
+
+   Gifted.ev.on("connection.update", async ({ connection, lastDisconnect }) => {
+    if (connection === 'close') {
+     const statusCode = lastDisconnect?.error?.output?.statusCode || 0;
+    console.log(`🛑 connection closed with status code: ${statusCode}`);
+      switch (statusCode) {
+      case DisconnectReason.badSession:
+        console.log("❌ Bad Session File. Delete session and rescan QR.");
+        break;
+      case DisconnectReason.connectionClosed:
+        console.log("⚠️ Connection closed. Reconnecting...");
+        await sleep(3000);
+      ConnectGiftedToWA();
+        break;
+      case DisconnectReason.connectionLost:
+        console.log("⚠️ Connection lost. Trying to reconnect...");
+        await sleep(3000);
+       ConnectGiftedToWA();
+        break;
+      case DisconnectReason.connectionReplaced:
+        console.log("⚠️ Connection replaced by a new session. You might be logged in elsewhere.");
+        break;
+      case DisconnectReason.loggedOut:
+        console.log("🛑 Logged out. Delete session and rescan QR.");
+        break;
+      case DisconnectReason.restartRequired:
+        console.log("🔁 Restart required. Reconnecting...");
+        await sleep(3000);
+       ConnectGiftedToWA();
+        break;
+      case DisconnectReason.timedOut:
+        console.log("⏱️ Connection timed out. Trying to reconnect...");
+        await sleep(3000);
+       ConnectGiftedToWA();
+        break;
+      case DisconnectReason.multideviceMismatch:
+        console.log("❌ Multi-device mismatch. Please re-login.");
+        break;
+      default:
+        console.log(`❌ Unknown disconnect reason: ${statusCode}. Reconnecting...`);
+        await sleep(3000);
+       ConnectGiftedToWA();
+    }
+  
+
+
     
+ /*   
 Gifted.ev.on('connection.update', (update) => {
 const { connection, lastDisconnect } = update
 if (connection === 'close') {
 if (lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut) {
 ConnectGiftedToWA()
 }
+*/
+
+
+    
 } else if (connection === 'open') {
  fs.readdirSync("./plugins/").forEach((plugin) => {
 if (path.extname(plugin).toLowerCase() == ".js") {
@@ -802,12 +858,34 @@ command.function(Gifted, mek, m,{from, quoted, body, isCmd, command, args, q, is
 })
 
 }
-setTimeout(() => {
-ConnectGiftedToWA()
-}, 4000);  
+// Add global error handlers
+process.on('uncaughtException', (error) => {
+    console.error('Uncaught Exception:', error);
+    process.exit(1);
+});
 
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+// Start Express server immediately
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'lib', 'ali.html'));
 });
 
-app.listen(port, () => console.log(`ali Server Live on http://localhost:${port}`));
+const server = app.listen(port, '0.0.0.0', () => {
+    console.log(`Ali Server Live on http://0.0.0.0:${port}`);
+});
+
+server.on('error', (error) => {
+    console.error('Server error:', error);
+});
+
+// Start WhatsApp connection after server is running
+setTimeout(() => {
+    try {
+        ConnectGiftedToWA()
+    } catch (error) {
+        console.error('Error starting WhatsApp connection:', error);
+    }
+}, 4000);

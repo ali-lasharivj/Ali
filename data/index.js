@@ -1,8 +1,7 @@
 const { AntiDelDB,
     initializeAntiDeleteSettings,
     setAnti,
-    getAnti,
-    getAllAntiDeleteSettings, } = require('../lib/msgdel');
+    getAnti } = require('./antidel');
 const {
     saveContact,
     loadMessage,
@@ -22,7 +21,6 @@ module.exports = {
     initializeAntiDeleteSettings,
     setAnti,
     getAnti,
-    getAllAntiDeleteSettings,
     saveContact,
     loadMessage,
     getName,
