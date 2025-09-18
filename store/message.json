@@ -1,0 +1,169 @@
+[
+  {
+    "id": "A522B7DE9A909E307BF9AEBB6D3F4F3C",
+    "jid": "919088873712@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "919088873712@s.whatsapp.net",
+        "fromMe": true,
+        "id": "A522B7DE9A909E307BF9AEBB6D3F4F3C"
+      },
+      "messageTimestamp": 1758229085,
+      "broadcast": false,
+      "status": 2,
+      "messageStubType": 2,
+      "messageStubParameters": [
+        "No session record"
+      ]
+    },
+    "timestamp": 1758229085000
+  },
+  {
+    "id": "00D64246775DE83827D9B6088F371CEA",
+    "jid": "919088873712:1@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "919088873712:1@s.whatsapp.net",
+        "fromMe": true,
+        "id": "00D64246775DE83827D9B6088F371CEA"
+      },
+      "message": {
+        "imageMessage": {
+          "url": "https://mmg.whatsapp.net/o1/v/t24/f2/m269/AQMal3G7bL4_Mb6n6837lhFI_nNjcgIOx4tUUnw_l_j5GPsnS7_m4gLKzjRvYAp7SIN6AcbmY9U5GdCUmjbFOXVC7tCG2yCqZwQ_t7U_Qw?ccb=9-4&oh=01_Q5Aa2gEEk435OKYYxJNUf8gXMgMXzQ4ztN2F-hlryaRzi4XxUQ&oe=68F3DE4F&_nc_sid=e6ed6c&mms3=true",
+          "mimetype": "image/jpeg",
+          "caption": "*𝐂𝐎𝐍𝐍𝐄𝐂𝐓𝐄𝐃 𝐒𝐔𝐂𝐂𝐄𝐒𝐒𝐅𝐔𝐋𝐋𝐘!*\n*╭───────────────────⊷*\n*│• 𝐓𝐘𝐏𝐄 .𝐌𝐄𝐍𝐔 𝐓𝐎 𝐒𝐄𝐄 𝐋𝐈𝐒𝐓 •*\n*│• 𝐁𝐎𝐓 𝐀𝐌𝐀𝐙𝐈𝐍𝐆 𝐅𝐄𝐀𝐓𝐔𝐑𝐄𝐒 •*\n*│• 🌸𝐃𝐄𝐕𝐄𝐋𝐎𝐏𝐄𝐑: 𝐀ɭīī-𝐈𝐍𝅦𝐗īī𝐃𝐄*\n*│• 🧮𝐏𝐑𝐄𝐒𝐄𝐍𝐂𝐄: online*\n*│• 📜𝐏𝐑𝐄𝐅𝐈𝐗: .*\n*│• 🪾𝐌𝐎𝐃𝐄: public*\n*│• 🪄𝐒𝐓𝐀𝐓𝐔𝐒 𝐕𝐈𝐄𝐖𝐒: true*\n*│• 🫟𝐒𝐔𝐃𝐎𝐒: No Sudos set*\n*╰───────────────────⊷*",
+          "fileSha256": "wPrIRZTglWQzIOZCy3e812BfYIU60K781cA+abQNyHI=",
+          "fileLength": "143158",
+          "height": 1600,
+          "width": 1600,
+          "mediaKey": "evRzhU7LcL6eSCiCDOek0RUmSBaRTF/+6TH3E98mgAo=",
+          "fileEncSha256": "2iHO6/i8jyfuuzB0B6o4ze4n8a4FodUFyT2sjRe7PK8=",
+          "directPath": "/o1/v/t24/f2/m269/AQMal3G7bL4_Mb6n6837lhFI_nNjcgIOx4tUUnw_l_j5GPsnS7_m4gLKzjRvYAp7SIN6AcbmY9U5GdCUmjbFOXVC7tCG2yCqZwQ_t7U_Qw?ccb=9-4&oh=01_Q5Aa2gEEk435OKYYxJNUf8gXMgMXzQ4ztN2F-hlryaRzi4XxUQ&oe=68F3DE4F&_nc_sid=e6ed6c",
+          "mediaKeyTimestamp": "1758229590",
+          "jpegThumbnail": "/9j/2wBDABALDA4MChAODQ4SERATGCgaGBYWGDEjJR0oOjM9PDkzODdASFxOQERXRTc4UG1RV19iZ2hnPk1xeXBkeFxlZ2P/2wBDARESEhgVGC8aGi9jQjhCY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2NjY2P/wAARCAAgACADASIAAhEBAxEB/8QAGAABAAMBAAAAAAAAAAAAAAAAAwIEBQf/xAApEAACAQMDAwMEAwAAAAAAAAABAgMABBEFEiExQXETFGEGIiNRgZGx/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAH/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwArgp7yXeEwACSwH+1W91aO4SOSIk8DHmg+oy4L7WwC4DeMVlrpl2V3+nlc4yDn+fFB0mNpsENGqgDj7s5ob4sYkyBjeOR4NUG1VNH0i096zyzMgAA5LfOf6qaanDqdnHLErr+TGHHwagxrzbPPMjKGVh0qMUM+wKjBVI2urDg/I/VHFeelPv2K/fDVbGtOqBRHHjx85qhL+G21C3ijuGKtEMK6HkdO3fpQWiJZXRt0ZjGmChZic5HPHSs+SZ5JmfOM9qlHO3qBmPQYoP/Z",
+          "contextInfo": {
+            "forwardingScore": 5,
+            "isForwarded": true,
+            "expiration": 100,
+            "forwardedNewsletterMessageInfo": {
+              "newsletterJid": "120363318387454868@newsletter",
+              "serverMessageId": 143,
+              "newsletterName": "𓆩ု᪳𝐀ɭīī 𝐌Ɗှ᪳𓆪"
+            }
+          }
+        }
+      },
+      "messageTimestamp": "1758229590",
+      "status": "PENDING"
+    },
+    "timestamp": 1758229590000
+  },
+  {
+    "id": "A5DC219BDBAA41FB82D968630CA9ABA5",
+    "jid": "919088873712@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "919088873712@s.whatsapp.net",
+        "fromMe": true,
+        "id": "A5DC219BDBAA41FB82D968630CA9ABA5"
+      },
+      "messageTimestamp": 1758229611,
+      "pushName": "sumon roy",
+      "broadcast": false,
+      "status": 2,
+      "message": {
+        "conversation": ".ping"
+      }
+    },
+    "timestamp": 1758229611000
+  },
+  {
+    "id": "414BB740F795E631B4688BB50392C4BC",
+    "jid": "919088873712@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "919088873712@s.whatsapp.net",
+        "fromMe": true,
+        "id": "414BB740F795E631B4688BB50392C4BC"
+      },
+      "message": {
+        "reactionMessage": {
+          "key": {
+            "remoteJid": "919088873712@s.whatsapp.net",
+            "fromMe": true,
+            "id": "A5DC219BDBAA41FB82D968630CA9ABA5"
+          },
+          "text": "⚡",
+          "senderTimestampMs": "1758229611960"
+        }
+      },
+      "messageTimestamp": "1758229611",
+      "status": "PENDING"
+    },
+    "timestamp": 1758229611000
+  },
+  {
+    "id": "BA7670977694B3B3E0BF64A89C17846E",
+    "jid": "919088873712@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "919088873712@s.whatsapp.net",
+        "fromMe": true,
+        "id": "BA7670977694B3B3E0BF64A89C17846E"
+      },
+      "message": {
+        "extendedTextMessage": {
+          "text": "*𝐏๏፝֟ƞ̽g: 50 𝐌ʂ 🎐*",
+          "contextInfo": {
+            "participant": "0@s.whatsapp.net",
+            "quotedMessage": {
+              "contactMessage": {
+                "displayName": "sumon roy",
+                "vcard": "BEGIN:VCARD\nVERSION:3.0\nN:;a,;;;\nFN:'GIFTED'\nitem1.TEL;waid=919088873712:919088873712\nitem1.X-ABLabel:Ponsel\nEND:VCARD"
+              }
+            },
+            "remoteJid": "status@broadcast",
+            "mentionedJid": [
+              "919088873712@s.whatsapp.net"
+            ],
+            "forwardingScore": 5,
+            "isForwarded": false,
+            "forwardedNewsletterMessageInfo": {
+              "newsletterJid": "120363318387454868@newsletter",
+              "serverMessageId": 143,
+              "newsletterName": "ALI-MD"
+            }
+          }
+        }
+      },
+      "messageTimestamp": "1758229612",
+      "status": "PENDING"
+    },
+    "timestamp": 1758229612000
+  },
+  {
+    "id": "922D2B967090BFACA5B6565118488662",
+    "jid": "919088873712@s.whatsapp.net",
+    "message": {
+      "key": {
+        "remoteJid": "919088873712@s.whatsapp.net",
+        "fromMe": true,
+        "id": "922D2B967090BFACA5B6565118488662"
+      },
+      "message": {
+        "reactionMessage": {
+          "key": {
+            "remoteJid": "919088873712@s.whatsapp.net",
+            "fromMe": true,
+            "id": "A5DC219BDBAA41FB82D968630CA9ABA5"
+          },
+          "text": "✅",
+          "senderTimestampMs": "1758229612545"
+        }
+      },
+      "messageTimestamp": "1758229612",
+      "status": "PENDING"
+    },
+    "timestamp": 1758229612000
+  }
+]
