@@ -1,5 +1,5 @@
 const {
-      default: GiftedConnect,
+      default: Alisock,
       useMultiFileAuthState,
       DisconnectReason,
       jidNormalizedUser,
@@ -132,7 +132,7 @@ console.log('⏱️ CONNETING ALI MD ⏱️');
 const { state, saveCreds } = await useMultiFileAuthState(__dirname + '/session/');
 var { version, isLatest } = await fetchLatestBaileysVersion();
 
-const Gifted = GiftedConnect({
+const Gifted = Alisock({
         logger: P({ level: 'silent' }),
         printQRInTerminal: !config.SESSION_ID,
         fireInitQueries: false,
