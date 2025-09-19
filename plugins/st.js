@@ -47,7 +47,7 @@ gmd({
     category: "system",
     filename: __filename
 },
-async(Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async(Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
 
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
@@ -106,7 +106,7 @@ const uptime = formatUptime(process.uptime());
               }
     };
 
-        await Gifted.sendMessage(from, giftedMess, { quoted: mek });
+        await Aliconn.sendMessage(from, giftedMess, { quoted: mek });
     } catch (e) {
         console.log(e);
         reply(`🚨 *Error:* ${e}`);
@@ -122,7 +122,7 @@ gmd({
     use: '.menu',
     filename: __filename
 },
-async(Gifted, mek, m, { from, quoted, body, isCmd, umarmd, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async(Aliconn, mek, m, { from, quoted, body, isCmd, umarmd, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
 
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
@@ -170,7 +170,7 @@ async(Gifted, mek, m, { from, quoted, body, isCmd, umarmd, args, q, isGroup, sen
               }
     };
 
-        await Gifted.sendMessage(from, giftedMess, { quoted: mek });
+        await Aliconn.sendMessage(from, giftedMess, { quoted: mek });
     } catch (e) {
         console.log(e);
         reply(`🚨 *Error:* ${e}`);
@@ -185,13 +185,13 @@ gmd({
   category: "owner",
   filename: __filename
 },
-async (Gifted, mek, m, { from, sender, isOwner, reply }) => {
+async (Aliconn, mek, m, { from, sender, isOwner, reply }) => {
   if (!isOwner) {
     return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
   }
 
   try {
-    await Gifted.sendMessage(from, { text: '🔄 *Downloading update from GitHub...*' }, { quoted: mek });
+    await Aliconn.sendMessage(from, { text: '🔄 *Downloading update from GitHub...*' }, { quoted: mek });
 
     const zipUrl = 'https://github.com/itx-alii-raza/ALI-MD/archive/refs/heads/main.zip';
     const zipPath = path.join(process.cwd(), 'update.zip');
@@ -261,7 +261,7 @@ async (Gifted, mek, m, { from, sender, isOwner, reply }) => {
     fs.rmSync(zipPath);
     fs.rmSync(tempExtractPath, { recursive: true, force: true });
 
-    await Gifted.sendMessage(from, {
+    await Aliconn.sendMessage(from, {
       text: `✅ *ᴜᴘᴅᴀᴛᴇ ᴄᴏᴍᴘʟᴇᴛᴇᴅ sᴜᴄᴄᴇssғᴜʟʟʏ! ᴜsᴇ .ʀᴇsᴛᴀʀᴛ ᴄᴏᴍᴍᴀɴᴅ ᴛᴏ ʀᴇʟᴏᴀᴅ ᴛʜᴇ ʙᴏᴛ*`,
       contextInfo: {
         forwardingScore: 999,
@@ -289,7 +289,7 @@ gmd({
   category: "system",
   filename: __filename
 },
-async (Gifted, mek, m, { from, isOwner, reply }) => {
+async (Aliconn, mek, m, { from, isOwner, reply }) => {
   try {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
 
@@ -328,7 +328,7 @@ gmd({
     category: "system",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
         if (!isOwner) return reply("Owner Only Command!");
@@ -356,7 +356,7 @@ gmd({
     category: "system",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         exec("pm2 status", (err, stdout, stderr) => {
             if (err || stderr) {
@@ -379,7 +379,7 @@ gmd({
     category: "system",
     filename: __filename
 },
-async(Gifted, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+async(Aliconn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
 if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
 reply("*Bot is Rebooting...*")
@@ -398,7 +398,7 @@ gmd({
     category: "system",
     filename: __filename
 },
-async(Gifted, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+async(Aliconn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
 if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
 reply("*Bot is Shutting Down Now...*")

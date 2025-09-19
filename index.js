@@ -125,14 +125,14 @@ function formatBytes(bytes) {
   }
 }
 
-async function ConnectGiftedToWA() {
+async function ConnectAliconnToWA() {
   await loadSession();
   eventlogger()
 console.log('⏱️ CONNETING ALI MD ⏱️');
 const { state, saveCreds } = await useMultiFileAuthState(__dirname + '/session/');
 var { version, isLatest } = await fetchLatestBaileysVersion();
 
-const Gifted = Alisock({
+const Aliconn = Alisock({
         logger: P({ level: 'silent' }),
         printQRInTerminal: !config.SESSION_ID,
         fireInitQueries: false,
@@ -146,7 +146,7 @@ const Gifted = Alisock({
         version
         });
   
-   Gifted.ev.on("connection.update", async ({ connection, lastDisconnect }) => {
+   Aliconn.ev.on("connection.update", async ({ connection, lastDisconnect }) => {
     if (connection === 'close') {
      const statusCode = lastDisconnect?.error?.output?.statusCode || 0;
     console.log(`🛑 connection closed with status code: ${statusCode}`);
@@ -157,12 +157,12 @@ const Gifted = Alisock({
       case DisconnectReason.connectionClosed:
         console.log("⚠️ Connection closed. Reconnecting...");
         await sleep(3000);
-      ConnectGiftedToWA();
+      ConnectAliconnToWA();
         break;
       case DisconnectReason.connectionLost:
         console.log("⚠️ Connection lost. Trying to reconnect...");
         await sleep(3000);
-       ConnectGiftedToWA();
+       ConnectAliconnToWA();
         break;
       case DisconnectReason.connectionReplaced:
         console.log("⚠️ Connection replaced by a new session. You might be logged in elsewhere.");
@@ -173,12 +173,12 @@ const Gifted = Alisock({
       case DisconnectReason.restartRequired:
         console.log("🔁 Restart required. Reconnecting...");
         await sleep(3000);
-       ConnectGiftedToWA();
+       ConnectAliconnToWA();
         break;
       case DisconnectReason.timedOut:
         console.log("⏱️ Connection timed out. Trying to reconnect...");
         await sleep(3000);
-       ConnectGiftedToWA();
+       ConnectAliconnToWA();
         break;
       case DisconnectReason.multideviceMismatch:
         console.log("❌ Multi-device mismatch. Please re-login.");
@@ -186,7 +186,7 @@ const Gifted = Alisock({
       default:
         console.log(`❌ Unknown disconnect reason: ${statusCode}. Reconnecting...`);
         await sleep(3000);
-       ConnectGiftedToWA();     
+       ConnectAliconnToWA();     
     }
 } else if (connection === 'open') {
  fs.readdirSync("./plugins/").forEach((plugin) => {
@@ -220,21 +220,21 @@ const startMess = {
               }
       };
       
-Gifted.sendMessage(Gifted.user.id, startMess, { disappearingMessagesInChat: true, ephemeralExpiration: 100, })
- Gifted.groupAcceptInvite(giftedMdgc);
- Gifted.newsletterFollow(giftedChannelId);
+Aliconn.sendMessage(Aliconn.user.id, startMess, { disappearingMessagesInChat: true, ephemeralExpiration: 100, })
+ Aliconn.groupAcceptInvite(giftedMdgc);
+ Aliconn.newsletterFollow(giftedChannelId);
 console.log('ALI MD IS ACTIVE ✅')
 }
 })
-Gifted.ev.on('creds.update', saveCreds); 
+Aliconn.ev.on('creds.update', saveCreds); 
 
         if (config.AUTO_REACT === "true") {
-            Gifted.ev.on('messages.upsert', async (mek) => {
+            Aliconn.ev.on('messages.upsert', async (mek) => {
                 mek = mek.messages[0];
                 try {
                     if (!mek.key.fromMe && mek.message) {
                         const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-                        await doReact(randomEmoji, mek, Gifted);
+                        await doReact(randomEmoji, mek, Aliconn);
                     }
                 } catch (err) {
                     console.error('Error during auto reaction:', err);
@@ -242,24 +242,24 @@ Gifted.ev.on('creds.update', saveCreds);
             });
         }
 
-      Gifted.ev.on('messages.update', async updates => {
+      Aliconn.ev.on('messages.update', async updates => {
     for (const update of updates) {
       if (update.update.message === null) {
         console.log("Delete Detected:", JSON.stringify(update, null, 2));
-        await AntiDelete(Gifted, updates);
+        await AntiDelete(Aliconn, updates);
       }
     }
   });
       
-Gifted.ev.on("call", async (json) => {
-  await GiftedAnticall(json, Gifted);
+Aliconn.ev.on("call", async (json) => {
+  await GiftedAnticall(json, Aliconn);
 });
     
-    Gifted.ev.on('group-participants.update', async (update) => {
+    Aliconn.ev.on('group-participants.update', async (update) => {
   try {
     if (config.WELCOME !== "true") return;
 
-    const metadata = await Gifted.groupMetadata(update.id);
+    const metadata = await Aliconn.groupMetadata(update.id);
     const groupName = metadata.subject;
     const groupSize = metadata.participants.length;
 
@@ -268,7 +268,7 @@ Gifted.ev.on("call", async (json) => {
       let pfp;
 
       try {
-        pfp = await Gifted.profilePictureUrl(user, 'image');
+        pfp = await Aliconn.profilePictureUrl(user, 'image');
       } catch (err) {
         pfp = "https://files.catbox.moe/ggm42k.jpeg";
       }
@@ -287,7 +287,7 @@ Gifted.ev.on("call", async (json) => {
 *│● ©ᴘσωєʀє∂ ву αℓι-м∂⎯꯭̽👑*
 *╰┉┉┉┉┈┈┈┈┈┈┈┈┉┉┉᛫᛭*`;
 
-        await Gifted.sendMessage(update.id, {
+        await Aliconn.sendMessage(update.id, {
           image: { url: pfp },
           caption: welcomeMsg,
           mentions: [user],
@@ -314,7 +314,7 @@ Gifted.ev.on("call", async (json) => {
 *│● ©ᴘσωєʀє∂ ву αℓι м∂⎯꯭̽👑*
 *╰┉┉┉┉┈┈┈┈┈┈┈┈┉┉┉᛫᛭*`;
 
-        await Gifted.sendMessage(update.id, {
+        await Aliconn.sendMessage(update.id, {
           image: { url: "https://files.catbox.moe/e2on77.jpeg" },
           caption: goodbyeMsg,
           mentions: [user],
@@ -336,7 +336,7 @@ Gifted.ev.on("call", async (json) => {
   }
 });
 
-  Gifted.ev.on('messages.upsert', async (m) => {
+  Aliconn.ev.on('messages.upsert', async (m) => {
    try {
        const msg = m.messages[0];
        if (!msg || !msg.message) return;
@@ -349,7 +349,7 @@ Gifted.ev.on("call", async (json) => {
                const emoji = emojiList[Math.floor(Math.random() * emojiList.length)];
 
                const messageId = msg.newsletterServerId.toString();
-               await Gifted.newsletterReactMessage(targetNewsletter, messageId, emoji);
+               await Aliconn.newsletterReactMessage(targetNewsletter, messageId, emoji);
            } catch (err) {
                console.error("❌ Failed to react to Home message:", err);
            }
@@ -359,7 +359,7 @@ Gifted.ev.on("call", async (json) => {
    }
 });  
     
-Gifted.ev.on('messages.upsert', async(mek) => {
+Aliconn.ev.on('messages.upsert', async(mek) => {
 mek = mek.messages[0];
 saveMessage(JSON.parse(JSON.stringify(mek, null, 2)))
 const fromJid = mek.key.participant || mek.key.remoteJid;
@@ -374,16 +374,16 @@ if (mek.key && isJidBroadcast(mek.key.remoteJid)) {
     try {
  
         if (config.AUTO_READ_STATUS === "true" && mek.key) {
-            const giftedtech = jidNormalizedUser(Gifted.user.id);
-            await Gifted.readMessages([mek.key, giftedtech]);
+            const giftedtech = jidNormalizedUser(Aliconn.user.id);
+            await Aliconn.readMessages([mek.key, giftedtech]);
         }
 
         if (config.AUTO_LIKE_STATUS === "true") {
-            const giftedtech = jidNormalizedUser(Gifted.user.id);
+            const giftedtech = jidNormalizedUser(Aliconn.user.id);
             const emojis = config.AUTO_LIKE_EMOJIS.split(','); 
             const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)]; 
             if (mek.key.remoteJid && mek.key.participant) {
-                await Gifted.sendMessage(
+                await Aliconn.sendMessage(
                     mek.key.remoteJid,
                     { react: { key: mek.key, text: randomEmoji } },
                     { statusJidList: [mek.key.participant, giftedtech] }
@@ -396,7 +396,7 @@ if (mek.key && isJidBroadcast(mek.key.remoteJid)) {
         if (config.AUTO_REPLY_STATUS === "true") {
             const customMessage = config.STATUS_REPLY_MSG || '✅ Status Viewed by ALI MD';
             if (mek.key.remoteJid) {
-                await Gifted.sendMessage(
+                await Aliconn.sendMessage(
                     fromJid,
                     { text: customMessage },
                     { quoted: mek }
@@ -408,7 +408,7 @@ if (mek.key && isJidBroadcast(mek.key.remoteJid)) {
     }
 }
     
-const m = giftedmd(Gifted, mek);
+const m = giftedmd(Aliconn, mek);
 const type = getContentType(mek.message);
 const content = JSON.stringify(mek.message);
 const from = mek.key.remoteJid;
@@ -428,10 +428,10 @@ const args = body.trim().split(/ +/).slice(1);
 const q = args.join(' ');
 const isGroup = from.endsWith('@g.us');
 const sender = mek.key.fromMe 
-  ? (Gifted.user.id.split(':')[0] + '@s.whatsapp.net' || Gifted.user.id) 
+  ? (Aliconn.user.id.split(':')[0] + '@s.whatsapp.net' || Aliconn.user.id) 
   : (mek.key.participant || mek.key.remoteJid);
 const senderNumber = sender.split('@')[0];
-const botNumber = Gifted.user.id.split(':')[0];
+const botNumber = Aliconn.user.id.split(':')[0];
 const pushname = mek.pushName || 'Hello User';
 const isMe = botNumber.includes(senderNumber);
  const sudoNumbersFromFile = getSudoNumbers();
@@ -441,8 +441,8 @@ const sudoNumbers = config.SUDO_NUMBERS ? config.SUDO_NUMBERS.split(',') : [];
 const devNumbers = Devs.split(',');
 const allOwnerNumbers = [...new Set([...ownerNumber, ...sudoNumbersFromFile, ...sudoNumbers, ...devNumbers])];
 const isOwner = allOwnerNumbers.includes(senderNumber) || isMe;
-const botNumber2 = jidNormalizedUser(Gifted.user.id);
-const groupMetadata = isGroup ? await Gifted.groupMetadata(from).catch(e => {}) : '';
+const botNumber2 = jidNormalizedUser(Aliconn.user.id);
+const groupMetadata = isGroup ? await Aliconn.groupMetadata(from).catch(e => {}) : '';
 const groupName = isGroup ? groupMetadata.subject : '';
 const participants = isGroup ? await groupMetadata.participants : '';
 const groupAdmins = isGroup ? getGroupAdmins(participants) : '';
@@ -457,8 +457,8 @@ if (isGroup && !isAdmins && isBotAdmins) {
         if (!global.userWarnings) global.userWarnings = {};
         let userWarnings = global.userWarnings;
         if (config.ANTILINK === "true") {
-            await Gifted.sendMessage(from, { delete: mek.key });
-            await Gifted.sendMessage(from, {
+            await Aliconn.sendMessage(from, { delete: mek.key });
+            await Aliconn.sendMessage(from, {
                 text: `*⌈⚠️ ℓιɴк ∂єтє¢тє∂ ⌋*
 *╭────────────────┄┈┈*
 *│🫩 συт:* @${sender.split('@')[0]}
@@ -467,14 +467,14 @@ if (isGroup && !isAdmins && isBotAdmins) {
 *╰────────────────┄┈┈*`,
                 mentions: [sender]
             }, { quoted: mek });
-            await Gifted.groupParticipantsUpdate(from, [sender], 'remove');
+            await Aliconn.groupParticipantsUpdate(from, [sender], 'remove');
             return;
         } else if (config.ANTILINK === "warn") {
             if (!userWarnings[sender]) userWarnings[sender] = 0;
             userWarnings[sender] += 1;
             if (userWarnings[sender] <= 3) {
-                await Gifted.sendMessage(from, { delete: mek.key });
-                await Gifted.sendMessage(from, {
+                await Aliconn.sendMessage(from, { delete: mek.key });
+                await Aliconn.sendMessage(from, {
                     text: `*⌈⚠️ ℓιɴк ∂єтє¢тє∂ ⌋*
 *╭────────────────┄┈┈*
 *│👤 ᴜsєʀ:* @${sender.split('@')[0]}!
@@ -485,18 +485,18 @@ if (isGroup && !isAdmins && isBotAdmins) {
                     mentions: [sender]
                 }, { quoted: mek });
             } else {
-                await Gifted.sendMessage(from, { delete: mek.key });
-                await Gifted.sendMessage(from, {
+                await Aliconn.sendMessage(from, { delete: mek.key });
+                await Aliconn.sendMessage(from, {
                     text: `@${sender.split('@')[0]} *нαѕ вєєи ʀємσνє∂ ᴡαʀɴ ℓιмιт єχᴄєє∂є∂!*`,
                     mentions: [sender]
                 }, { quoted: mek });
-                await Gifted.groupParticipantsUpdate(from, [sender], 'remove');
+                await Aliconn.groupParticipantsUpdate(from, [sender], 'remove');
                 userWarnings[sender] = 0;
             }
             return;
         } else if (config.ANTILINK === "delete") {
-            await Gifted.sendMessage(from, { delete: mek.key });
-            await Gifted.sendMessage(from, {
+            await Aliconn.sendMessage(from, { delete: mek.key });
+            await Aliconn.sendMessage(from, {
                 text: `⎙ @${sender.split('@')[0]}, *ℓιɴкѕ αʀє ɴσт αℓℓσωє∂ ιɴ тнιѕ gʀσυρ ρℓєαѕє ανσι∂ ѕєɴ∂ιиg ℓιɴкѕ.🚯*`,
                 mentions: [sender]
             }, { quoted: mek });
@@ -506,26 +506,26 @@ if (isGroup && !isAdmins && isBotAdmins) {
 }
 // --- END ANTI-LINK HANDLER ---
 /*const reply = (teks) => {
-  Gifted.sendMessage(from, { text: teks }, { quoted: mek });
+  Aliconn.sendMessage(from, { text: teks }, { quoted: mek });
 };
 */
 const reply = async (teks) => {
   try {
-    await Gifted.sendMessage(
+    await Aliconn.sendMessage(
       from,
       { text: teks },
       { quoted: mek }
     );
   } catch (err) {
     console.error("❌ Failed to send reply:", err);
-    await Gifted.sendMessage(
+    await Aliconn.sendMessage(
       from,
       { text: "⚠️ An error occurred while sending the reply." }
     );
   }
 };
 
-Gifted.decodeJid = jid => {
+Aliconn.decodeJid = jid => {
     if (!jid) return jid;
     if (/:\d+@/gi.test(jid)) {
       let decode = jidDecode(jid) || {};
@@ -538,7 +538,7 @@ Gifted.decodeJid = jid => {
     } else return jid;
   };
 
-Gifted.copyNForward = async(jid, message, forceForward = false, options = {}) => {
+Aliconn.copyNForward = async(jid, message, forceForward = false, options = {}) => {
     let vtype
     if (options.readViewOnce) {
         message.message = message.message && message.message.ephemeralMessage && message.message.ephemeralMessage.message ? message.message.ephemeralMessage.message : (message.message || undefined)
@@ -569,11 +569,11 @@ Gifted.copyNForward = async(jid, message, forceForward = false, options = {}) =>
         }
       } : {})
     } : {})
-    await Gifted.relayMessage(jid, waMessage.message, { messageId: waMessage.key.id })
+    await Aliconn.relayMessage(jid, waMessage.message, { messageId: waMessage.key.id })
     return waMessage
   }
   //=================================================
-  Gifted.downloadAndSaveMediaMessage = async(message, filename, attachExtension = true) => {
+  Aliconn.downloadAndSaveMediaMessage = async(message, filename, attachExtension = true) => {
     let quoted = message.msg ? message.msg : message
     let mime = (message.msg || message).mimetype || ''
     let messageType = message.mtype ? message.mtype.replace(/Message/gi, '') : mime.split('/')[0]
@@ -590,7 +590,7 @@ Gifted.copyNForward = async(jid, message, forceForward = false, options = {}) =>
     return trueFileName
   }
   //=================================================
-  Gifted.downloadMediaMessage = async(message) => {
+  Aliconn.downloadMediaMessage = async(message) => {
     let mime = (message.msg || message).mimetype || ''
     let messageType = message.mtype ? message.mtype.replace(/Message/gi, '') : mime.split('/')[0]
     const stream = await downloadContentFromMessage(message, messageType)
@@ -603,7 +603,7 @@ Gifted.copyNForward = async(jid, message, forceForward = false, options = {}) =>
   }
 
 
-Gifted.sendFileUrl = async (jid, url, caption = '', options = {}) => {
+Aliconn.sendFileUrl = async (jid, url, caption = '', options = {}) => {
     try {
         let buffer = await axios.get(url, { responseType: 'arraybuffer' }).then(res => res.data);
 
@@ -627,19 +627,19 @@ Gifted.sendFileUrl = async (jid, url, caption = '', options = {}) => {
         }
           
         if (mimeType.startsWith("image")) {
-            return Gifted.sendMessage(jid, { image: buffer, caption, ...options }, quoted);
+            return Aliconn.sendMessage(jid, { image: buffer, caption, ...options }, quoted);
         }
         if (mimeType.startsWith("video")) {
-            return Gifted.sendMessage(jid, { video: buffer, caption, mimetype: 'video/mp4', ...options }, quoted);
+            return Aliconn.sendMessage(jid, { video: buffer, caption, mimetype: 'video/mp4', ...options }, quoted);
         }
         if (mimeType.startsWith("audio")) {
-            return Gifted.sendMessage(jid, { audio: buffer, mimetype: 'audio/mpeg', ...options }, quoted);
+            return Aliconn.sendMessage(jid, { audio: buffer, mimetype: 'audio/mpeg', ...options }, quoted);
         }
         if (mimeType === "application/pdf") {
-            return Gifted.sendMessage(jid, { document: buffer, mimetype: 'application/pdf', caption, ...options }, quoted);
+            return Aliconn.sendMessage(jid, { document: buffer, mimetype: 'application/pdf', caption, ...options }, quoted);
         }
 
-        return Gifted.sendMessage(jid, { document: buffer, mimetype: mimeType, caption, filename: `file.${ext}`, ...options }, quoted);
+        return Aliconn.sendMessage(jid, { document: buffer, mimetype: mimeType, caption, filename: `file.${ext}`, ...options }, quoted);
 
     } catch (error) {
         console.error(`Error in sendFileUrl: ${error.message}`);
@@ -647,7 +647,7 @@ Gifted.sendFileUrl = async (jid, url, caption = '', options = {}) => {
 };
 
 
-Gifted.sendAlbumMessage = async function (jid, medias, options) {
+Aliconn.sendAlbumMessage = async function (jid, medias, options) {
   options = { ...options };
 
   const caption = options.text || options.caption || "";
@@ -668,7 +668,7 @@ Gifted.sendAlbumMessage = async function (jid, medias, options) {
     }
   }, { quoted: m });
 
-  await Gifted.relayMessage(album.key.remoteJid, album.message, {
+  await Aliconn.relayMessage(album.key.remoteJid, album.message, {
     messageId: album.key.id
   });
 
@@ -678,7 +678,7 @@ Gifted.sendAlbumMessage = async function (jid, medias, options) {
       [type]: data,
       ...(media === medias[0] ? { caption } : {})
     }, {
-      upload: Gifted.waUploadToServer
+      upload: Aliconn.waUploadToServer
     });
 
     img.message.messageContextInfo = {
@@ -688,7 +688,7 @@ Gifted.sendAlbumMessage = async function (jid, medias, options) {
       }
     };
 
-    await Gifted.relayMessage(img.key.remoteJid, img.message, {
+    await Aliconn.relayMessage(img.key.remoteJid, img.message, {
       messageId: img.key.id
     });
   }
@@ -697,7 +697,7 @@ Gifted.sendAlbumMessage = async function (jid, medias, options) {
 };
 
 
-Gifted.cMod = (jid, copy, text = '', sender = Gifted.user.id, options = {}) => {
+Aliconn.cMod = (jid, copy, text = '', sender = Aliconn.user.id, options = {}) => {
     //let copy = message.toJSON()
     let mtype = Object.keys(copy.message)[0]
     let isEphemeral = mtype === 'ephemeralMessage'
@@ -718,25 +718,25 @@ Gifted.cMod = (jid, copy, text = '', sender = Gifted.user.id, options = {}) => {
     if (copy.key.remoteJid.includes('@s.whatsapp.net')) sender = sender || copy.key.remoteJid
     else if (copy.key.remoteJid.includes('@broadcast')) sender = sender || copy.key.remoteJid
     copy.key.remoteJid = jid
-    copy.key.fromMe = sender === Gifted.user.id
+    copy.key.fromMe = sender === Aliconn.user.id
   
     return proto.WebMessageInfo.fromObject(copy)
   }
   
   //=====================================================
-  Gifted.sendTextWithMentions = async(jid, text, quoted, options = {}) => Gifted.sendMessage(jid, { text: text, contextInfo: { mentionedJid: [...text.matchAll(/@(\d{0,16})/g)].map(v => v[1] + '@s.whatsapp.net') }, ...options }, { quoted })
+  Aliconn.sendTextWithMentions = async(jid, text, quoted, options = {}) => Aliconn.sendMessage(jid, { text: text, contextInfo: { mentionedJid: [...text.matchAll(/@(\d{0,16})/g)].map(v => v[1] + '@s.whatsapp.net') }, ...options }, { quoted })
 
   //=====================================================
-  Gifted.sendImage = async(jid, path, caption = '', quoted = '', options) => {
+  Aliconn.sendImage = async(jid, path, caption = '', quoted = '', options) => {
     let buffer = Buffer.isBuffer(path) ? path : /^data:.*?\/.*?;base64,/i.test(path) ? Buffer.from(path.split `,` [1], 'base64') : /^https?:\/\//.test(path) ? await (await getBuffer(path)) : fs.existsSync(path) ? fs.readFileSync(path) : Buffer.alloc(0)
-    return await Gifted.sendMessage(jid, { image: buffer, caption: caption, ...options }, { quoted })
+    return await Aliconn.sendMessage(jid, { image: buffer, caption: caption, ...options }, { quoted })
   }
   
   //=====================================================
-  Gifted.sendText = (jid, text, quoted = '', options) => Gifted.sendMessage(jid, { text: text, ...options }, { quoted })
+  Aliconn.sendText = (jid, text, quoted = '', options) => Aliconn.sendMessage(jid, { text: text, ...options }, { quoted })
   
   //=====================================================
- Gifted.sendButtonText = (jid, buttons = [], text, footer, quoted = '', options = {}) => {
+ Aliconn.sendButtonText = (jid, buttons = [], text, footer, quoted = '', options = {}) => {
     let buttonMessage = {
             text,
             footer,
@@ -745,11 +745,11 @@ Gifted.cMod = (jid, copy, text = '', sender = Gifted.user.id, options = {}) => {
             ...options
         }
         //========================================================================================================================================
-    Gifted.sendMessage(jid, buttonMessage, { quoted, ...options })
+    Aliconn.sendMessage(jid, buttonMessage, { quoted, ...options })
   }
   //=====================================================
-  Gifted.send5ButImg = async(jid, text = '', footer = '', img, but = [], thumb, options = {}) => {
-    let message = await prepareWAMessageMedia({ image: img, jpegThumbnail: thumb }, { upload: Gifted.waUploadToServer })
+  Aliconn.send5ButImg = async(jid, text = '', footer = '', img, but = [], thumb, options = {}) => {
+    let message = await prepareWAMessageMedia({ image: img, jpegThumbnail: thumb }, { upload: Aliconn.waUploadToServer })
     var template = generateWAMessageFromContent(jid, proto.Message.fromObject({
         templateMessage: {
             hydratedTemplate: {
@@ -760,7 +760,7 @@ Gifted.cMod = (jid, copy, text = '', sender = Gifted.user.id, options = {}) => {
             }
         }
     }), options)
-    Gifted.relayMessage(jid, template.message, { messageId: template.key.id })
+    Aliconn.relayMessage(jid, template.message, { messageId: template.key.id })
   }
       
  
@@ -786,16 +786,16 @@ if(senderNumber.includes("923197521693")){
    }
    
 
-if (config.PRESENCE === "typing") await Gifted.sendPresenceUpdate("composing", from, [mek.key]);
-            if (config.PRESENCE === "recording") await Gifted.sendPresenceUpdate("recording", from, [mek.key]);
-            if (config.PRESENCE === "online") await Gifted.sendPresenceUpdate('available', from, [mek.key]);
-            else await Gifted.sendPresenceUpdate('unavailable', from, [mek.key]);
-            if (config.AUTO_READ_MESSAGES === "true") await Gifted.readMessages([mek.key]);
-            if (config.AUTO_READ_MESSAGES === "commands" && isCmd) await Gifted.readMessages([mek.key]);
+if (config.PRESENCE === "typing") await Aliconn.sendPresenceUpdate("composing", from, [mek.key]);
+            if (config.PRESENCE === "recording") await Aliconn.sendPresenceUpdate("recording", from, [mek.key]);
+            if (config.PRESENCE === "online") await Aliconn.sendPresenceUpdate('available', from, [mek.key]);
+            else await Aliconn.sendPresenceUpdate('unavailable', from, [mek.key]);
+            if (config.AUTO_READ_MESSAGES === "true") await Aliconn.readMessages([mek.key]);
+            if (config.AUTO_READ_MESSAGES === "commands" && isCmd) await Aliconn.readMessages([mek.key]);
             if (config.AUTO_BLOCK) {
                 const countryCodes = config.AUTO_BLOCK.split(',').map(code => code.trim());
                 if (countryCodes.some(code => m.sender.startsWith(code))) {
-                    await Gifted.updateBlockStatus(m.sender, 'block');
+                    await Aliconn.updateBlockStatus(m.sender, 'block');
                 }
             }
       
@@ -808,31 +808,31 @@ const cmdName = isCmd ? body.slice(1).trim().split(" ")[0].toLowerCase() : false
 if (isCmd) {
 const gmd = events.commands.find((gmd) => gmd.pattern === (cmdName)) || events.commands.find((gmd) => gmd.alias && gmd.alias.includes(cmdName))
 if (gmd) {
-if (gmd.react) Gifted.sendMessage(from, { react: { text: gmd.react, key: mek.key }})
+if (gmd.react) Aliconn.sendMessage(from, { react: { text: gmd.react, key: mek.key }})
 
 try {
-gmd.function(Gifted, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply});
+gmd.function(Aliconn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply});
 } catch (e) {
 console.error("[ALI MD PLUGIN ERROR]: " + e);
-Gifted.sendMessage(from, { text: `[ALI MD PLUGIN ERROR]:\n${e}`})
+Aliconn.sendMessage(from, { text: `[ALI MD PLUGIN ERROR]:\n${e}`})
 }
 }
 }
 events.commands.map(async(command) => {
 if (body && command.on === "body") {
-command.function(Gifted, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply})
+command.function(Aliconn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply})
 } else if (mek.q && command.on === "text") {
-command.function(Gifted, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply})
+command.function(Aliconn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply})
 } else if (
 (command.on === "image" || command.on === "photo") &&
 mek.type === "imageMessage"
 ) {
-command.function(Gifted, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply})
+command.function(Aliconn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply})
 } else if (
 command.on === "sticker" &&
 mek.type === "stickerMessage"
 ) {
-command.function(Gifted, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply})
+command.function(Aliconn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply})
 }});
 
 })
@@ -864,7 +864,7 @@ server.on('error', (error) => {
 // Start WhatsApp connection after server is running
 setTimeout(() => {
     try {
-        ConnectGiftedToWA()
+        ConnectAliconnToWA()
     } catch (error) {
         console.error('Error starting WhatsApp connection:', error);
     }

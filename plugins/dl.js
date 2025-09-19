@@ -17,7 +17,7 @@ gmd({
     react: "🎀",
     filename: __filename
 },
-async (Gifted, mek, m, { from, args, q, reply }) => {
+async (Aliconn, mek, m, { from, args, q, reply }) => {
     try {
         if (!q) return reply("Please provide a TikTok video link.");
         if (!q.includes("tiktok.com")) return reply("Invalid TikTok link.");
@@ -34,7 +34,7 @@ async (Gifted, mek, m, { from, args, q, reply }) => {
         
         const caption = `> *© ᴘσωєʀє∂ ву αℓι м∂⎯꯭̽🚩°*`;
         
-        await Gifted.sendMessage(from, {
+        await Aliconn.sendMessage(from, {
             video: { url: videoUrl },
             caption: caption,
             contextInfo: { mentionedJid: [m.sender] }
@@ -54,7 +54,7 @@ gmd({
   category: "download",
   use: ".fbdl <Facebook video URL>",
   filename: __filename
-}, async (Gifted, mek, m, { from, reply, args }) => {
+}, async (Aliconn, mek, m, { from, reply, args }) => {
   try {
     // Check if the user provided a Facebook video URL
     const fbUrl = args[0];
@@ -63,7 +63,7 @@ gmd({
     }
 
     // Add a reaction to indicate processing
-    await Gifted.sendMessage(from, { react: { text: '⏳', key: m.key } });
+    await Aliconn.sendMessage(from, { react: { text: '⏳', key: m.key } });
 
     // Prepare the API URL
     const apiUrl = `https://apis.davidcyriltech.my.id/facebook2?url=${encodeURIComponent(fbUrl)}`;
@@ -95,7 +95,7 @@ gmd({
     const videoBuffer = Buffer.from(videoResponse.data, 'binary');
 
     // Send the video with details
-    await Gifted.sendMessage(from, {
+    await Aliconn.sendMessage(from, {
       video: videoBuffer,
       caption: `*🎡 fв νι∂єσ ∂σωиℓσα∂є∂*\n> *© ᴘσωєʀє∂ ву αℓι м∂⎯꯭̽🐍*`,
       contextInfo: {
@@ -111,13 +111,13 @@ gmd({
     }, { quoted: mek });
 
     // Add a reaction to indicate success
-    await Gifted.sendMessage(from, { react: { text: '✅', key: m.key } });
+    await Aliconn.sendMessage(from, { react: { text: '✅', key: m.key } });
   } catch (error) {
     console.error('Error downloading video:', error);
     reply('❌ Unable to download the video. Please try again later.');
 
     // Add a reaction to indicate failure
-    await Gifted.sendMessage(from, { react: { text: '❌', key: m.key } });
+    await Aliconn.sendMessage(from, { react: { text: '❌', key: m.key } });
   }
 });
 
@@ -130,7 +130,7 @@ gmd({
   react: "📽",
   filename: __filename
 },
-async (Gifted, mek, m, { from, q, reply }) => {
+async (Aliconn, mek, m, { from, q, reply }) => {
   try {
     if (!q) return reply(`Please provide a YouTube video name or URL!\n\n*Example:*\n${prefix}video Alan Walker - Faded\n${prefix}video https://youtu.be/example`);
 
@@ -194,10 +194,10 @@ async (Gifted, mek, m, { from, q, reply }) => {
       }
     };
 
-    const sentMsg = await Gifted.sendMessage(from, infoMess, { quoted: mek });
+    const sentMsg = await Aliconn.sendMessage(from, infoMess, { quoted: mek });
     const originalMsgId = sentMsg.key.id;
 
-    Gifted.ev.on("messages.upsert", async (event) => {
+    Aliconn.ev.on("messages.upsert", async (event) => {
       const msg = event.messages?.[0];
       if (!msg?.message) return;
       const text = msg.message.conversation || msg.message.extendedTextMessage?.text;
@@ -206,7 +206,7 @@ async (Gifted, mek, m, { from, q, reply }) => {
       if (isReply) {
         await m.react("⬇️");
         if (text === "1") {
-          await Gifted.sendMessage(from, {
+          await Aliconn.sendMessage(from, {
             video: buffer,
             fileName: `${title}.mp4`,
             mimetype: "video/mp4",
@@ -222,7 +222,7 @@ async (Gifted, mek, m, { from, q, reply }) => {
           }, { quoted: msg });
           await m.react("✅");
         } else if (text === "2") {
-          await Gifted.sendMessage(from, {
+          await Aliconn.sendMessage(from, {
             document: buffer,
             mimetype: "video/mp4",
             fileName: `${title}.mp4`,
@@ -238,7 +238,7 @@ async (Gifted, mek, m, { from, q, reply }) => {
           }, { quoted: msg });
           await m.react("✅");
         } else {
-          await Gifted.sendMessage(from, { text: "❌ Invalid reply. Reply with *1* or *2* only." }, { quoted: msg });
+          await Aliconn.sendMessage(from, { text: "❌ Invalid reply. Reply with *1* or *2* only." }, { quoted: msg });
         }
       }
     });
@@ -255,7 +255,7 @@ gmd({
     category: "downloader",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         if (!q) {
             return reply(`Please provide a GitHub repository URL, e.g.,\n${prefix}gitclone https://github.com/Mayelprince/PRINCE-MD`);
@@ -291,7 +291,7 @@ async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, s
             : `${repo}.zip`;
 
         // Send the zip file
-        await Gifted.sendMessage(from, {
+        await Aliconn.sendMessage(from, {
             document: { url: url },
             mimetype: "application/zip",
             fileName: filename
@@ -312,7 +312,7 @@ gmd({
   category: "downloader",
   filename: __filename
 },
-async (Gifted, mek, m, { from, q, isOwner, reply }) => {
+async (Aliconn, mek, m, { from, q, isOwner, reply }) => {
   try {
     if (!q) return reply(`Please provide a search term or a spotify audio URL!\nusage: ${prefix}spotify <search_term> or ${prefix}spotify <audio_url>`);
     if (q.startsWith("https://open.spotify.com")) {
@@ -341,8 +341,8 @@ async (Gifted, mek, m, { from, q, isOwner, reply }) => {
                 }
             }
         };
-       await Gifted.sendMessage(from, infoMess, { disappearingMessagesInChat: true, ephemeralExpiration: 100 }, { quoted: mek });
-       await Gifted.sendMessage(from, {
+       await Aliconn.sendMessage(from, infoMess, { disappearingMessagesInChat: true, ephemeralExpiration: 100 }, { quoted: mek });
+       await Aliconn.sendMessage(from, {
             document: buffer,
             fileName: `${downloadData.title}.mp3`,
             mimetype: 'audio/mpeg',
@@ -393,8 +393,8 @@ if (!audioUrl) {
                 }
             }
         };
-       await Gifted.sendMessage(from, infoMess, { disappearingMessagesInChat: true, ephemeralExpiration: 100 }, { quoted: mek });
-       await Gifted.sendMessage(from, {
+       await Aliconn.sendMessage(from, infoMess, { disappearingMessagesInChat: true, ephemeralExpiration: 100 }, { quoted: mek });
+       await Aliconn.sendMessage(from, {
             document: buffer,
             fileName: `${downloadData.title}.mp3`,
             mimetype: 'audio/mpeg',
@@ -426,7 +426,7 @@ gmd({
   category: "downloader",
   use: ".apk <app name>",
   filename: __filename
-}, async (Gifted, mek, m, { from, reply, args }) => {
+}, async (Aliconn, mek, m, { from, reply, args }) => {
   try {
     // Check if the user provided an app name
     const appName = args.join(" ");
@@ -435,7 +435,7 @@ gmd({
     }
 
     // Add a reaction to indicate processing
-    await Gifted.sendMessage(from, { react: { text: '⏳', key: m.key } });
+    await Aliconn.sendMessage(from, { react: { text: '⏳', key: m.key } });
 
     // Prepare the NexOracle API URL
     const apiUrl = `https://api.nexoracle.com/downloader/apk`;
@@ -456,7 +456,7 @@ gmd({
     const { name, lastup, package, size, icon, dllink } = response.data.result;
 
     // Send a message with the app thumbnail and "Downloading..." text
-    await Gifted.sendMessage(from, {
+    await Aliconn.sendMessage(from, {
       image: { url: icon }, // App icon as thumbnail
       caption: `*『𝐀𝐋𝐈-𝐌𝐃 𝐀𝐏𝐊 𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃』*\n*╭──────────────────✑*\n‎*┋ 🔖 ɴαмє: ${name}*\n*┋ 📅 ℓαѕт υρ∂αтє∂: ${lastup}*\n*┋ 📦 ρα¢кαgє: ${package}*\n‎*┋ 📏 ѕιzє: ${size}*\n‎*╰──────────────────✑*\n> *⏳ ρℓєαѕє ωαιт α мσмєɴт ωнιℓє уσυʀ αρк ιѕ вєιɴg ѕєит...*`,
       contextInfo: {
@@ -485,7 +485,7 @@ gmd({
      
 
     // Send the APK file as a document
-    await Gifted.sendMessage(from, {
+    await Aliconn.sendMessage(from, {
       document: apkBuffer,
       mimetype: 'application/vnd.android.package-archive',
       fileName: `${name}.apk`,
@@ -503,13 +503,13 @@ gmd({
     }, { quoted: mek });
 
     // Add a reaction to indicate success
-    await Gifted.sendMessage(from, { react: { text: '✅', key: m.key } });
+    await Aliconn.sendMessage(from, { react: { text: '✅', key: m.key } });
   } catch (error) {
     console.error('Error fetching APK details:', error);
     reply('❌ Unable to fetch APK details. Please try again later.');
 
     // Add a reaction to indicate failure
-    await Gifted.sendMessage(from, { react: { text: '❌', key: m.key } });
+    await Aliconn.sendMessage(from, { react: { text: '❌', key: m.key } });
   }
 });
 
@@ -521,7 +521,7 @@ gmd({
     react: "⬇️",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, q, reply }) => {
+async (Aliconn, mek, m, { from, quoted, q, reply }) => {
     try {
         if (!q || !q.startsWith("https://")) {
             return reply("Please provide a valid Twitter URL.");
@@ -558,9 +558,9 @@ async (Gifted, mek, m, { from, quoted, q, reply }) => {
           }
       };
 
-      const messageSent = await Gifted.sendMessage(from, infoMess, { quoted: mek });
+      const messageSent = await Aliconn.sendMessage(from, infoMess, { quoted: mek });
       const messageId = messageSent.key.id;
-      Gifted.ev.on("messages.upsert", async (event) => {
+      Aliconn.ev.on("messages.upsert", async (event) => {
           const messageData = event.messages[0];
           if (!messageData.message) return;
           const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
@@ -570,28 +570,28 @@ async (Gifted, mek, m, { from, quoted, q, reply }) => {
               await m.react("⬇️");
               switch (messageContent) {
                   case "1": 
-                      await Gifted.sendMessage(from, {
+                      await Aliconn.sendMessage(from, {
                           audio: audioBuffer,
                           mimetype: "audio/mpeg"
                       }, { quoted: messageData });
                       break;
 
                       case "2": 
-                      await Gifted.sendMessage(from, {
+                      await Aliconn.sendMessage(from, {
                           video: sdVideoBuffer,
                           mimetype: "video/mp4"
                       }, { quoted: messageData });
                       break;
 
                       case "3": 
-                      await Gifted.sendMessage(from, {
+                      await Aliconn.sendMessage(from, {
                           video: hdVideoBuffer,
                           mimetype: "video/mp4"
                       }, { quoted: messageData });
                       break;
 
                   default:
-                await Gifted.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1, 2 or 3)." });
+                await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1, 2 or 3)." });
               }
           }
       });
@@ -610,7 +610,7 @@ gmd({
     react: "⬇️",
     filename: __filename
 },
-async(Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async(Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         if (!q && !q.startsWith("https://")) return reply("Provide me gdrive url")
         let data = await gifted.googledrive(q);
@@ -634,7 +634,7 @@ const fileName = data.result.name.includes('.')
     ? data.result.name 
     : `${data.result.name}.${ext}`;
 
-await Gifted.sendMessage(
+await Aliconn.sendMessage(
     from, 
     { 
         document: buffer, 
@@ -660,7 +660,7 @@ gmd({
     react: "⬇️",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, q, reply }) => {
+async (Aliconn, mek, m, { from, quoted, q, reply }) => {
     try {
         if (!q || !q.startsWith("https://")) {
             return reply("🔗 *Please provide a valid Instagram URL.*");
@@ -676,7 +676,7 @@ async (Gifted, mek, m, { from, quoted, q, reply }) => {
 
         const videoBuffer = await getBuffer(res.result.download_url);
 
-        await Gifted.sendMessage(from, {
+        await Aliconn.sendMessage(from, {
             video: videoBuffer,
             mimetype: "video/mp4",
             caption: `*🪸 ιɴѕтαgʀαм ∂σωиℓσα∂є∂*\n` +
@@ -700,7 +700,7 @@ gmd({
     react: "⬇️",
     filename: __filename
 },
-async (Gifted, mek, m, {
+async (Aliconn, mek, m, {
     from, q, reply
 }) => {
     try {
@@ -717,7 +717,7 @@ async (Gifted, mek, m, {
 
         const fileBuffer = await getBuffer(res.result.downloadUrl);
 
-        await Gifted.sendMessage(from, {
+        await Aliconn.sendMessage(from, {
             document: fileBuffer,
             mimetype: res.result.mimeType || 'application/octet-stream',
             fileName: res.result.fileName || 'downloaded_file',
@@ -741,7 +741,7 @@ gmd({
   react: "🎶",
   filename: __filename
 }, 
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
   try {
       if (!q) {
           return reply(`Please enter a search query or YouTube link. Usage example:
@@ -803,9 +803,9 @@ async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, s
           }
       };
 
-      const messageSent = await Gifted.sendMessage(from, infoMess, { quoted: mek });
+      const messageSent = await Aliconn.sendMessage(from, infoMess, { quoted: mek });
       const messageId = messageSent.key.id;
-      Gifted.ev.on("messages.upsert", async (event) => {
+      Aliconn.ev.on("messages.upsert", async (event) => {
           const messageData = event.messages[0];
           if (!messageData.message) return;
           const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
@@ -815,7 +815,7 @@ async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, s
               await m.react("⬇️");
               switch (messageContent) {
                   case "1": 
-                      await Gifted.sendMessage(from, {
+                      await Aliconn.sendMessage(from, {
                           audio: buffer,
                           mimetype: "audio/mpeg",
                           contextInfo: {
@@ -832,7 +832,7 @@ async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, s
                       break;
 
                   case "2": 
-                      await Gifted.sendMessage(from, {
+                      await Aliconn.sendMessage(from, {
                           document: buffer,
                           mimetype: "audio/mpeg",
                           fileName: `${dataa.title}.mp3`,
@@ -850,7 +850,7 @@ async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, s
                       break;
 
                   default:
-                await Gifted.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
+                await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
               }
           }
       });
@@ -913,9 +913,9 @@ async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, s
           }
       };
 
-      const messageSent = await Gifted.sendMessage(from, infoMess, { quoted: mek });
+      const messageSent = await Aliconn.sendMessage(from, infoMess, { quoted: mek });
       const messageId = messageSent.key.id;
-      Gifted.ev.on("messages.upsert", async (event) => {
+      Aliconn.ev.on("messages.upsert", async (event) => {
           const messageData = event.messages[0];
           if (!messageData.message) return;
           const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
@@ -925,7 +925,7 @@ async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, s
               await m.react("⬇️");
               switch (messageContent) {
                   case "1": 
-                      await Gifted.sendMessage(from, {
+                      await Aliconn.sendMessage(from, {
                           audio: buffer,
                           mimetype: "audio/mpeg",
                           contextInfo: {
@@ -942,7 +942,7 @@ async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, s
                       break;
 
                   case "2": 
-                      await Gifted.sendMessage(from, {
+                      await Aliconn.sendMessage(from, {
                           document: buffer,
                           mimetype: "audio/mpeg",
                           fileName: `${datas.title}.mp3`,
@@ -960,7 +960,7 @@ async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, s
                       break;
 
                   default:
-                await Gifted.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
+                await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
               }
           }
       });
@@ -979,7 +979,7 @@ gmd({
   category: "downloader",
   react: "📽",
   filename: __filename
-}, async (Gifted, mek, m, { from, isOwner, q, reply }) => {
+}, async (Aliconn, mek, m, { from, isOwner, q, reply }) => {
   try {
       if (!q) return reply("Please provide a YouTube URL!");
       if (q.startsWith("https://youtu")) {
@@ -1020,9 +1020,9 @@ gmd({
           }
       };
 
-      const messageSent = await Gifted.sendMessage(from, infoMess);
+      const messageSent = await Aliconn.sendMessage(from, infoMess);
       const messageId = messageSent.key.id;
-      Gifted.ev.on("messages.upsert", async (event) => {
+      Aliconn.ev.on("messages.upsert", async (event) => {
           const messageData = event.messages[0];
           if (!messageData.message) return;
           const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
@@ -1035,7 +1035,7 @@ gmd({
                       const down1 = await gifted.ytmp4(q, 360);
                       const downloadUrl1 = down1.result.download_url;
                       const buffer1 = await getBuffer(downloadUrl1);
-                      await Gifted.sendMessage(from, {
+                      await Aliconn.sendMessage(from, {
                           audio: buffer1,
                           mimetype: "video/mp4",
                           contextInfo: {
@@ -1055,7 +1055,7 @@ gmd({
                       const down2 = await gifted.ytmp4(q, 720);
                       const downloadUrl2 = down2.result.download_url;
                       const buffer2 = await getBuffer(downloadUrl2);
-                      await Gifted.sendMessage(from, {
+                      await Aliconn.sendMessage(from, {
                           audio: buffer2,
                           mimetype: "video/mp4",
                           contextInfo: {
@@ -1075,7 +1075,7 @@ gmd({
                       const down3 = await gifted.ytv(q, 1080);
                       const downloadUrl3 = down3.result.download_url;
                       const buffer3 = await getBuffer(downloadUrl3);
-                      await Gifted.sendMessage(from, {
+                      await Aliconn.sendMessage(from, {
                           audio: buffer3,
                           mimetype: "audio/mpeg",
                           contextInfo: {
@@ -1092,7 +1092,7 @@ gmd({
                       break;
 
                   default:
-                await Gifted.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
+                await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
               }
           }
       });

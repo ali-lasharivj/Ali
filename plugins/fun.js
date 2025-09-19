@@ -8,10 +8,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/newyear?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: data.result }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: data.result }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -26,10 +26,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/christmas?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: data.result }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: data.result }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -45,10 +45,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/valentines?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: data.result }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: data.result }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -63,10 +63,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/girlfriendsday?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: data.result }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: data.result }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -81,10 +81,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/boyfriendsday?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: data.result }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: data.result }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -100,10 +100,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/pickupline?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: data.result }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: data.result }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -118,10 +118,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/fathersday?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: data.result }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: data.result }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -136,10 +136,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/mothersday?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: data.result }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: data.result }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -154,10 +154,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/heartbreak?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: data.result }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: data.result }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -173,10 +173,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/jokes?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: `Set Up: ${data.result.setup}\nPuncline: ${data.result.punchline}` }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: `Set Up: ${data.result.setup}\nPuncline: ${data.result.punchline}` }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -191,10 +191,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/halloween?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: data.result }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: data.result }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -209,10 +209,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/motivation?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: data.result }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: data.result }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -227,10 +227,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/love?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: data.result }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: data.result }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -245,10 +245,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/gratitude?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: data.result }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: data.result }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -263,10 +263,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/thankyou?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: data.result }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: data.result }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -281,10 +281,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/shayari?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: data.result }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: data.result }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -299,10 +299,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/goodnight?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: data.result }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: data.result }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -317,10 +317,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/truth?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: data.result }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: data.result }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -335,10 +335,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/advice?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: data.result }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: data.result }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -353,10 +353,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/flirt?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: data.result }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: data.result }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -372,10 +372,10 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const data = await fetchJson(`${global.api}/fun/quotes?apikey=${global.myName}`);
-        await Gifted.sendMessage(from, { text: data.result }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: data.result }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -390,11 +390,11 @@ gmd({
     react: "😼",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const apiUrl = ``;
         const data = await fetchJson(`https://api.thecatapi.com/v1/images/search`);
-        await Gifted.sendMessage(from, { image: { url: data[0]?.url }, caption: `> ${global.footer}`  }, { quoted: mek });
+        await Aliconn.sendMessage(from, { image: { url: data[0]?.url }, caption: `> ${global.footer}`  }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -410,13 +410,13 @@ gmd({
     react: "🐶",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const apiUrl = `https://dog.ceo/api/breeds/image/random`;
         const response = await axios.get(apiUrl);
         const data = response.data;
 
-        await Gifted.sendMessage(from, { image: { url: data.message }, caption: `> ${global.footer}`  }, { quoted: mek });
+        await Aliconn.sendMessage(from, { image: { url: data.message }, caption: `> ${global.footer}`  }, { quoted: mek });
         await m.react("✅"); 
     } catch (e) {
         console.log(e); 
@@ -431,7 +431,7 @@ gmd({
     category: "fun",
     filename: __filename
 },
-async (Gifted, mek, m, { from, q, reply }) => {
+async (Aliconn, mek, m, { from, q, reply }) => {
     try {
         const url = 'https://uselessfacts.jsph.pl/random.json?language=en'; 
         const response = await axios.get(url);
@@ -458,7 +458,7 @@ gmd({
     react: "💻",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
         const steps = [
@@ -483,7 +483,7 @@ async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, s
   ];
 
         for (const line of steps) {
-            await Gifted.sendMessage(from, { text: line }, { quoted: mek });
+            await Aliconn.sendMessage(from, { text: line }, { quoted: mek });
             await m.react("✅"); 
             await new Promise(resolve => setTimeout(resolve, 1000));
         }

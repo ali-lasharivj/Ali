@@ -4,13 +4,13 @@ const { gmd, config, commands, fetchJson } = require('../lib'),
     axios = require('axios'); 
 
 // Helper function for robust sending
-async function robustSendMessage(Gifted, from, msg, quoted, reply) {
+async function robustSendMessage(Aliconn, from, msg, quoted, reply) {
     try {
-        await Gifted.sendMessage(from, msg, { quoted });
+        await Aliconn.sendMessage(from, msg, { quoted });
     } catch (err) {
         console.log("Send with quoted failed, retrying without quoted:", err);
         try {
-            await Gifted.sendMessage(from, msg);
+            await Aliconn.sendMessage(from, msg);
         } catch (err2) {
             console.log("Send without quoted also failed:", err2);
             if (reply) return reply("❌ Failed to send the response.");
@@ -28,7 +28,7 @@ gmd({
     category: "ai",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, q, reply }) => {
+async (Aliconn, mek, m, { from, quoted, q, reply }) => {
     try {
         if (!q) return reply("Provide a prompt to generate image!");
         const res = await axios.get(`${global.api}/ai/sd?apikey=${global.myName}&prompt=${encodeURIComponent(q)}`, {
@@ -38,11 +38,11 @@ async (Gifted, mek, m, { from, quoted, q, reply }) => {
             image: Buffer.from(res.data),
             caption: `Here is your generated Image for ${q}\n> ${global.footer}`
         };
-        await robustSendMessage(Gifted, from, imageMsg, mek, reply);
+        await robustSendMessage(Aliconn, from, imageMsg, mek, reply);
         await m.react("✅");
     } catch (e) {
         console.error("Error occurred:", e);
-        reply("❌ An error occurred while fetching data from Gifted-Api. Please try again later.");
+        reply("❌ An error occurred while fetching data from Aliconn-Api. Please try again later.");
     }
 });
 
@@ -54,7 +54,7 @@ gmd({
     category: "ai",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, q, reply }) => {
+async (Aliconn, mek, m, { from, quoted, q, reply }) => {
     try {
         if (!q) return reply("Provide a prompt to generate image!");
         const res = await axios.get(`${global.api}/ai/text2img?apikey=${global.myName}&prompt=${encodeURIComponent(q)}`, {
@@ -64,17 +64,17 @@ async (Gifted, mek, m, { from, quoted, q, reply }) => {
             image: Buffer.from(res.data),
             caption: `Here is your generated Image for ${q}\n> ${global.footer}`
         };
-        await robustSendMessage(Gifted, from, imageMsg, mek, reply);
+        await robustSendMessage(Aliconn, from, imageMsg, mek, reply);
         await m.react("✅");
     } catch (e) {
         console.error("Error occurred:", e);
-        reply("❌ An error occurred while fetching data from Gifted-Api. Please try again later.");
+        reply("❌ An error occurred while fetching data from Aliconn-Api. Please try again later.");
     }
 });
 
 // --- CHAT COMMANDS ---
 
-async function sendChatResponse(Gifted, from, mek, m, reply, resultText) {
+async function sendChatResponse(Aliconn, from, mek, m, reply, resultText) {
     const infoMess = {
         text: resultText,
         contextInfo: {
@@ -88,7 +88,7 @@ async function sendChatResponse(Gifted, from, mek, m, reply, resultText) {
             }
         }
     };
-    await robustSendMessage(Gifted, from, infoMess, mek, reply);
+    await robustSendMessage(Aliconn, from, infoMess, mek, reply);
     await m.react('✅');
 }
 
@@ -100,14 +100,14 @@ gmd({
     category: "ai",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, q, reply }) => {
+async (Aliconn, mek, m, { from, quoted, q, reply }) => {
     try {
         if (!q) return reply("Provide a query!");
         const data = await fetchJson(`${global.api}/ai/luminai?apikey=${global.myName}&query=${encodeURIComponent(q)}`);
-        await sendChatResponse(Gifted, from, mek, m, reply, data.result);
+        await sendChatResponse(Aliconn, from, mek, m, reply, data.result);
     } catch (e) {
         console.error("Error occurred:", e);
-        reply("❌ An error occurred while fetching data from Gifted-Api. Please try again later.");
+        reply("❌ An error occurred while fetching data from Aliconn-Api. Please try again later.");
     }
 });
 
@@ -118,14 +118,14 @@ gmd({
     category: "ai",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, q, reply }) => {
+async (Aliconn, mek, m, { from, quoted, q, reply }) => {
     try {
         if (!q) return reply("Provide a query!");
         const data = await fetchJson(`${global.api}/ai/wwdgpt?apikey=${global.myName}&prompt=${encodeURIComponent(q)}`);
-        await sendChatResponse(Gifted, from, mek, m, reply, data.result);
+        await sendChatResponse(Aliconn, from, mek, m, reply, data.result);
     } catch (e) {
         console.error("Error occurred:", e);
-        reply("❌ An error occurred while fetching data from Gifted-Api. Please try again later.");
+        reply("❌ An error occurred while fetching data from Aliconn-Api. Please try again later.");
     }
 });
 
@@ -137,14 +137,14 @@ gmd({
     category: "ai",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, q, reply }) => {
+async (Aliconn, mek, m, { from, quoted, q, reply }) => {
     try {
         if (!q) return reply("Provide a query!");
         const data = await fetchJson(`${global.api}/ai/letmegpt?apikey=${global.myName}&query=${encodeURIComponent(q)}`);
-        await sendChatResponse(Gifted, from, mek, m, reply, data.result);
+        await sendChatResponse(Aliconn, from, mek, m, reply, data.result);
     } catch (e) {
         console.error("Error occurred:", e);
-        reply("❌ An error occurred while fetching data from Gifted-Api. Please try again later.");
+        reply("❌ An error occurred while fetching data from Aliconn-Api. Please try again later.");
     }
 });
 
@@ -156,14 +156,14 @@ gmd({
     category: "ai",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, q, reply }) => {
+async (Aliconn, mek, m, { from, quoted, q, reply }) => {
     try {
         if (!q) return reply("Provide a query!");
         const data = await fetchJson(`${global.api}/ai/simsimi?apikey=${global.myName}&query=${encodeURIComponent(q)}`);
-        await sendChatResponse(Gifted, from, mek, m, reply, data.result);
+        await sendChatResponse(Aliconn, from, mek, m, reply, data.result);
     } catch (e) {
         console.error("Error occurred:", e);
-        reply("❌ An error occurred while fetching data from Gifted-Api. Please try again later.");
+        reply("❌ An error occurred while fetching data from Aliconn-Api. Please try again later.");
     }
 });
 
@@ -174,14 +174,14 @@ gmd({
     category: "ai",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, q, reply }) => {
+async (Aliconn, mek, m, { from, quoted, q, reply }) => {
     try {
         if (!q) return reply("Provide a query!");
         const data = await fetchJson(`${global.api}/ai/gpt4-o?apikey=${global.myName}&q=${encodeURIComponent(q)}`);
-        await sendChatResponse(Gifted, from, mek, m, reply, data.result);
+        await sendChatResponse(Aliconn, from, mek, m, reply, data.result);
     } catch (e) {
         console.error("Error occurred:", e);
-        reply("❌ An error occurred while fetching data from Gifted-Api. Please try again later.");
+        reply("❌ An error occurred while fetching data from Aliconn-Api. Please try again later.");
     }
 });
 
@@ -192,7 +192,7 @@ gmd({
     react: "🤖",
     category: "ai",
     filename: __filename
-}, async (Gifted, mek, m, { from, quoted, q, reply }) => {
+}, async (Aliconn, mek, m, { from, quoted, q, reply }) => {
     try {
         if (!q) return reply("Provide a prompt");
 
@@ -219,7 +219,7 @@ gmd({
         }
 
         if (!resultText) return reply("Sorry, I couldn't generate a response. Please try again later.");
-        await sendChatResponse(Gifted, from, mek, m, reply, resultText);
+        await sendChatResponse(Aliconn, from, mek, m, reply, resultText);
 
     } catch (e) {
         console.log(e);
@@ -235,11 +235,11 @@ gmd({
     category: "ai",
     filename: __filename
 },
-async(Gifted, mek, m, {from, quoted, q, reply}) => {
+async(Aliconn, mek, m, {from, quoted, q, reply}) => {
     try {
         if (!q) return reply("Provide a prompt");
         let data = await fetchJson(`${global.api}/ai/geminiai?apikey=${global.myName}&q=${encodeURIComponent(q)}`);
-        await sendChatResponse(Gifted, from, mek, m, reply, data.result);
+        await sendChatResponse(Aliconn, from, mek, m, reply, data.result);
     } catch(e) {
         console.log(e);
         reply(`${e}`);
@@ -254,12 +254,12 @@ gmd({
     category: "ai",
     filename: __filename
 },
-async(Gifted, mek, m, {from, quoted, q, reply}) => {
+async(Aliconn, mek, m, {from, quoted, q, reply}) => {
     try {
         let data = await fetchJson(`${global.api}/ai/blackbox?apikey=${global.myName}&q=${encodeURIComponent(q)}`);
         if (!data || !data.result) return reply("Error: No response from the AI.");
         if (data && data.result && !data.result.includes("Generated by BLACKBOX.AI, try unlimited chat https://www.blackbox.ai")) {
-            await sendChatResponse(Gifted, from, mek, m, reply, data.result);
+            await sendChatResponse(Aliconn, from, mek, m, reply, data.result);
         }
     } catch (e) {
         console.log(e);
@@ -274,7 +274,7 @@ gmd({
     react: "🤖",
     category: "ai",
     filename: __filename
-}, async (Gifted, mek, m, { from, quoted, q, reply }) => {
+}, async (Aliconn, mek, m, { from, quoted, q, reply }) => {
     try {
         let data;
         const tryFetch = async (url) => {
@@ -302,7 +302,7 @@ gmd({
         }
 
         if (!resultText) return reply("Sorry, I couldn't generate a response. Please try again later.");
-        await sendChatResponse(Gifted, from, mek, m, reply, resultText);
+        await sendChatResponse(Aliconn, from, mek, m, reply, resultText);
 
     } catch (e) {
         console.log(e);

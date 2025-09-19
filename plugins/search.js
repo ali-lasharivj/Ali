@@ -12,7 +12,7 @@ gmd({
   react: "🔍",
   filename: __filename,
   use: "<search query>"
-}, async (Gifted, mek, message, { from, args, reply }) => {
+}, async (Aliconn, mek, message, { from, args, reply }) => {
   if (!args[0]) {
     return reply("Please provide a search query!");
   }
@@ -46,7 +46,7 @@ gmd({
         }
       }
     };
-    await Gifted.sendMessage(from, giftedMess, { quoted: mek });
+    await Aliconn.sendMessage(from, giftedMess, { quoted: mek });
   } catch (error) {
     console.error("Error in YouTube search:", error);
     reply("❌ An error occurred while searching YouTube. Please try again later.");
@@ -69,7 +69,7 @@ gmd({
   react: "🖼️",
   category: "general",
   filename: __filename
-}, async (Gifted, mek, m, { from, quoted, body, args, q, reply }) => {
+}, async (Aliconn, mek, m, { from, quoted, body, args, q, reply }) => {
   try {
     let responseText = "*BOT IS CURRENTLY ACTIVE!*";
     const giftedMess = {
@@ -83,7 +83,7 @@ gmd({
         }
       }
     };
-    await Gifted.sendMessage(from, giftedMess, { quoted: mek });
+    await Aliconn.sendMessage(from, giftedMess, { quoted: mek });
     await m.react("✅");
   } catch (error) {
     console.error("Error in test2 command:", error);
@@ -99,7 +99,7 @@ gmd({
   react: "🌍",
   category: "stalker",
   filename: __filename
-}, async (Gifted, mek, m, { from, quoted, body, args, q, reply }) => {
+}, async (Aliconn, mek, m, { from, quoted, body, args, q, reply }) => {
   try {
     if (!q) {
       return reply(`Please provide a username, e.g., *${prefix}github mauricegift*`);
@@ -140,7 +140,7 @@ gmd({
         }
       }
     };
-    await Gifted.sendMessage(from, giftedMess, { quoted: mek });
+    await Aliconn.sendMessage(from, giftedMess, { quoted: mek });
     await m.react("✅");
   } catch (error) {
     console.error("Error fetching GitHub user data:", error);
@@ -155,7 +155,7 @@ gmd({
     react: "🖼️",
     category: "search",
     filename: __filename
-}, async (Gifted, mek, m, { from, quoted, body, args, q, reply }) => {
+}, async (Aliconn, mek, m, { from, quoted, body, args, q, reply }) => {
     try {
         if (!q) return reply("Please provide a search query for the image.");
         let response = await fetchJson(`${global.api}/search/googleimage?apikey=${global.myName}&query=${encodeURIComponent(q)}`);
@@ -164,7 +164,7 @@ gmd({
         }
         let imageUrls = response.results.slice(0, 5);
         for (let url of imageUrls) {
-            await Gifted.sendMessage(from, {
+            await Aliconn.sendMessage(from, {
                 image: { url },
                 caption: `> ${global.footer}`
             }, { quoted: mek });
@@ -182,7 +182,7 @@ gmd({
     react: "🖼️",
     category: "search",
     filename: __filename
-}, async (Gifted, mek, m, { from, quoted, args, q, reply }) => {
+}, async (Aliconn, mek, m, { from, quoted, args, q, reply }) => {
     try {
         if (!q) return reply("Please provide a search query.");
 
@@ -221,7 +221,7 @@ gmd({
                     imageMessage: (await generateWAMessageContent({
                         image: item.buffer
                     }, {
-                        upload: Gifted.waUploadToServer
+                        upload: Aliconn.waUploadToServer
                     })).imageMessage
                 },
                 body: {
@@ -264,7 +264,7 @@ gmd({
             quoted: mek
         });
 
-        await Gifted.relayMessage(from, carouselMessage.message, {
+        await Aliconn.relayMessage(from, carouselMessage.message, {
             messageId: carouselMessage.key.id
         });
 
@@ -281,7 +281,7 @@ gmd({
     react: "🖼️",
     category: "search",
     filename: __filename
-}, async (Gifted, mek, m, { from, quoted, body, args, q, reply }) => {
+}, async (Aliconn, mek, m, { from, quoted, body, args, q, reply }) => {
     try {
         if (!q) return reply("Please provide a search query for the image.");
         let response = await fetchJson(`${global.api}/search/pinterest?apikey=${global.myName}&query=${encodeURIComponent(q)}`);
@@ -290,7 +290,7 @@ gmd({
         }
         let imageUrls = response.results.slice(0, 5);
         for (let url of imageUrls) {
-            await Gifted.sendMessage(from, {
+            await Aliconn.sendMessage(from, {
                 image: { url },
                 caption: `> ${global.footer}`
             }, { quoted: mek });
@@ -308,7 +308,7 @@ gmd({
     react: "🌍",
     category: "search",
     filename: __filename
-}, async (Gifted, mek, m, { from, quoted, body, args, q, reply }) => {
+}, async (Aliconn, mek, m, { from, quoted, body, args, q, reply }) => {
     try {    
         if (!q) return reply("Please provide a search query.");
         let data = await fetchJson(`${global.api}/search/google?apikey=${global.myName}&query=${encodeURIComponent(q)}`);
@@ -336,7 +336,7 @@ gmd({
           }
         }
       };
-      await Gifted.sendMessage(from, giftedMess, { quoted: mek });
+      await Aliconn.sendMessage(from, giftedMess, { quoted: mek });
       await m.react("✅"); 
         } else {
             reply("❌ Unable to fetch search results. Please try again.");
@@ -354,7 +354,7 @@ gmd({
     react: "🌍",
     category: "search",
     filename: __filename
-}, async (Gifted, mek, m, { from, quoted, body, args, q, reply }) => {
+}, async (Aliconn, mek, m, { from, quoted, body, args, q, reply }) => {
     try {    
         if (!q) return reply("Please provide a search query.");
         let data = await fetchJson(`${global.api}/search/wikimedia?apikey=${global.myName}&title=${encodeURIComponent(q)}`);
@@ -382,7 +382,7 @@ gmd({
           }
         }
       };
-      await Gifted.sendMessage(from, giftedMess, { quoted: mek });
+      await Aliconn.sendMessage(from, giftedMess, { quoted: mek });
       await m.react("✅"); 
         } else {
             reply("❌ Unable to fetch search results. Please try again.");
@@ -400,7 +400,7 @@ gmd({
     react: "🌦️",
     category: "search",
     filename: __filename
-}, async (Gifted, mek, m, { from, quoted, body, args, q, reply }) => {
+}, async (Aliconn, mek, m, { from, quoted, body, args, q, reply }) => {
     try {
         if (!q) return reply("Please provide a location for the weather search.");
         let data = await fetchJson(`${global.api}/search/weather?apikey=${global.myName}&location=${encodeURIComponent(q)}`);   
@@ -435,7 +435,7 @@ gmd({
           }
         }
       };
-      await Gifted.sendMessage(from, giftedMess, { quoted: mek });
+      await Aliconn.sendMessage(from, giftedMess, { quoted: mek });
       await m.react("✅");  
         } else {
        reply("❌ Unable to fetch weather information. Please try again.");
@@ -453,7 +453,7 @@ gmd({
     react: "🤔",
     category: "stalker",
     filename: __filename
-}, async (Gifted, mek, m, { from, quoted, body, args, q, reply }) => {
+}, async (Aliconn, mek, m, { from, quoted, body, args, q, reply }) => {
     try {
         if (!q) return reply("Please provide a package name for the npm search.");
          let data = await fetchJson(`${global.api}/search/npmsearch?apikey=${global.myName}&packagename=${encodeURIComponent(q)}`);
@@ -493,7 +493,7 @@ gmd({
           }
         }
       };
-      await Gifted.sendMessage(from, giftedMess, { quoted: mek });
+      await Aliconn.sendMessage(from, giftedMess, { quoted: mek });
       await m.react("✅"); 
         } else {
        reply("❌ Unable to fetch npm information. Please try again.");
@@ -511,7 +511,7 @@ gmd({
     react: "🎶",
     category: "search",
     filename: __filename
-}, async (Gifted, mek, m, { from, quoted, body, args, q, reply }) => {
+}, async (Aliconn, mek, m, { from, quoted, body, args, q, reply }) => {
     try {
         if (!q) return reply("Please provide a song name for the lyrics search.");
          let data = await fetchJson(`${global.api}/search/lyrics?apikey=${global.myName}&query=${encodeURIComponent(q)}`);      
@@ -536,7 +536,7 @@ gmd({
           }
         }
       };
-      await Gifted.sendMessage(from, giftedMess, { quoted: mek });
+      await Aliconn.sendMessage(from, giftedMess, { quoted: mek });
       await m.react("✅"); 
         } else {
       reply("❌ Unable to fetch lyrics information. Please try again.");
@@ -554,7 +554,7 @@ gmd({
     react: "📰",
     filename: __filename
 },
-async (Gifted, mek, m, { from, reply }) => {
+async (Aliconn, mek, m, { from, reply }) => {
     try {
         const giftedKey = "0f2c43ab11324578a7b1709651736382";
         const response = await axios.get(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${giftedKey}`);
@@ -572,12 +572,12 @@ async (Gifted, mek, m, { from, reply }) => {
 > ${global.footer}
             `.trim();
             if (article.urlToImage) {
-                await Gifted.sendMessage(from, {
+                await Aliconn.sendMessage(from, {
                     image: { url: article.urlToImage },
                     caption: `message\n\n> ${global.footer}`
                 });
             } else {
-                await Gifted.sendMessage(from, { text: message });
+                await Aliconn.sendMessage(from, { text: message });
             }
         }
     } catch (e) {
@@ -594,7 +594,7 @@ gmd({
     category: "search",
     react: "🎬",
     filename: __filename,
-}, async (Gifted, mek, m, { from, reply, q, sender }) => {
+}, async (Aliconn, mek, m, { from, reply, q, sender }) => {
     try {
         if (!q)
             return reply(`_Provide a Series or movie name_`); 
@@ -638,7 +638,7 @@ gmd({
                 }
             }
         };
-        await Gifted.sendMessage(from, giftedMess, { quoted: mek });
+        await Aliconn.sendMessage(from, giftedMess, { quoted: mek });
         await m.react("✅");
     } catch (error) {
         console.error("Error in movie command:", error);

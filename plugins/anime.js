@@ -9,11 +9,11 @@ gmd({
     use: '.loli',
     filename: __filename
 },
-async(Gifted, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+async(Aliconn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
 if (!isOwner) return reply("❌ You are not the owner!");
 let res = await axios.get('https://api.waifu.im/search/?included_tags=milf')
-await Gifted.sendMessage(from, { image: { url: res.data.images[0].url }, caption: `> ${global.footer}` }, { quoted: mek })
+await Aliconn.sendMessage(from, { image: { url: res.data.images[0].url }, caption: `> ${global.footer}` }, { quoted: mek })
 await m.react("✅"); 
 } catch (e) {
 reply(e)
@@ -29,11 +29,11 @@ gmd({
     use: '.loli',
     filename: __filename
 },
-async(Gifted, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+async(Aliconn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
 if (!isOwner) return reply("❌ You are not the owner!");
 let res = await axios.get('https://api.waifu.im/search/?included_tags=ero')
-await Gifted.sendMessage(from, { image: { url: res.data.images[0].url }, caption: `> ${global.footer}` }, { quoted: mek })
+await Aliconn.sendMessage(from, { image: { url: res.data.images[0].url }, caption: `> ${global.footer}` }, { quoted: mek })
 await m.react("✅"); 
 } catch (e) {
 reply(e)
@@ -49,11 +49,11 @@ gmd({
     use: '.loli',
     filename: __filename
 },
-async(Gifted, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+async(Aliconn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
 if (!isOwner) return reply("❌ You are not the owner!");
 let res = await axios.get('https://api.waifu.im/search/?included_tags=ecchi')
-await Gifted.sendMessage(from, { image: { url: res.data.images[0].url }, caption: `> ${global.footer}` }, { quoted: mek })
+await Aliconn.sendMessage(from, { image: { url: res.data.images[0].url }, caption: `> ${global.footer}` }, { quoted: mek })
 await m.react("✅"); 
 } catch (e) {
 reply(e)
@@ -69,11 +69,11 @@ gmd({
     use: '.loli',
     filename: __filename
 },
-async(Gifted, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+async(Aliconn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
 if (!isOwner) return reply("❌ You are not the owner!");
 let res = await axios.get('https://api.waifu.im/search/?included_tags=ass')
-await Gifted.sendMessage(from, { image: { url: res.data.images[0].url }, caption: `> ${global.footer}` }, { quoted: mek })
+await Aliconn.sendMessage(from, { image: { url: res.data.images[0].url }, caption: `> ${global.footer}` }, { quoted: mek })
 await m.react("✅"); 
 } catch (e) {
 reply(e)
@@ -90,7 +90,7 @@ gmd({
     use: '.loli',
     filename: __filename
 },
-async(Gifted, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+async(Aliconn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
 const response = await axios.get('https://api.jikan.moe/v4/random/anime'); 
 const data = response.data.data;
@@ -114,7 +114,7 @@ const data = response.data.data;
           }
         }
       };
-await Gifted.sendMessage(from, infoMess, { quoted: mek });
+await Aliconn.sendMessage(from, infoMess, { quoted: mek });
 await m.react("✅"); 
 } catch (e) {
 reply(e)
@@ -132,10 +132,10 @@ gmd({
     use: '.loli',
     filename: __filename
 },
-async(Gifted, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+async(Aliconn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
 let res = await axios.get('https://api.lolicon.app/setu/v2?num=1&r18=0&tag=lolicon')
-await Gifted.sendMessage(from, { image: { url: res.data.data[0].urls.original }, caption: `> ${global.footer}` }, { quoted: mek })
+await Aliconn.sendMessage(from, { image: { url: res.data.data[0].urls.original }, caption: `> ${global.footer}` }, { quoted: mek })
 await m.react("✅"); 
 } catch (e) {
 reply(e)
@@ -152,10 +152,10 @@ gmd({
     use: '.waifu',
     filename: __filename
 },
-async(Gifted, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+async(Aliconn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
 let res = await axios.get('https://api.waifu.pics/sfw/waifu')
-await Gifted.sendMessage(from, { image: { url: res.data.url }, caption: `> ${global.footer}` }, { quoted: mek })
+await Aliconn.sendMessage(from, { image: { url: res.data.url }, caption: `> ${global.footer}` }, { quoted: mek })
 await m.react("✅"); 
 } catch (e) {
 reply(cants)
@@ -172,10 +172,10 @@ gmd({
     use: '.neko',
     filename: __filename
 },
-async(Gifted, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+async(Aliconn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
 let res = await axios.get('https://api.waifu.pics/sfw/neko')
-await Gifted.sendMessage(from, { image: { url: res.data.url  }, caption: `> ${global.footer}` }, { quoted: mek })
+await Aliconn.sendMessage(from, { image: { url: res.data.url  }, caption: `> ${global.footer}` }, { quoted: mek })
 await m.react("✅"); 
 } catch (e) {
 reply(e)
@@ -192,10 +192,10 @@ gmd({
     use: '.megumin',
     filename: __filename
 },
-async(Gifted, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+async(Aliconn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
 let res = await axios.get('https://api.waifu.pics/sfw/megumin')
-await Gifted.sendMessage(from, { image: { url: res.data.url }, caption: `> ${global.footer}` }, { quoted: mek })
+await Aliconn.sendMessage(from, { image: { url: res.data.url }, caption: `> ${global.footer}` }, { quoted: mek })
 await m.react("✅"); 
 } catch (e) {
 reply(e)
@@ -212,10 +212,10 @@ gmd({
     use: '.maid',
     filename: __filename
 },
-async(Gifted, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+async(Aliconn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
 let res = await axios.get('https://api.waifu.im/search/?included_tags=maid')
-await Gifted.sendMessage(from, { image: { url: res.data.images[0].url  }, caption: `> ${global.footer}` }, { quoted: mek })
+await Aliconn.sendMessage(from, { image: { url: res.data.images[0].url  }, caption: `> ${global.footer}` }, { quoted: mek })
 await m.react("✅"); 
 } catch (e) {
 reply(e)
@@ -232,10 +232,10 @@ gmd({
     use: '.awoo',
     filename: __filename
 },
-async(Gifted, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+async(Aliconn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
 let res = await axios.get('https://api.waifu.pics/sfw/awoo')
-await Gifted.sendMessage(from, { image: { url: res.data.url }, caption: `> ${global.footer}` }, { quoted: mek })
+await Aliconn.sendMessage(from, { image: { url: res.data.url }, caption: `> ${global.footer}` }, { quoted: mek })
 await m.react("✅"); 
 } catch (e) {
 reply(e)

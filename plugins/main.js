@@ -63,7 +63,7 @@ gmd({
     category: "general",
     filename: __filename
 },
-async(Gifted, mek, m, { from, quoted, isCmd, command, args, q, isGroup, sender, pushname, reply }) => {
+async(Aliconn, mek, m, { from, quoted, isCmd, command, args, q, isGroup, sender, pushname, reply }) => {
     try {
         // Contact-style quote
         let gift = {
@@ -155,7 +155,7 @@ async(Gifted, mek, m, { from, quoted, isCmd, command, args, q, isGroup, sender, 
           }
         }
       };
-      await Gifted.sendMessage(from, giftedMess, { quoted: gift });
+      await Aliconn.sendMessage(from, giftedMess, { quoted: gift });
       await m.react("✅");
     } catch (e) {
         console.log(e);
@@ -170,7 +170,7 @@ gmd({
     react: "⚡",
     filename: __filename
 },
-async(Gifted, mek, m, { from, quoted, isCmd, command, args, q, isGroup, sender, pushname, reply }) => {
+async(Aliconn, mek, m, { from, quoted, isCmd, command, args, q, isGroup, sender, pushname, reply }) => {
     try {
         const startTime = Date.now(); // Start timer
 
@@ -200,7 +200,7 @@ async(Gifted, mek, m, { from, quoted, isCmd, command, args, q, isGroup, sender, 
         const ping = Date.now() - startTime;
 
         // Send final ping message
-        await Gifted.sendMessage(from, {
+        await Aliconn.sendMessage(from, {
             text: `*𝐏๏፝֟ƞ̽g: ${ping} 𝐌ʂ ${randomEmojix}*`,
             contextInfo: {
                 mentionedJid: [m.sender],
@@ -228,7 +228,7 @@ gmd({
     category: "general",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, isCmd, command, args, q, isGroup, sender, pushname, reply }) => {
+async (Aliconn, mek, m, { from, quoted, isCmd, command, args, q, isGroup, sender, pushname, reply }) => {
     try {
       let gift = {
             key: {
@@ -307,7 +307,7 @@ async (Gifted, mek, m, { from, quoted, isCmd, command, args, q, isGroup, sender,
           }
         }
       };
-      await Gifted.sendMessage(from, giftedMess, { quoted: gift });
+      await Aliconn.sendMessage(from, giftedMess, { quoted: gift });
 await m.react("✅");
     } catch (e) {
         console.error(e);
@@ -324,7 +324,7 @@ gmd({
     category: "general",
     filename: __filename,
 }, 
-async (Gifted, mek, m, { from, quoted, sender, pushname, reply }) => {
+async (Aliconn, mek, m, { from, quoted, sender, pushname, reply }) => {
     try {
       let gift = {
             key: {
@@ -408,7 +408,7 @@ async (Gifted, mek, m, { from, quoted, sender, pushname, reply }) => {
           }
         }
       };
-      await Gifted.sendMessage(from, giftedMess, { quoted: gift });
+      await Aliconn.sendMessage(from, giftedMess, { quoted: gift });
       await m.react("✅");
     } catch (e) {
         console.error(e);
@@ -426,7 +426,7 @@ gmd({
     use: '.request',
     filename: __filename
 },
-async(Gifted, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+async(Aliconn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 const reportedMessages = {};
 const devlopernumber = '923197521693';
 try{
@@ -441,7 +441,7 @@ const isCreator = [botNumber, config.OWNER_NUMBER + '@s.whatsapp.net'].includes(
     const textt = `*| REQUEST/REPORT |*`;
     const teks1 = `\n\n*User*: @${sender.split("@")[0]}\n*Request:* ${q}`;
     const teks2 = `\n\n*Hi ${pushname}, your request has been forwarded to my Owners.*\n*Please wait...*`;
-    Gifted.sendMessage(devlopernumber + "@s.whatsapp.net", {
+    Aliconn.sendMessage(devlopernumber + "@s.whatsapp.net", {
         text: textt + teks1,
         mentions: [m.sender],
     }, {
@@ -465,7 +465,7 @@ console.log(e)
     filename: __filename
 },
 
-async(Gifted, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+async(Aliconn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
 const response = await axios.get(global.giftedApiRepo);
     const repoData = response.data;
@@ -498,7 +498,7 @@ const response = await axios.get(global.giftedApiRepo);
           }
         }
       };
-      await Gifted.sendMessage(from, giftedMess, { quoted: gift });
+      await Aliconn.sendMessage(from, giftedMess, { quoted: gift });
 await m.react("✅");
 }catch(e){
 console.log(e)
@@ -514,7 +514,7 @@ gmd({
   react: "👑",
   filename: __filename
 },
-async(Gifted, mek, m,{from, quoted, isOwner, reply}) => {
+async(Aliconn, mek, m,{from, quoted, isOwner, reply}) => {
 try{
 const vcard = 'BEGIN:VCARD\n'
           + 'VERSION:3.0\n' 
@@ -522,7 +522,7 @@ const vcard = 'BEGIN:VCARD\n'
           + 'ORG:BOT-CREATER;\n' 
           + `TEL;type=CELL;type=VOICE;waid=${config.OWNER_NUMBERR}:${config.OWNER_NUMBERR}\n`
           + 'END:VCARD';
-  await Gifted.sendMessage(
+  await Aliconn.sendMessage(
   from,
   { 
       contacts: { 
@@ -546,7 +546,7 @@ gmd({
     react: "👓",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const audioUrls = [
         'https://files.catbox.moe/nfnb5k.mp3',
@@ -594,7 +594,7 @@ async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, s
           }
         }
       };
-      await Gifted.sendMessage(from, giftedMess, { quoted: gift });
+      await Aliconn.sendMessage(from, giftedMess, { quoted: gift });
       await m.react("✅"); 
     } catch (e) {
         console.log(e)
@@ -609,7 +609,7 @@ gmd({
     react: "⏱️",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
   const uptimeSeconds = process.uptime();
   const days = Math.floor(uptimeSeconds / (24 * 3600));
   const hours = Math.floor((uptimeSeconds % (24 * 3600)) / 3600);
@@ -651,7 +651,7 @@ async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, s
         }
       }
     };
-    await Gifted.sendMessage(from, giftedMess, { quoted: gift }); 
+    await Aliconn.sendMessage(from, giftedMess, { quoted: gift }); 
     await m.react("✅"); 
 } catch (e) {
         console.log(e)
@@ -667,7 +667,7 @@ gmd({
     react: "⏱️",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
   const uptimeSeconds = process.uptime();
   const days = Math.floor(uptimeSeconds / (24 * 3600));
   const hours = Math.floor((uptimeSeconds % (24 * 3600)) / 3600);
@@ -700,7 +700,7 @@ async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, s
         }
       }
     };
-    await Gifted.sendMessage(from, giftedMess, { quoted: gift}); 
+    await Aliconn.sendMessage(from, giftedMess, { quoted: gift}); 
     await m.react("✅"); 
 } catch (e) {
         console.log(e)
@@ -716,18 +716,18 @@ gmd({
     react: "⚡",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         const uptimeSeconds = process.uptime();
         const days = Math.floor(uptimeSeconds / (24 * 3600));
         const hours = Math.floor((uptimeSeconds % (24 * 3600)) / 3600);
         const minutes = Math.floor((uptimeSeconds % 3600) / 60);
         const seconds = Math.floor(uptimeSeconds % 60);
-        const message = await Gifted.sendMessage(from, 
+        const message = await Aliconn.sendMessage(from, 
             { text: '*Connecting Server...*' }, 
             { quoted: mek });
         const text =  `*Bot Has Been Up For: _${days}d ${hours}h ${minutes}m ${seconds}s_*`;
-        await Gifted.sendMessage(from, {
+        await Aliconn.sendMessage(from, {
             text: text,
             edit: message.key }, 
             { quoted: mek });

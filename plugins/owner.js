@@ -70,13 +70,13 @@ gmd({
     react: "📢",
     filename: __filename
 },
-async (Gifted, mek, m, { from, isOwner, args, reply }) => {
+async (Aliconn, mek, m, { from, isOwner, args, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     if (args.length === 0) return reply("📢 Provide a message to breadcast after the command.");
     const message = args.join(' ');
-    const groups = Object.keys(await Gifted.groupFetchAllParticipating());
+    const groups = Object.keys(await Aliconn.groupFetchAllParticipating());
     for (const groupId of groups) {
-    await Gifted.sendMessage(groupId, {
+    await Aliconn.sendMessage(groupId, {
     image: { url: config.BOT_PIC },
     caption: message 
 }, { quoted: mek });
@@ -94,7 +94,7 @@ async (Gifted, mek, m, { from, isOwner, args, reply }) => {
     react: "🖼️",
     filename: __filename
 },
-async (Gifted, mek, m, { isOwner, quoted, reply }) => {
+async (Aliconn, mek, m, { isOwner, quoted, reply }) => {
     try {
         if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
 
@@ -106,7 +106,7 @@ async (Gifted, mek, m, { isOwner, quoted, reply }) => {
 
         if (!buffer) return reply("⚠️ Could not download the image.");
 
-        await Gifted.updateProfilePicture(Gifted.user.id, buffer);
+        await Aliconn.updateProfilePicture(Aliconn.user.id, buffer);
         reply("✅ Bot profile picture updated successfully!");
     } catch (error) {
         console.error("❌ Error updating profile picture:", error);
@@ -121,7 +121,7 @@ gmd({
     category: "owner",
     react: "💻",
     filename: __filename
-}, async (Gifted, mek, m, { reply, isOwner, isMe, botNumber2, botNumber, q }) => {
+}, async (Aliconn, mek, m, { reply, isOwner, isMe, botNumber2, botNumber, q }) => {
     if (!isOwner && !isMe && !botNumber2 && !botNumber) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     if (!q) return reply("Provide a terminal command to execute.");
     exec(q, (err, stdout, stderr) => {
@@ -141,14 +141,14 @@ gmd({
     category: "owner",
     react: "🧠",
     filename: __filename
-}, async (Gifted, mek, m, { reply, isOwner, q }) => {
+}, async (Aliconn, mek, m, { reply, isOwner, q }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     if (!q) return reply("Provide some code to evaluate.");
 
     try {
         const AsyncFunction = Object.getPrototypeOf(async function () { }).constructor;
 
-        const fn = new AsyncFunction("Gifted", "mek", "m", "reply", "console", `
+        const fn = new AsyncFunction("Aliconn", "mek", "m", "reply", "console", `
             (async () => {
                 try {
                     ${q}
@@ -158,7 +158,7 @@ gmd({
             })();
         `);
 
-        await fn(Gifted, mek, m, reply, console);
+        await fn(Aliconn, mek, m, reply, console);
     } catch (err) {
         await reply("❌ Fatal Eval Error: " + (err?.stack || err?.message || err));
     }
@@ -171,7 +171,7 @@ gmd({
     category: "owner",
     react: "🧠",
     filename: __filename
-}, async (Gifted, mek, m, { reply, isOwner, q }) => {
+}, async (Aliconn, mek, m, { reply, isOwner, q }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     if (!q) return reply("Provide some code to evaluate.");
     try {
@@ -193,7 +193,7 @@ gmd({
     category: "owner",
     react: "🔎",
     filename: __filename
-}, async (Gifted, mek, m, { from, reply, isOwner, q }) => {
+}, async (Aliconn, mek, m, { from, reply, isOwner, q }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     if (!q) return reply("Provide a URL to get data from");
     if (!/^https?:\/\//.test(q)) return reply('Start the *URL* with http:// or https://');
@@ -207,15 +207,15 @@ gmd({
         const contentType = response.headers.get('content-type') || '';
         if (/image\//.test(contentType)) {
             const buffer = Buffer.from(await response.arrayBuffer());
-            await Gifted.sendMessage(from, { image: buffer, caption: `> ${global.footer}` });
+            await Aliconn.sendMessage(from, { image: buffer, caption: `> ${global.footer}` });
             return;
         } else if (/audio\//.test(contentType)) {
             const buffer = Buffer.from(await response.arrayBuffer());
-            await Gifted.sendMessage(from, { audio: buffer, mimetype: contentType, ptt: false }); 
+            await Aliconn.sendMessage(from, { audio: buffer, mimetype: contentType, ptt: false }); 
             return;
         } else if (/video\//.test(contentType)) {
             const buffer = Buffer.from(await response.arrayBuffer());
-            await Gifted.sendMessage(from, { video: buffer, caption: `> ${global.footer}` });
+            await Aliconn.sendMessage(from, { video: buffer, caption: `> ${global.footer}` });
             return;
         }
         let content = '';
@@ -243,7 +243,7 @@ gmd({
     react: "📱",
     filename: __filename
 },
-async (Gifted, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, isItzcp, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, isItzcp, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     if (!q) return reply("Provide a Phone Number to Genrrate PairingCode!");
     try {
@@ -264,8 +264,8 @@ async (Gifted, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup
           }
         }
       };
-      await Gifted.sendMessage(from, giftedMess, { disappearingMessagesInChat: true, ephemeralExpiration: 100 }, { quoted: mek });
-      await Gifted.sendMessage(from, { text: getsess }, { quoted: mek });
+      await Aliconn.sendMessage(from, giftedMess, { disappearingMessagesInChat: true, ephemeralExpiration: 100 }, { quoted: mek });
+      await Aliconn.sendMessage(from, { text: getsess }, { quoted: mek });
       await m.react('✅');
   } catch (error) {
         reply(`❌ Error fetching paircode code: ${error.message}`);
@@ -281,7 +281,7 @@ gmd({
     category: "owner",
     react: "👋",
     filename: __filename
-}, async (Gifted, mek, m, { from, q, body, reply, isOwner }) => {
+}, async (Aliconn, mek, m, { from, q, body, reply, isOwner }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
       const infoMess = {
             image: { url: config.BOT_PIC },
@@ -307,9 +307,9 @@ gmd({
             }
         };
 
-        const messageSent = await Gifted.sendMessage(from, infoMess);
+        const messageSent = await Aliconn.sendMessage(from, infoMess);
         const messageId = messageSent.key.id;
-        Gifted.ev.on("messages.upsert", async (event) => {
+        Aliconn.ev.on("messages.upsert", async (event) => {
             const messageData = event.messages[0];
             if (!messageData.message) return;
             const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
@@ -331,7 +331,7 @@ gmd({
                         break;
                             
                     default:
-                  await Gifted.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
+                  await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
                 }
             }
         }); 
@@ -348,7 +348,7 @@ gmd({
     category: "owner",
     react: "👋",
     filename: __filename
-}, async (Gifted, mek, m, { from, q, body, reply, isOwner }) => {
+}, async (Aliconn, mek, m, { from, q, body, reply, isOwner }) => {
       if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     const infoMess = {
             image: { url: config.BOT_PIC },
@@ -374,9 +374,9 @@ gmd({
             }
         };
 
-        const messageSent = await Gifted.sendMessage(from, infoMess);
+        const messageSent = await Aliconn.sendMessage(from, infoMess);
         const messageId = messageSent.key.id;
-        Gifted.ev.on("messages.upsert", async (event) => {
+        Aliconn.ev.on("messages.upsert", async (event) => {
             const messageData = event.messages[0];
             if (!messageData.message) return;
             const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
@@ -398,7 +398,7 @@ gmd({
                         break;
                             
                     default:
-                  await Gifted.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
+                  await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
                 }
             }
         }); 
@@ -416,10 +416,10 @@ gmd({
     react: "🔐",
     filename: __filename
 },
-async (Gifted, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, isItzcp, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, isItzcp, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
-        const privacySettings = await Gifted.fetchPrivacySettings(true);
+        const privacySettings = await Aliconn.fetchPrivacySettings(true);
         console.log("Privacy settings: " + JSON.stringify(privacySettings));
         reply(`*💬 Current Privacy Settings:*\n\n${JSON.stringify(privacySettings, null, 2)}`);
     } catch (error) {
@@ -434,13 +434,13 @@ gmd({
     react: "🔐",
     filename: __filename
 },
-async (Gifted, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, isItzcp, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, isItzcp, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
         const value = args[0] || 'all'; 
         const validValues = ['all', 'contacts', 'contact_blacklist', 'none'];
         if (!validValues.includes(value)) return reply("❌ Invalid option. Valid options are: 'all', 'contacts', 'contact_blacklist', 'none'.");
-        await Gifted.updateLastSeenPrivacy(value);
+        await Aliconn.updateLastSeenPrivacy(value);
         reply(`✅ Last seen privacy updated to: ${value}`);
     } catch (error) {
         reply(`❌ Error updating last seen privacy: ${error.message}`);
@@ -454,13 +454,13 @@ gmd({
     react: "🔐",
     filename: __filename
 },
-async (Gifted, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, isItzcp, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, isItzcp, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
         const value = args[0] || 'all'; 
         const validValues = ['all', 'match_last_seen'];
         if (!validValues.includes(value)) return reply("❌ Invalid option. Valid options are: 'all', 'match_last_seen'.");
-        await Gifted.updateOnlinePrivacy(value);
+        await Aliconn.updateOnlinePrivacy(value);
         reply(`✅ Online privacy updated to: ${value}`);
     } catch (error) {
         reply(`❌ Error updating online privacy: ${error.message}`);
@@ -474,13 +474,13 @@ gmd({
     react: "🔐",
     filename: __filename
 },
-async (Gifted, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, isItzcp, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, isItzcp, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
         const value = args[0] || 'all'; 
         const validValues = ['all', 'contacts', 'contact_blacklist', 'none'];  
         if (!validValues.includes(value)) return reply("❌ Invalid option. Valid options are: 'all', 'contacts', 'contact_blacklist', 'none'.");     
-        await Gifted.updateProfilePicturePrivacy(value);
+        await Aliconn.updateProfilePicturePrivacy(value);
         reply(`✅ Profile picture privacy updated to: ${value}`);
     } catch (error) {
         reply(`❌ Error updating profile picture privacy: ${error.message}`);
@@ -494,13 +494,13 @@ gmd({
     react: "🔐",
     filename: __filename
 },
-async (Gifted, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, isItzcp, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, isItzcp, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
         const value = args[0] || 'all';
         const validValues = ['all', 'contacts', 'contact_blacklist', 'none']; 
         if (!validValues.includes(value)) return reply("❌ Invalid option. Valid options are: 'all', 'contacts', 'contact_blacklist', 'none'."); 
-        await Gifted.updateStatusPrivacy(value);
+        await Aliconn.updateStatusPrivacy(value);
         reply(`✅ Status privacy updated to: ${value}`);
     } catch (error) {
         reply(`❌ Error updating status privacy: ${error.message}`);
@@ -514,13 +514,13 @@ gmd({
     react: "🔐",
     filename: __filename
 },
-async (Gifted, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, isItzcp, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, isItzcp, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂**📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
         const value = args[0] || 'all'; 
         const validValues = ['all', 'none'];    
         if (!validValues.includes(value)) return reply("❌ Invalid option. Valid options are: 'all', 'none'.");   
-        await Gifted.updateReadReceiptsPrivacy(value);
+        await Aliconn.updateReadReceiptsPrivacy(value);
         reply(`✅ Read receipts privacy updated to: ${value}`);
     } catch (error) {
         reply(`❌ Error updating read receipts privacy: ${error.message}`);
@@ -534,13 +534,13 @@ gmd({
     react: "🔐",
     filename: __filename
 },
-async (Gifted, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, isItzcp, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, isItzcp, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
         const value = args[0] || 'all'; 
         const validValues = ['all', 'contacts', 'contact_blacklist', 'none'];
         if (!validValues.includes(value)) return reply("❌ Invalid option. Valid options are: 'all', 'contacts', 'contact_blacklist', 'none'.");
-        await Gifted.updateGroupsAddPrivacy(value);
+        await Aliconn.updateGroupsAddPrivacy(value);
         reply(`✅ Group add privacy updated to: ${value}`);
     } catch (error) {
         reply(`❌ Error updating group add privacy: ${error.message}`);
@@ -555,12 +555,12 @@ gmd({
     react: "🔐",
     filename: __filename
 },
-async (Gifted, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, isItzcp, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, isItzcp, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
         const duration = args[0] || 86400; // Default to 86400 (1 day)
         
-        await Gifted.updateDefaultDisappearingMode(duration);
+        await Aliconn.updateDefaultDisappearingMode(duration);
         reply(`✅ Default disappearing messages updated to: ${duration} seconds`);
     } catch (error) {
         reply(`❌ Error updating disappearing messages: ${error.message}`);
@@ -575,12 +575,12 @@ gmd({
     react: "🚫",
     filename: __filename
 },
-async (Gifted, mek, m, { from, isOwner, quoted, reply }) => {
+async (Aliconn, mek, m, { from, isOwner, quoted, reply }) => {
     if (!isOwner) return reply("❌ You are not the bot owner!");
     if (!m.quoted) return reply("❌ Please reply to the user you want to block.");
     const user = quoted.sender;
     try {
-        await Gifted.updateBlockStatus(user, 'block');
+        await Aliconn.updateBlockStatus(user, 'block');
         reply('🚫 User ' + user + ' blocked successfully.');
     } catch (error) {
         reply('❌ Error blocking user: ' + error.message);
@@ -594,12 +594,12 @@ gmd({
     react: "✅",
     filename: __filename
 },
-async (Gifted, mek, m, { from, isOwner, quoted, reply }) => {
+async (Aliconn, mek, m, { from, isOwner, quoted, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     if (!m.quoted) return reply("❌ Please reply to the user you want to unblock.");
     const user = quoted.sender;
     try {
-        await Gifted.updateBlockStatus(user, 'unblock');
+        await Aliconn.updateBlockStatus(user, 'unblock');
         reply(`✅ User ${user} unblocked successfully.`);
     } catch (error) {
         reply(`❌ Error unblocking user: ${error.message}`);
@@ -615,7 +615,7 @@ category: "owner",
 use: '.del',
 filename: __filename
 },
-async(Gifted, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants,  isItzcp, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+async(Aliconn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants,  isItzcp, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 if (!isOwner) return;
 try{
 if (!m.quoted) return reply('No Message Quoted for Deletion');
@@ -625,7 +625,7 @@ const key = {
             id: m.quoted.id,
             participant: m.quoted.sender
         }
-        await Gifted.sendMessage(m.chat, { delete: key })
+        await Aliconn.sendMessage(m.chat, { delete: key })
 await m.react("✅"); 
 } catch(e) {
 console.log(e);
@@ -641,12 +641,12 @@ gmd({
     react: "🧹",
     filename: __filename
 },
-async (Gifted, mek, m, { from, isOwner, reply }) => {
+async (Aliconn, mek, m, { from, isOwner, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
-        const chats = Gifted.chats.all();
+        const chats = Aliconn.chats.all();
         for (const chat of chats) {
-            await Gifted.modifyChat(chat.jid, 'delete');
+            await Aliconn.modifyChat(chat.jid, 'delete');
         }
         reply("🧹 All Chats Successfully cleared!");
     } catch (error) {
@@ -661,9 +661,9 @@ gmd({
     react: "🤖",
     filename: __filename
 },
-async (Gifted, mek, m, { from, isOwner, reply }) => {
+async (Aliconn, mek, m, { from, isOwner, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
-    reply(`🤖 *Bot JID:* ${Gifted.user.id}`);
+    reply(`🤖 *Bot JID:* ${Aliconn.user.id}`);
 });
 
 
@@ -675,9 +675,9 @@ gmd({
     react: "📝",
     filename: __filename
 },
-async (Gifted, mek, m, { from, isOwner, reply }) => {
+async (Aliconn, mek, m, { from, isOwner, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
-    const groups = await Gifted.groupFetchAllParticipating();
+    const groups = await Aliconn.groupFetchAllParticipating();
     const groupJids = Object.keys(groups).join('\n');
     reply(`📝 *Group JIDs:*\n\n${groupJids}`);
 });        
@@ -689,17 +689,17 @@ gmd({
     react: "📦",
     filename: __filename
 },
-async (Gifted, mek, m, { from, isOwner, reply }) => {
+async (Aliconn, mek, m, { from, isOwner, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
-        store.bind(Gifted.ev);
-        Gifted.store = store;
+        store.bind(Aliconn.ev);
+        Aliconn.store = store;
         const chatId = from; 
-        const chatMessages = await Gifted.store.messages[chatId]?.last; 
+        const chatMessages = await Aliconn.store.messages[chatId]?.last; 
         if (!chatMessages) {
             return reply("❌ No messages found in this chat!");
         }
-        await Gifted.chatModify({ archive: true, lastMessages: [chatMessages] }, chatId);
+        await Aliconn.chatModify({ archive: true, lastMessages: [chatMessages] }, chatId);
         reply("📦 Chat archived successfully!");
     } catch (error) {
         reply(`❌ Error archiving chat: ${error.message}`);
@@ -714,10 +714,10 @@ gmd({
     react: "📌",
     filename: __filename
 },
-async (Gifted, mek, m, { from, isOwner, reply }) => {
+async (Aliconn, mek, m, { from, isOwner, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
-        await Gifted.chatModify({ pin: true }, from);
+        await Aliconn.chatModify({ pin: true }, from);
         reply("📌 Chat pinned successfully!");
     } catch (error) {
         reply(`❌ Error pinning chat: ${error.message}`);
@@ -731,10 +731,10 @@ gmd({
     react: "📌",
     filename: __filename
 },
-async (Gifted, mek, m, { from, isOwner, reply }) => {
+async (Aliconn, mek, m, { from, isOwner, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
-        await Gifted.chatModify({ pin: false }, from);
+        await Aliconn.chatModify({ pin: false }, from);
         reply("📌 Chat unpinned successfully!");
     } catch (error) {
         reply(`❌ Error unpinning chat: ${error.message}`);
@@ -749,11 +749,11 @@ gmd({
     react: "⭐",
     filename: __filename
 },
-async (Gifted, mek, m, { from, isOwner, reply, args }) => {
+async (Aliconn, mek, m, { from, isOwner, reply, args }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
         const messageId = args[0];
-        await Gifted.chatModify({
+        await Aliconn.chatModify({
             star: { messages: [{ id: messageId, fromMe: true, star: true }] }
         }, from);
         reply("⭐ Message starred!");
@@ -769,11 +769,11 @@ gmd({
     react: "⭐",
     filename: __filename
 },
-async (Gifted, mek, m, { from, isOwner, reply, args }) => {
+async (Aliconn, mek, m, { from, isOwner, reply, args }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
         const messageId = args[0];
-        await Gifted.chatModify({
+        await Aliconn.chatModify({
             star: { messages: [{ id: messageId, fromMe: true, star: false }] }
         }, from);
         reply("⭐ Message unstarred!");
@@ -790,11 +790,11 @@ gmd({
     react: "⏳",
     filename: __filename
 },
-async (Gifted, mek, m, { from, isOwner, reply }) => {
+async (Aliconn, mek, m, { from, isOwner, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
         const jid = from; 
-        await Gifted.sendMessage(jid, { disappearingMessagesInChat: WA_DEFAULT_EPHEMERAL });
+        await Aliconn.sendMessage(jid, { disappearingMessagesInChat: WA_DEFAULT_EPHEMERAL });
         reply("⏳ Disappearing messages turned on!");
     } catch (error) {
         reply(`❌ Error enabling disappearing messages: ${error.message}`);
@@ -809,11 +809,11 @@ gmd({
     react: "⏳",
     filename: __filename
 },
-async (Gifted, mek, m, { from, isOwner, reply }) => {
+async (Aliconn, mek, m, { from, isOwner, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
         const jid = from;
-        await Gifted.sendMessage(jid, { disappearingMessagesInChat: false });
+        await Aliconn.sendMessage(jid, { disappearingMessagesInChat: false });
         reply("⏳ Disappearing messages turned off!");
     } catch (error) {
         reply(`❌ Error disabling disappearing messages: ${error.message}`);
@@ -828,11 +828,11 @@ gmd({
     react: "📱",
     filename: __filename
 },
-async (Gifted, mek, m, { from, isOwner, reply, args }) => {
+async (Aliconn, mek, m, { from, isOwner, reply, args }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
         const id = args[0];
-        const [result] = await Gifted.onWhatsApp(id);
+        const [result] = await Aliconn.onWhatsApp(id);
         if (result.exists) {
             reply(`${id} exists on WhatsApp, as jid: ${result.jid}`);
         } else {
@@ -849,7 +849,7 @@ gmd({
     desc: "Generates a wa.me link for the Mentioned/Quoted User.",
     category: "owner",
     filename: __filename,
-}, async (Gifted, mek, m, { quoted, text, args, isOwner }) => {
+}, async (Aliconn, mek, m, { quoted, text, args, isOwner }) => {
       if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
         let user;
@@ -860,12 +860,12 @@ gmd({
         } else if (text) {
             user = text.replace('@', '');
         } else {
-            return Gifted.sendMessage(m.key.remoteJid, { text: "Please mention a user, quote a message, or provide a number." }, { quoted: mek });
+            return Aliconn.sendMessage(m.key.remoteJid, { text: "Please mention a user, quote a message, or provide a number." }, { quoted: mek });
         }
-        return Gifted.sendMessage(m.key.remoteJid, { text: `https://wa.me/${user}` }, { quoted: mek });
+        return Aliconn.sendMessage(m.key.remoteJid, { text: `https://wa.me/${user}` }, { quoted: mek });
     } catch (error) {
         console.error(error);
-        return Gifted.sendMessage(m.key.remoteJid, { text: "An error occurred while processing your request." }, { quoted: mek });
+        return Aliconn.sendMessage(m.key.remoteJid, { text: "An error occurred while processing your request." }, { quoted: mek });
     }
 });
 
@@ -877,11 +877,11 @@ gmd({
     react: "📲",
     filename: __filename
 },
-async (Gifted, mek, m, { from, isOwner, reply, args }) => {
+async (Aliconn, mek, m, { from, isOwner, reply, args }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
         const status = args.join(" ");
-        await Gifted.updateProfileStatus(status);
+        await Aliconn.updateProfileStatus(status);
         reply(`📲 Profile status updated to: ${status}`);
     } catch (error) {
         reply(`❌ Error changing profile status: ${error.message}`);
@@ -895,11 +895,11 @@ gmd({
     react: "📝",
     filename: __filename
 },
-async (Gifted, mek, m, { from, isOwner, reply, args }) => {
+async (Aliconn, mek, m, { from, isOwner, reply, args }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     try {
         const name = args.join(" ");
-        await Gifted.updateProfileName(name);
+        await Aliconn.updateProfileName(name);
         reply(`📝 Profile name updated to: ${name}`);
     } catch (error) {
         reply(`❌ Error changing profile name: ${error.message}`);
@@ -913,7 +913,7 @@ gmd({
     category: "owner",
     react: "🤖",
     filename: __filename
-}, async (Gifted, mek, m, { from, body, isGroup, isOwner, q, isAdmins, isBotAdmins, reply }) => {
+}, async (Aliconn, mek, m, { from, body, isGroup, isOwner, q, isAdmins, isBotAdmins, reply }) => {
     try {
         if (!isOwner) return reply('*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*');
           
@@ -943,9 +943,9 @@ gmd({
             }
         };
 
-        const messageSent = await Gifted.sendMessage(from, infoMess);
+        const messageSent = await Aliconn.sendMessage(from, infoMess);
         const messageId = messageSent.key.id;
-        Gifted.ev.on("messages.upsert", async (event) => {
+        Aliconn.ev.on("messages.upsert", async (event) => {
             const messageData = event.messages[0];
             if (!messageData.message) return;
             const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
@@ -977,7 +977,7 @@ gmd({
                         break;
 
                     default:
-                  await Gifted.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1, 2, 3 or 4)." });
+                  await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1, 2, 3 or 4)." });
                 }
             }
         }); 
@@ -990,7 +990,7 @@ gmd({
 
 gmd({
     on: "body"
-}, async (Gifted, mek, m, { from, body, isMe, isOwner, isGroup, reply }) => {
+}, async (Aliconn, mek, m, { from, body, isMe, isOwner, isGroup, reply }) => {
     try {
         if (chatbotEnabled) {
             if (isMe) {
@@ -1037,7 +1037,7 @@ gmd({
         }
 
         if (config.AUTO_BIO === "true") {
-            startAutoBio(Gifted);
+            startAutoBio(Aliconn);
             console.log("👨‍💻 AutoBIO started automatically as per config.");
         }
         // Auto audio
@@ -1049,7 +1049,7 @@ gmd({
                     let regex = new RegExp(`\\b${escapedVr}\\b`, 'gi');
                     if (regex.test(body)) {
                       const buffer = await getBuffer(data[vr]);
-                        return Gifted.sendMessage(from, {
+                        return Aliconn.sendMessage(from, {
                             audio: buffer,
                             mimetype: 'audio/mpeg',
                             ptt: true
@@ -1074,7 +1074,7 @@ gmd({
     category: "owner",
     react: "📖",
     filename: __filename
-}, async (Gifted, mek, m, { from, q, body, reply, isOwner }) => {
+}, async (Aliconn, mek, m, { from, q, body, reply, isOwner }) => {
       if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
       const infoMess = {
             image: { url: config.BOT_PIC },
@@ -1101,9 +1101,9 @@ gmd({
             }
         };
 
-        const messageSent = await Gifted.sendMessage(from, infoMess);
+        const messageSent = await Aliconn.sendMessage(from, infoMess);
         const messageId = messageSent.key.id;
-        Gifted.ev.on("messages.upsert", async (event) => {
+        Aliconn.ev.on("messages.upsert", async (event) => {
             const messageData = event.messages[0];
             if (!messageData.message) return;
             const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
@@ -1131,7 +1131,7 @@ gmd({
                         break;
                             
                     default:
-                  await Gifted.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1, 2 or 3)." });
+                  await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1, 2 or 3)." });
                 }
             }
         }); 
@@ -1145,7 +1145,7 @@ gmd({
     category: "owner",
     react: "📖",
     filename: __filename
-}, async (Gifted, mek, m, { from, q, body, reply, isOwner }) => {
+}, async (Aliconn, mek, m, { from, q, body, reply, isOwner }) => {
       if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     const infoMess = {
             image: { url: config.BOT_PIC },
@@ -1171,9 +1171,9 @@ gmd({
             }
         };
 
-        const messageSent = await Gifted.sendMessage(from, infoMess);
+        const messageSent = await Aliconn.sendMessage(from, infoMess);
         const messageId = messageSent.key.id;
-        Gifted.ev.on("messages.upsert", async (event) => {
+        Aliconn.ev.on("messages.upsert", async (event) => {
             const messageData = event.messages[0];
             if (!messageData.message) return;
             const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
@@ -1195,7 +1195,7 @@ gmd({
                         break;
                             
                     default:
-                  await Gifted.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
+                  await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
                 }
             }
         }); 
@@ -1209,7 +1209,7 @@ gmd({
     category: "owner",
     react: "👍",
     filename: __filename
-}, async (Gifted, mek, m, { from, q, body, reply, isOwner }) => {
+}, async (Aliconn, mek, m, { from, q, body, reply, isOwner }) => {
       if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂**📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     const infoMess = {
             image: { url: config.BOT_PIC },
@@ -1235,9 +1235,9 @@ gmd({
             }
         };
 
-        const messageSent = await Gifted.sendMessage(from, infoMess);
+        const messageSent = await Aliconn.sendMessage(from, infoMess);
         const messageId = messageSent.key.id;
-        Gifted.ev.on("messages.upsert", async (event) => {
+        Aliconn.ev.on("messages.upsert", async (event) => {
             const messageData = event.messages[0];
             if (!messageData.message) return;
             const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
@@ -1259,7 +1259,7 @@ gmd({
                         break;
                             
                     default:
-                  await Gifted.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
+                  await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
                 }
             }
         }); 
@@ -1273,7 +1273,7 @@ gmd({
     category: "owner",
     react: "❤️",
     filename: __filename
-}, async (Gifted, mek, m, { from, q, body, reply, isOwner }) => {
+}, async (Aliconn, mek, m, { from, q, body, reply, isOwner }) => {
       if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
       const infoMess = {
             image: { url: config.BOT_PIC },
@@ -1299,9 +1299,9 @@ gmd({
             }
         };
 
-        const messageSent = await Gifted.sendMessage(from, infoMess);
+        const messageSent = await Aliconn.sendMessage(from, infoMess);
         const messageId = messageSent.key.id;
-        Gifted.ev.on("messages.upsert", async (event) => {
+        Aliconn.ev.on("messages.upsert", async (event) => {
             const messageData = event.messages[0];
             if (!messageData.message) return;
             const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
@@ -1323,7 +1323,7 @@ gmd({
                         break;
                             
                     default:
-                  await Gifted.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
+                  await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
                 }
             }
         }); 
@@ -1337,7 +1337,7 @@ gmd({
     category: "owner",
     react: "📵",
     filename: __filename
-}, async (Gifted, mek, m, { from, q, body, reply, isOwner }) => {
+}, async (Aliconn, mek, m, { from, q, body, reply, isOwner }) => {
       if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
       const infoMess = {
             image: { url: config.BOT_PIC },
@@ -1364,9 +1364,9 @@ gmd({
             }
         };
 
-        const messageSent = await Gifted.sendMessage(from, infoMess);
+        const messageSent = await Aliconn.sendMessage(from, infoMess);
         const messageId = messageSent.key.id;
-        Gifted.ev.on("messages.upsert", async (event) => {
+        Aliconn.ev.on("messages.upsert", async (event) => {
             const messageData = event.messages[0];
             if (!messageData.message) return;
             const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
@@ -1393,7 +1393,7 @@ gmd({
                         break;
 
                     default:
-                  await Gifted.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1, 2, or 3 )." });
+                  await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1, 2, or 3 )." });
                 }
             }
         }); 
@@ -1410,7 +1410,7 @@ gmd({
     category: "owner",
     react: "🛑",
     filename: __filename
-}, async (Gifted, mek, m, { from, q, body, reply, isOwner }) => {
+}, async (Aliconn, mek, m, { from, q, body, reply, isOwner }) => {
       if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
       const infoMess = {
             image: { url: config.BOT_PIC },
@@ -1436,9 +1436,9 @@ gmd({
             }
         };
 
-        const messageSent = await Gifted.sendMessage(from, infoMess);
+        const messageSent = await Aliconn.sendMessage(from, infoMess);
         const messageId = messageSent.key.id;
-        Gifted.ev.on("messages.upsert", async (event) => {
+        Aliconn.ev.on("messages.upsert", async (event) => {
             const messageData = event.messages[0];
             if (!messageData.message) return;
             const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
@@ -1460,7 +1460,7 @@ gmd({
                         break;
                             
                     default:
-                  await Gifted.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
+                  await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
                 }
             }
         }); 
@@ -1474,7 +1474,7 @@ gmd({
     category: "owner",
     react: "💬",
     filename: __filename
-}, async (Gifted, mek, m, { from, q, body, reply, isOwner }) => {
+}, async (Aliconn, mek, m, { from, q, body, reply, isOwner }) => {
       if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
       const infoMess = {
             image: { url: config.BOT_PIC },
@@ -1500,9 +1500,9 @@ gmd({
             }
         };
 
-        const messageSent = await Gifted.sendMessage(from, infoMess);
+        const messageSent = await Aliconn.sendMessage(from, infoMess);
         const messageId = messageSent.key.id;
-        Gifted.ev.on("messages.upsert", async (event) => {
+        Aliconn.ev.on("messages.upsert", async (event) => {
             const messageData = event.messages[0];
             if (!messageData.message) return;
             const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
@@ -1524,7 +1524,7 @@ gmd({
                         break;
                             
                     default:
-                  await Gifted.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
+                  await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
                 }
             }
         }); 
@@ -1539,7 +1539,7 @@ gmd({
     category: "owner",
     react: "🔄",
     filename: __filename
-}, async (Gifted, mek, m, { from, q, body, reply, isOwner }) => {
+}, async (Aliconn, mek, m, { from, q, body, reply, isOwner }) => {
       if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     const infoMess = {
             image: { url: config.BOT_PIC },
@@ -1567,9 +1567,9 @@ gmd({
             }
         };
 
-        const messageSent = await Gifted.sendMessage(from, infoMess);
+        const messageSent = await Aliconn.sendMessage(from, infoMess);
         const messageId = messageSent.key.id;
-        Gifted.ev.on("messages.upsert", async (event) => {
+        Aliconn.ev.on("messages.upsert", async (event) => {
             const messageData = event.messages[0];
             if (!messageData.message) return;
             const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
@@ -1603,7 +1603,7 @@ gmd({
                         break;
 
                     default:
-                  await Gifted.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1, 2, 3 or 4)." });
+                  await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1, 2, 3 or 4)." });
                 }
             }
         }); 
@@ -1618,7 +1618,7 @@ gmd({
     category: "owner",
     react: "🔄",
     filename: __filename
-}, async (Gifted, mek, m, { from, q, reply, isOwner }) => {
+}, async (Aliconn, mek, m, { from, q, reply, isOwner }) => {
     try {
       if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
         const newPrefix = q.trim().toLowerCase();
@@ -1641,7 +1641,7 @@ gmd({
     category: "owner",
     react: "🔄",
     filename: __filename
-}, async (Gifted, mek, m, { from, q, reply, isOwner }) => {
+}, async (Aliconn, mek, m, { from, q, reply, isOwner }) => {
     try {
       if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
         const newMsg = q.trim();
@@ -1664,7 +1664,7 @@ gmd({
     category: "owner",
     react: "🔄",
     filename: __filename
-}, async (Gifted, mek, m, { from, q, reply, isOwner }) => {
+}, async (Aliconn, mek, m, { from, q, reply, isOwner }) => {
     try {
       if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
         const newEmoji = q.trim();
@@ -1688,7 +1688,7 @@ gmd({
     category: "owner",
     react: "🔗",
     filename: __filename
-}, async (Gifted, mek, m, { from, q, body, reply, isOwner }) => {
+}, async (Aliconn, mek, m, { from, q, body, reply, isOwner }) => {
 if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
       const infoMess = {
             image: { url: config.BOT_PIC },
@@ -1716,9 +1716,9 @@ if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂
             }
         };
 
-        const messageSent = await Gifted.sendMessage(from, infoMess);
+        const messageSent = await Aliconn.sendMessage(from, infoMess);
         const messageId = messageSent.key.id;
-        Gifted.ev.on("messages.upsert", async (event) => {
+        Aliconn.ev.on("messages.upsert", async (event) => {
             const messageData = event.messages[0];
             if (!messageData.message) return;
             const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
@@ -1752,7 +1752,7 @@ if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂
                         break;
                             
                     default:
-                  await Gifted.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1, 2, 3 or 4)." });
+                  await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1, 2, 3 or 4)." });
                 }
             }
         }); 
@@ -1765,7 +1765,7 @@ gmd({
     category: "owner",
     react: "🍀",
     filename: __filename
-}, async (Gifted, mek, m, { from, isOwner, q, reply }) => {
+}, async (Aliconn, mek, m, { from, isOwner, q, reply }) => {
     if (!isOwner) return reply("Owner Only Command!");
     const infoMess = {
             image: { url: config.BOT_PIC },
@@ -1793,9 +1793,9 @@ gmd({
             }
         };
 
-        const messageSent = await Gifted.sendMessage(from, infoMess);
+        const messageSent = await Aliconn.sendMessage(from, infoMess);
         const messageId = messageSent.key.id;
-        Gifted.ev.on("messages.upsert", async (event) => {
+        Aliconn.ev.on("messages.upsert", async (event) => {
             const messageData = event.messages[0];
             if (!messageData.message) return;
             const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
@@ -1829,7 +1829,7 @@ gmd({
                         break;
                             
                     default:
-                  await Gifted.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1, 2, 3 or 4)." });
+                  await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1, 2, 3 or 4)." });
                 }
             }
         }); 
@@ -1844,7 +1844,7 @@ gmd({
     category: "owner",
     react: "💬",
     filename: __filename
-}, async (Gifted, mek, m, { from, q, body, reply, isOwner }) => {
+}, async (Aliconn, mek, m, { from, q, body, reply, isOwner }) => {
 if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     const infoMess = {
             image: { url: config.BOT_PIC },
@@ -1872,9 +1872,9 @@ if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂
             }
         };
 
-        const messageSent = await Gifted.sendMessage(from, infoMess);
+        const messageSent = await Aliconn.sendMessage(from, infoMess);
         const messageId = messageSent.key.id;
-        Gifted.ev.on("messages.upsert", async (event) => {
+        Aliconn.ev.on("messages.upsert", async (event) => {
             const messageData = event.messages[0];
             if (!messageData.message) return;
             const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
@@ -1908,7 +1908,7 @@ if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂
                         break;
                             
                     default:
-                  await Gifted.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1, 2, 3 or 4)." });
+                  await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1, 2, 3 or 4)." });
                 }
             }
         }); 
@@ -1921,7 +1921,7 @@ gmd({
     category: "owner",
     react: "🍀",
     filename: __filename
-}, async (Gifted, mek, m, { from, isOwner, q, reply }) => {
+}, async (Aliconn, mek, m, { from, isOwner, q, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     const infoMess = {
             image: { url: config.BOT_PIC },
@@ -1947,9 +1947,9 @@ gmd({
             }
         };
 
-        const messageSent = await Gifted.sendMessage(from, infoMess);
+        const messageSent = await Aliconn.sendMessage(from, infoMess);
         const messageId = messageSent.key.id;
-        Gifted.ev.on("messages.upsert", async (event) => {
+        Aliconn.ev.on("messages.upsert", async (event) => {
             const messageData = event.messages[0];
             if (!messageData.message) return;
             const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
@@ -1971,7 +1971,7 @@ gmd({
                         break;
                             
                     default:
-                  await Gifted.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
+                  await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
                 }
             }
         }); 
@@ -1986,9 +1986,9 @@ gmd({
   category: "owner",
   filename: __filename
 },
-async (Gifted, mek, m, { quoted, sender, isOwner, from, reply }) => {
+async (Aliconn, mek, m, { quoted, sender, isOwner, from, reply }) => {
   if (!isOwner)
-    return Gifted.sendMessage(from, { text: "*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*" }, { quoted: mek });
+    return Aliconn.sendMessage(from, { text: "*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*" }, { quoted: mek });
 
   if (!quoted)
     return reply("Reply to a user to add to sudo.");
@@ -2004,14 +2004,14 @@ async (Gifted, mek, m, { quoted, sender, isOwner, from, reply }) => {
 
     console.log(`[SUDO] addSudo called for: ${userNumber} | Added: ${added}`);
 
-    await Gifted.sendMessage(from, {
+    await Aliconn.sendMessage(from, {
       text: msg,
       mentions: [userJid]
     }, { quoted: mek });
 
   } catch (err) {
     console.error("[addsudo ERROR]:", err);
-    Gifted.sendMessage(from, { text: "❌ Failed to add sudo."}, { quoted: mek });
+    Aliconn.sendMessage(from, { text: "❌ Failed to add sudo."}, { quoted: mek });
   }
 });
 
@@ -2022,7 +2022,7 @@ gmd({
   category: "owner",
   filename: __filename
 },
-async (Gifted, mek, m, { quoted, sender, isOwner, from,  reply}) => {
+async (Aliconn, mek, m, { quoted, sender, isOwner, from,  reply}) => {
   if (!isOwner)
     return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*" );
 
@@ -2040,14 +2040,14 @@ async (Gifted, mek, m, { quoted, sender, isOwner, from,  reply}) => {
 
     console.log(`[SUDO] removeSudo called for: ${userNumber} | Removed: ${removed}`);
 
-    await Gifted.sendMessage(from, {
+    await Aliconn.sendMessage(from, {
       text: msg,
       mentions: [userJid]
     }, { quoted: mek });
 
   } catch (err) {
     console.error("[delsudo ERROR]:", err);
-    Gifted.sendMessage(from, { text: "❌ Failed to remove sudo." }, { quoted: mek });
+    Aliconn.sendMessage(from, { text: "❌ Failed to remove sudo." }, { quoted: mek });
   }
 });
 
@@ -2059,22 +2059,22 @@ gmd({
   category: "owner",
   filename: __filename
 },
-async (Gifted, mek, m, { from }) => {
+async (Aliconn, mek, m, { from }) => {
   try {
     const sudoList = getSudoNumbers();
     if (!sudoList.length)
-      return Gifted.sendMessage(from, { text: "⚠️ No sudo users added yet." }, { quoted: mek });
+      return Aliconn.sendMessage(from, { text: "⚠️ No sudo users added yet." }, { quoted: mek });
 
     let msg = "*👑 SUDO USERS:*\n\n";
     sudoList.forEach((num, i) => {
       msg += `${i + 1}. wa.me/${num}\n`;
     });
 
-    await Gifted.sendMessage(from, { text: msg }, { quoted: mek });
+    await Aliconn.sendMessage(from, { text: msg }, { quoted: mek });
 
   } catch (err) {
     console.error("[listsudo ERROR]:", err);
-    Gifted.sendMessage(from, { text: "❌ Failed to list sudo users." }, { quoted: mek });
+    Aliconn.sendMessage(from, { text: "❌ Failed to list sudo users." }, { quoted: mek });
   }
 });
 
@@ -2086,11 +2086,11 @@ async (Gifted, mek, m, { from }) => {
     category: "owner",
     react: "🍀",
     filename: __filename
-}, async (Gifted, mek, m, { from, isOwner, reply }) => {
+}, async (Aliconn, mek, m, { from, isOwner, reply }) => {
     if (!isOwner) return reply("*📛 тнιѕ ιѕ αɴ σωɴєʀ ᴄσммαɴ∂*");
     if (autoBioEnabled) {
         reply("*Auto Bio enabled!* 🔄");
-        startAutoBio(Gifted);
+        startAutoBio(Aliconn);
     } else {
         reply("*Auto Bio disabled!* 😶");
         stopAutoBio();
@@ -2098,11 +2098,11 @@ async (Gifted, mek, m, { from }) => {
 });
 
 
-function startAutoBio(Gifted) {
+function startAutoBio(Aliconn) {
     if (autoBioInterval) clearInterval(autoBioInterval); 
     autoBioInterval = setInterval(async () => {
         const bioText = ` ${config.BOT_NAME} 𝐈𝐒 𝐀𝐂𝐓𝐈𝐕𝐄 𝟐𝟒/𝟕 | 𝐓𝐈𝐌𝐄: [${time}, ${date}]  |  𝐐𝐔𝐎𝐓𝐄: ${config.AUTO_BIO_QUOTE}`;
-        await Gifted.updateProfileStatus(bioText);
+        await Aliconn.updateProfileStatus(bioText);
         secondCount++;
         if (secondCount > 59) {
             secondCount = 1;

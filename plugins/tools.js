@@ -33,7 +33,7 @@ gmd({
   category: "ai",
   filename: __filename
 }, 
-async (Gifted, mek, m, {
+async (Aliconn, mek, m, {
   q,
   reply,
   from,
@@ -73,7 +73,7 @@ async (Gifted, mek, m, {
 
     const imageBuffer = Buffer.from(response.data, "binary");
 
-    await Gifted.sendMessage(from, {
+    await Aliconn.sendMessage(from, {
       image: imageBuffer,
       caption: `> ɢᴇɴᴇʀᴀᴛᴇᴅ ʙʏ ᴀʟɪ ᴍᴅ  \n✨ Prompt: *${q}*`
     }, { quoted: mek });
@@ -95,7 +95,7 @@ gmd({
   use: ".imgscan [reply to image]",
   filename: __filename
 }, 
-async (Gifted, mek, m, {
+async (Aliconn, mek, m, {
   from,
   prefix,
   quoted,
@@ -180,13 +180,13 @@ gmd({
   react: "🛠️",
   category: "coding",
   filename: __filename
-}, async (Gifted, mek, m, { from, q, quoted, reply, pushname }) => {
+}, async (Aliconn, mek, m, { from, q, quoted, reply, pushname }) => {
   try {
     if (q.length === 0 || !q.startsWith("http://") && !q.startsWith("https://")) {
       return reply(`Please provide a valid URL. Example: ${prefix}sendFileUrl <your_link_here>`);
     }
     // const fileUrl = q;
-    const media = await Gifted.sendFileUrl(from, q, quoted);
+    const media = await Aliconn.sendFileUrl(from, q, quoted);
     await m.react('✅');
   } catch (error) {
     console.error(error);
@@ -202,7 +202,7 @@ gmd({
     category: "converter",
     desc: "Convert Sticker to Image.",
     filename: __filename
-}, async (Gifted, mek, m, { from, reply, isCmd, command, args, q, isGroup, pushname }) => {
+}, async (Aliconn, mek, m, { from, reply, isCmd, command, args, q, isGroup, pushname }) => {
     try {
         const isQuotedSticker = m.quoted && m.quoted.type === 'stickerMessage';
         if (m.type === 'stickerMessage' || isQuotedSticker) {
@@ -210,7 +210,7 @@ gmd({
             const nameWebp = getRandom('.webp');
             await fs.promises.writeFile(nameWebp, stickerBuffer);
             const imageBuffer = await convertStickerToImage(nameWebp);  
-            await Gifted.sendMessage(from, { image: imageBuffer }, { caption: args.join(' ') || '*_Here is your image_*' });
+            await Aliconn.sendMessage(from, { image: imageBuffer }, { caption: args.join(' ') || '*_Here is your image_*' });
         } else {
             return reply('_Please reply to a sticker to convert it to an image._');
         }
@@ -229,7 +229,7 @@ gmd({
     use: '<query>',
     filename: __filename
 },
-async (Gifted, mek, m, { from, reply, quoted, isOwner, sender }) => {
+async (Aliconn, mek, m, { from, reply, quoted, isOwner, sender }) => {
     try {
         if (!quoted) {
             return reply(`Please reply to/quote a ViewOnce message`);
@@ -251,21 +251,21 @@ async (Gifted, mek, m, { from, reply, quoted, isOwner, sender }) => {
             const caption = quoted.imageMessage?.caption || quoted.videoMessage?.caption || quoted.audioMessage?.caption || global.footer;
 
             if (quoted.imageMessage) {
-                let media = await Gifted.downloadAndSaveMediaMessage(quoted.imageMessage);
+                let media = await Aliconn.downloadAndSaveMediaMessage(quoted.imageMessage);
                 msg = {
                     image: { url: media },
                     caption: caption,
                 };
             }
             else if (quoted.videoMessage) {
-                let media = await Gifted.downloadAndSaveMediaMessage(quoted.videoMessage);
+                let media = await Aliconn.downloadAndSaveMediaMessage(quoted.videoMessage);
                 msg = {
                     video: { url: media },
                     caption: caption,
                 };
             }
             else if (quoted.audioMessage) {
-                let media = await Gifted.downloadAndSaveMediaMessage(quoted.audioMessage);
+                let media = await Aliconn.downloadAndSaveMediaMessage(quoted.audioMessage);
                 msg = {
                     audio: { url: media },
                     ptt: true,
@@ -276,7 +276,7 @@ async (Gifted, mek, m, { from, reply, quoted, isOwner, sender }) => {
                 return reply('Please reply to an image, video, or audio message to use this command.');
             }
 
-            await Gifted.sendMessage(m.sender, msg);
+            await Aliconn.sendMessage(m.sender, msg);
             await m.react("✅"); 
         } catch (e) {
             console.log("Error:", e);
@@ -297,7 +297,7 @@ gmd({
     use: '<query>',
     filename: __filename
 },
-async (Gifted, mek, m, { from, reply, quoted, isOwner, sender }) => {
+async (Aliconn, mek, m, { from, reply, quoted, isOwner, sender }) => {
     try {
         if (!quoted) {
             return reply(`Please reply to/quote a ViewOnce message`);
@@ -319,21 +319,21 @@ async (Gifted, mek, m, { from, reply, quoted, isOwner, sender }) => {
             const caption = quoted.imageMessage?.caption || quoted.videoMessage?.caption || quoted.audioMessage?.caption || global.footer;
 
             if (quoted.imageMessage) {
-                let media = await Gifted.downloadAndSaveMediaMessage(quoted.imageMessage);
+                let media = await Aliconn.downloadAndSaveMediaMessage(quoted.imageMessage);
                 msg = {
                     image: { url: media },
                     caption: caption,
                 };
             }
             else if (quoted.videoMessage) {
-                let media = await Gifted.downloadAndSaveMediaMessage(quoted.videoMessage);
+                let media = await Aliconn.downloadAndSaveMediaMessage(quoted.videoMessage);
                 msg = {
                     video: { url: media },
                     caption: caption,
                 };
             }
             else if (quoted.audioMessage) {
-                let media = await Gifted.downloadAndSaveMediaMessage(quoted.audioMessage);
+                let media = await Aliconn.downloadAndSaveMediaMessage(quoted.audioMessage);
                 msg = {
                     audio: { url: media },
                     mimetype: 'audio/mp4',
@@ -344,7 +344,7 @@ async (Gifted, mek, m, { from, reply, quoted, isOwner, sender }) => {
                 return reply('Please reply to an image, video, or audio message to use this command.');
             }
 
-            await Gifted.sendMessage(from, msg);
+            await Aliconn.sendMessage(from, msg);
             await m.react("✅"); 
         } catch (e) {
             console.log("Error:", e);
@@ -364,7 +364,7 @@ gmd({
   category: "tools",
   react: "📸",
   filename: __filename,
-}, async (Gifted, mek, m, { from, quoted, reply, pushname }) => {
+}, async (Aliconn, mek, m, { from, quoted, reply, pushname }) => {
   try {
     if (!quoted) {
       return reply("Please reply to an image to enhance its quality.\nExample: *hd2*");
@@ -377,7 +377,7 @@ gmd({
     if (!enhancedImageBuffer) {
       return reply("Failed to enhance the image. Please try again later.");
     }
-    await Gifted.sendMessage(
+    await Aliconn.sendMessage(
       from,
       {
         image: enhancedImageBuffer,
@@ -400,7 +400,7 @@ gmd({
   react: "🛠️",
   category: "coding",
   filename: __filename
-}, async (Gifted, mek, m, { from, args, quoted, body, isCmd, command, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+}, async (Aliconn, mek, m, { from, args, quoted, body, isCmd, command, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
   try {
     if (args.length === 0) {
       return reply(`Please provide a valid JS code to encrypt. Example: ${prefix}obfus console.log('ali Tech');`);
@@ -433,7 +433,7 @@ gmd({
         }
       }
     };
-    await Gifted.sendMessage(from, giftedMess, { quoted: mek });
+    await Aliconn.sendMessage(from, giftedMess, { quoted: mek });
     await m.react('✅');
   } catch (error) {
     console.error(error);
@@ -449,7 +449,7 @@ gmd({
   react: "🛠️",
   category: "coding",
   filename: __filename
-}, async (Gifted, mek, m, { from, args, quoted, body, isCmd, command, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+}, async (Aliconn, mek, m, { from, args, quoted, body, isCmd, command, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
   try {
     if (args.length === 0) {
       return reply(`Please provide a valid JS code to decrypt. Example: ${prefix}deobfus <your_encrypted_code>`);
@@ -471,7 +471,7 @@ gmd({
         }
       }
     };
-    await Gifted.sendMessage(from, giftedMess, { quoted: mek });
+    await Aliconn.sendMessage(from, giftedMess, { quoted: mek });
     await m.react('✅');
   } catch (error) {
     console.error(error);
@@ -487,7 +487,7 @@ gmd({
   react: "📡",
   category: "coding",
   filename: __filename
-}, async (Gifted, mek, m, { from, args, quoted, body, isCmd, command, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+}, async (Aliconn, mek, m, { from, args, quoted, body, isCmd, command, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
   let text = args.join(" ");
   if (!text) return reply("Please provide a text to encode.");
   try {
@@ -506,7 +506,7 @@ gmd({
   react: "📡",
   category: "coding",
   filename: __filename
-}, async (Gifted, mek, m, { from, args, quoted, body, isCmd, command, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+}, async (Aliconn, mek, m, { from, args, quoted, body, isCmd, command, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
   let text = args.join(" ");
   if (!text) return reply("Please provide binary to decode.");
   try {
@@ -525,7 +525,7 @@ gmd({
   react: "📡",
   category: "coding",
   filename: __filename
-}, async (Gifted, mek, m, { from, args, quoted, body, isCmd, command, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+}, async (Aliconn, mek, m, { from, args, quoted, body, isCmd, command, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
   let text = args.join(" ");
   if (!text) return reply("Please provide a text to encode.");
   try {
@@ -544,7 +544,7 @@ gmd({
   react: "📡",
   category: "coding",
   filename: __filename
-}, async (Gifted, mek, m, { from, args, quoted, body, isCmd, command, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+}, async (Aliconn, mek, m, { from, args, quoted, body, isCmd, command, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
   let text = args.join(" ");
   if (!text) return reply("Please provide Base64 to decode.");
   try {
@@ -566,7 +566,7 @@ gmd({
   react: "🛠️",
   category: "tools",
   filename: __filename
-}, async (Gifted, mek, m, { from, args, quoted, body, isCmd, command, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+}, async (Aliconn, mek, m, { from, args, quoted, body, isCmd, command, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
   try {
     if (args.length === 0) {
       return reply("Please provide a mathematical expression ie *10÷5*");
@@ -579,7 +579,7 @@ gmd({
     } catch (error) {
       return reply("Invalid mathematical expression.");
     }
-    return await Gifted.sendMessage(from, {
+    return await Aliconn.sendMessage(from, {
       text: "Result is: " + result
     }, {
       quoted: mek
@@ -599,7 +599,7 @@ gmd({
   react: "🔗",
   category: "shorten",
   filename: __filename
-}, async (Gifted, mek, m, { from, args, reply }) => {
+}, async (Aliconn, mek, m, { from, args, reply }) => {
   try {
     const url = args.join(" ");
     if (!url) {
@@ -611,7 +611,7 @@ gmd({
     if (!shortUrlData) {
       return await reply("_Couldn't fetch the shorturl data_");
     }
-    await Gifted.sendMessage(from, {
+    await Aliconn.sendMessage(from, {
       text: `_Shortened Url: ${shortUrlData.result}_`
     }, {
       quoted: mek
@@ -630,7 +630,7 @@ gmd({
   react: "🔗",
   category: "shorten",
   filename: __filename
-}, async (Gifted, mek, m, { from, args, reply }) => {
+}, async (Aliconn, mek, m, { from, args, reply }) => {
   try {
     const url = args.join(" ");
     if (!url) {
@@ -642,7 +642,7 @@ gmd({
     if (!shortUrlData) {
       return await reply("_Couldn't fetch the shorturl data_");
     }
-    await Gifted.sendMessage(from, {
+    await Aliconn.sendMessage(from, {
       text: `_Shortened Url: ${shortUrlData.result}_`
     }, {
       quoted: mek
@@ -661,7 +661,7 @@ gmd({
   react: "🔗",
   category: "shorten",
   filename: __filename
-}, async (Gifted, mek, m, { from, args, reply }) => {
+}, async (Aliconn, mek, m, { from, args, reply }) => {
   try {
     const url = args.join(" ");
     if (!url) {
@@ -673,7 +673,7 @@ gmd({
     if (!shortUrlData) {
       return await reply("_Couldn't fetch the shorturl data_");
     }
-    await Gifted.sendMessage(from, {
+    await Aliconn.sendMessage(from, {
       text: `_Shortened Url: ${shortUrlData.result}_`
     }, {
       quoted: mek
@@ -692,7 +692,7 @@ gmd({
   react: "🔗",
   category: "shorten",
   filename: __filename
-}, async (Gifted, mek, m, { from, args, reply }) => {
+}, async (Aliconn, mek, m, { from, args, reply }) => {
   try {
     const url = args.join(" ");
     if (!url) {
@@ -704,7 +704,7 @@ gmd({
     if (!shortUrlData) {
       return await reply("_Couldn't fetch the shorturl data_");
     }
-    await Gifted.sendMessage(from, {
+    await Aliconn.sendMessage(from, {
       text: `_Shortened Url: ${shortUrlData.result}_`
     }, {
       quoted: mek
@@ -723,7 +723,7 @@ gmd({
   react: "🔗",
   category: "shorten",
   filename: __filename
-}, async (Gifted, mek, m, { from, args, reply }) => {
+}, async (Aliconn, mek, m, { from, args, reply }) => {
   try {
     const url = args.join(" ");
     if (!url) {
@@ -735,7 +735,7 @@ gmd({
     if (!shortUrlData) {
       return await reply("_Couldn't fetch the shorturl data_");
     }
-    await Gifted.sendMessage(from, {
+    await Aliconn.sendMessage(from, {
       text: `_Shortened Url: ${shortUrlData.result}_`
     }, {
       quoted: mek
@@ -754,7 +754,7 @@ gmd({
   react: "🔗",
   category: "shorten",
   filename: __filename
-}, async (Gifted, mek, m, { from, args, reply }) => {
+}, async (Aliconn, mek, m, { from, args, reply }) => {
   try {
     const url = args.join(" ");
     if (!url) {
@@ -766,7 +766,7 @@ gmd({
     if (!shortUrlData) {
       return await reply("_Couldn't fetch the shorturl data_");
     }
-    await Gifted.sendMessage(from, {
+    await Aliconn.sendMessage(from, {
       text: `_Shortened Url: ${shortUrlData.result}_`
     }, {
       quoted: mek
@@ -785,7 +785,7 @@ gmd({
   react: "🔗",
   category: "shorten",
   filename: __filename
-}, async (Gifted, mek, m, { from, args, reply }) => {
+}, async (Aliconn, mek, m, { from, args, reply }) => {
   try {
     const url = args.join(" ");
     if (!url) {
@@ -797,7 +797,7 @@ gmd({
     if (!shortUrlData) {
       return await reply("_Couldn't fetch the shorturl data_");
     }
-    await Gifted.sendMessage(from, {
+    await Aliconn.sendMessage(from, {
       text: `_Shortened Url: ${shortUrlData.result.url}_`
     }, {
       quoted: mek
@@ -816,7 +816,7 @@ gmd({
   react: "🔗",
   category: "shorten",
   filename: __filename
-}, async (Gifted, mek, m, { from, args, reply }) => {
+}, async (Aliconn, mek, m, { from, args, reply }) => {
   try {
     const url = args.join(" ");
     if (!url) {
@@ -828,7 +828,7 @@ gmd({
     if (!shortUrlData) {
       return await reply("_Couldn't fetch the shorturl data_");
     }
-    await Gifted.sendMessage(from, {
+    await Aliconn.sendMessage(from, {
       text: `_Shortened Url: ${shortUrlData.result}_`
     }, {
       quoted: mek
@@ -847,7 +847,7 @@ gmd({
   react: "🔗",
   category: "shorten",
   filename: __filename
-}, async (Gifted, mek, m, { from, args, reply }) => {
+}, async (Aliconn, mek, m, { from, args, reply }) => {
   try {
     const url = args.join(" ");
     if (!url) {
@@ -859,7 +859,7 @@ gmd({
     if (!shortUrlData) {
       return await reply("_Couldn't fetch the shorturl data_");
     }
-    await Gifted.sendMessage(from, {
+    await Aliconn.sendMessage(from, {
       text: `_Shortened Url: ${shortUrlData.result}_`
     }, {
       quoted: mek
@@ -878,7 +878,7 @@ gmd({
   react: "🔗",
   category: "shorten",
   filename: __filename
-}, async (Gifted, mek, m, { from, args, reply }) => {
+}, async (Aliconn, mek, m, { from, args, reply }) => {
   try {
     const url = args.join(" ");
     if (!url) {
@@ -890,7 +890,7 @@ gmd({
     if (!shortUrlData) {
       return await reply("_Couldn't fetch the shorturl data_");
     }
-    await Gifted.sendMessage(from, {
+    await Aliconn.sendMessage(from, {
       text: `_Shortened Url: ${shortUrlData.result}_`
     }, {
       quoted: mek
@@ -909,7 +909,7 @@ gmd({
   react: "🔗",
   category: "shorten",
   filename: __filename
-}, async (Gifted, mek, m, { from, args, reply }) => {
+}, async (Aliconn, mek, m, { from, args, reply }) => {
   try {
     const url = args.join(" ");
     if (!url) {
@@ -921,7 +921,7 @@ gmd({
     if (!shortUrlData) {
       return await reply("_Couldn't fetch the shorturl data_");
     }
-    await Gifted.sendMessage(from, {
+    await Aliconn.sendMessage(from, {
       text: `_Shortened Url: ${shortUrlData.result.link}_`
     }, {
       quoted: mek
@@ -940,7 +940,7 @@ gmd({
   react: "🔗",
   category: "shorten",
   filename: __filename
-}, async (Gifted, mek, m, { from, args, reply }) => {
+}, async (Aliconn, mek, m, { from, args, reply }) => {
   try {
     const url = args.join(" ");
     if (!url) {
@@ -952,7 +952,7 @@ gmd({
     if (!shortUrlData) {
       return await reply("_Couldn't fetch the shorturl data_");
     }
-    await Gifted.sendMessage(from, {
+    await Aliconn.sendMessage(from, {
       text: `_Shortened Url: ${shortUrlData.result}_`
     }, {
       quoted: mek
@@ -973,13 +973,13 @@ gmd({
     category: "tools",
     filename: __filename
 },
-async (Gifted, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         if (!q) return reply("Provide a website URL to screenshot!");
         const res = await axios.get(`${global.api}/tools/ssweb?apikey=${global.myName}&url=${encodeURIComponent(q)}`, {
             responseType: 'arraybuffer' 
         });
-        await Gifted.sendMessage(from, { 
+        await Aliconn.sendMessage(from, { 
             image: Buffer.from(res.data),
             caption: `Here is the screenshot of ${q}\n> ${global.footer}`
         }, { quoted: mek });
@@ -998,13 +998,13 @@ gmd({
     category: "tools",
     filename: __filename
 },
-async (Gifted, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         if (!q) return reply("Provide a website URL to screenshot!");
         const res = await axios.get(`${global.api}/tools/ssphone?apikey=${global.myName}&url=${encodeURIComponent(q)}`, {
             responseType: 'arraybuffer' 
         });
-        await Gifted.sendMessage(from, { 
+        await Aliconn.sendMessage(from, { 
             image: Buffer.from(res.data),
             caption: `Here is the screenshot of ${q}\n> ${global.footer}`
         }, { quoted: mek });
@@ -1023,13 +1023,13 @@ gmd({
     category: "tools",
     filename: __filename
 },
-async (Gifted, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         if (!q) return reply("Provide a website URL to screenshot!");
         const res = await axios.get(`${global.api}/tools/sspc?apikey=${global.myName}&url=${encodeURIComponent(q)}`, {
             responseType: 'arraybuffer' 
         });
-        await Gifted.sendMessage(from, { 
+        await Aliconn.sendMessage(from, { 
             image: Buffer.from(res.data),
             caption: `Here is the screenshot of ${q}\n> ${global.footer}`
         }, { quoted: mek });
@@ -1048,13 +1048,13 @@ gmd({
     category: "tools",
     filename: __filename
 },
-async (Gifted, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         if (!q) return reply("Provide a website URL to screenshot!");
         const res = await axios.get(`${global.api}/tools/sstab?apikey=${global.myName}&url=${encodeURIComponent(q)}`, {
             responseType: 'arraybuffer' 
         });
-        await Gifted.sendMessage(from, { 
+        await Aliconn.sendMessage(from, { 
             image: Buffer.from(res.data),
             caption: `Here is the screenshot of ${q}\n> ${global.footer}`
         }, { quoted: mek });
@@ -1073,14 +1073,14 @@ gmd({
   use: ".reverse <text>",
   category: "tools",
   filename: __filename
-}, async (Gifted, mek, m, { from, args, reply }) => {
+}, async (Aliconn, mek, m, { from, args, reply }) => {
   try {
     if (args.length === 0) {
       return reply("Please provide the text to reverse.");
     }
     const text = args.join(" ");
     const result = text.split("").reverse().join("");
-    return await Gifted.sendMessage(from, {
+    return await Aliconn.sendMessage(from, {
       text: result
     }, {
       quoted: mek
@@ -1103,7 +1103,7 @@ gmd({
   category: "converter",
   use: ".sticker <Reply to image>",
   filename: __filename
-}, async (Gifted, mek, m, { from, reply, isCmd, command, quoted, args, q, isGroup, pushname }) => {
+}, async (Aliconn, mek, m, { from, reply, isCmd, command, quoted, args, q, isGroup, pushname }) => {
   try {
     const isImage = m.quoted && m.quoted.type === "imageMessage" || (m.quoted.type === "viewOnceMessage" && m.quoted.msg.type === "imageMessage");
     const isSticker = m.quoted && m.quoted.type === "stickerMessage";
@@ -1121,7 +1121,7 @@ gmd({
         background: "transparent"
       });
       const stickerBuffer = await sticker.toBuffer();
-      return Gifted.sendMessage(from, { sticker: stickerBuffer }, { quoted: mek });
+      return Aliconn.sendMessage(from, { sticker: stickerBuffer }, { quoted: mek });
       await m.react('✅');
     } else if (isSticker) {
       const stickerFile = getRandom(".webp");
@@ -1137,7 +1137,7 @@ gmd({
         background: "transparent"
       });
       const newStickerBuffer = await newSticker.toBuffer();
-      return Gifted.sendMessage(from, { sticker: newStickerBuffer }, { quoted: mek });
+      return Aliconn.sendMessage(from, { sticker: newStickerBuffer }, { quoted: mek });
       await m.react('✅');
     } else {
       return await reply('Reply to a photo for sticker!');
@@ -1157,7 +1157,7 @@ gmd({
     react: "💱",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, args, q, sender, reply }) => {
+async (Aliconn, mek, m, { from, quoted, args, q, sender, reply }) => {
     try {
         if (args.length < 3) {
             return reply(`Usage: ${prefix}currency 1000 KES TZS`);
@@ -1179,7 +1179,7 @@ async (Gifted, mek, m, { from, quoted, args, q, sender, reply }) => {
         conversionInfo += `💵 *Amount*: ${amount} ${fromCurrency}\n`;
         conversionInfo += `🔄 *Converted Amount*: ${convertedAmount} ${toCurrency}\n`;
         conversionInfo += `📈 *Exchange Rate*: 1 ${fromCurrency} = ${data.rates[toCurrency]} ${toCurrency}\n\n> ${global.footer}`;
-        await Gifted.sendMessage(from, { text: conversionInfo }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: conversionInfo }, { quoted: mek });
         await m.react('✅');
     } catch (e) {
         console.log(e);
@@ -1194,7 +1194,7 @@ gmd({
   react: "⚡", 
   category: "converter",  
   filename: __filename
-}, async (Gifted, mek, m, { from, q, reply }) => {
+}, async (Aliconn, mek, m, { from, q, reply }) => {
   try {
     const splitInput = q.split(" ");
     if (splitInput.length < 2) {
@@ -1227,7 +1227,7 @@ gmd(
     react: '🎵',
     filename: __filename,
   },
-  async (Gifted, mek, m, { from, quoted, reply, pushname }) => {
+  async (Aliconn, mek, m, { from, quoted, reply, pushname }) => {
     try {
       if (!quoted) {
         return reply('Reply to a video to convert it to audio.');
@@ -1241,7 +1241,7 @@ gmd(
       fs.writeFileSync(tempInput, mediaBuffer); 
       const audioBuffer = await toAudio(mediaBuffer, 'mp4');
       fs.writeFileSync(tempOutput, audioBuffer); 
-      await Gifted.sendMessage(
+      await Aliconn.sendMessage(
         from,
         { document: audioBuffer, mimetype: 'audio/mpeg', fileName: `Audio by ${pushname}.mp3` },
         { quoted: mek }
@@ -1265,7 +1265,7 @@ gmd(
     react: '🎥',
     filename: __filename,
   },
-  async (Gifted, mek, m, { from, quoted, reply, pushname }) => {
+  async (Aliconn, mek, m, { from, quoted, reply, pushname }) => {
     try {
       if (!quoted) {
         return reply('Reply to an audio file to convert it to video.');
@@ -1279,7 +1279,7 @@ gmd(
       fs.writeFileSync(tempInput, mediaBuffer);
       const videoBuffer = await toVideo(mediaBuffer, 'mp3');
       fs.writeFileSync(tempOutput, videoBuffer); 
-      await Gifted.sendMessage(
+      await Aliconn.sendMessage(
         from,
         { document: videoBuffer, mimetype: 'video/mp4', fileName: `Video by ${pushname}.mp4` },
         { quoted: mek }
@@ -1303,7 +1303,7 @@ gmd(
     react: '🎙️',
     filename: __filename,
   },
-  async (Gifted, mek, m, { from, quoted, reply, pushname }) => {
+  async (Aliconn, mek, m, { from, quoted, reply, pushname }) => {
     try {
       if (!quoted) {
         return reply('Reply to an audio file to convert it to a voice note.');
@@ -1317,7 +1317,7 @@ gmd(
       fs.writeFileSync(tempInput, mediaBuffer); 
       const pttBuffer = await toPTT(mediaBuffer, 'mp3');
       fs.writeFileSync(tempOutput, pttBuffer);
-      await Gifted.sendMessage(
+      await Aliconn.sendMessage(
         from,
         { audio: pttBuffer, mimetype: 'audio/ogg; codecs=opus', ptt: true },
         { quoted: mek }
@@ -1341,7 +1341,7 @@ gmd(
     react: '📡',
     filename: __filename,
   },
-  async (Gifted, mek, m, { from, quoted, sender, reply, pushname }) => {
+  async (Aliconn, mek, m, { from, quoted, sender, reply, pushname }) => {
     try {
       if (!quoted) {
         return reply(`Reply to a users status update (image, video, audio voice) to save.\nUse ${prefix}save statuses.`);
@@ -1359,7 +1359,7 @@ gmd(
       if (fileType.mime === 'text/plain') {
         const textContent = mediaBuffer.toString('utf8'); 
         const message = `*Hey ${pushname}, Here is your saved text content:* \n\n${textContent}`;
-        await Gifted.sendMessage(from, { text: message }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: message }, { quoted: mek });
       } else {
         const filename = `file.${fileType.ext}`;
         const tempFilePath = path.join(__dirname, filename);
@@ -1368,7 +1368,7 @@ gmd(
         const fileSizeMB = stats.size / (1024 * 1024);  
         const message = `*Hey ${pushname}, Here Is the Saved Media:* \n*File Size:* ${fileSizeMB.toFixed(2)} MB\n*File Type:* ${fileType.ext.toUpperCase()}`;
         if (fileType.mime.startsWith('image/') || fileType.mime.startsWith('video/')) {
-          await Gifted.sendMessage(
+          await Aliconn.sendMessage(
             botUser,
             {
               [fileType.mime.startsWith('image/') ? 'image' : 'video']: { url: tempFilePath },
@@ -1377,7 +1377,7 @@ gmd(
             { quoted: mek }
           );
         } else if (fileType.mime.startsWith('audio/')) {
-          await Gifted.sendMessage(botUser, { audio: { url: tempFilePath }, caption: message }, { quoted: mek });
+          await Aliconn.sendMessage(botUser, { audio: { url: tempFilePath }, caption: message }, { quoted: mek });
         }
         fs.unlinkSync(tempFilePath); 
       }
@@ -1396,7 +1396,7 @@ gmd({
     react: "🎶",
     filename: __filename,
 },
-async ( Gifted, mek, m,{ from, quoted, body, args, q, pushname, reply }) => {
+async ( Aliconn, mek, m,{ from, quoted, body, args, q, pushname, reply }) => {
     try {
       console.log("work console log")
         if (!q) {
@@ -1404,7 +1404,7 @@ async ( Gifted, mek, m,{ from, quoted, body, args, q, pushname, reply }) => {
         }
         const response = await fetchJson(`https://api.maskser.me/api/soundoftext?text=${encodeURIComponent(q)}&lang=en-US`);
         if (response && response.result) {
-            await Gifted.sendMessage(
+            await Aliconn.sendMessage(
                 from,
                 { audio: { url: response.result }, mimetype: 'audio/mpeg' },
                 { quoted: mek }
@@ -1428,7 +1428,7 @@ gmd({
         react: "📸",
         filename: __filename,
     },
-    async (Gifted, mek, m, { from, quoted, body, args, q, pushname, reply }) => {
+    async (Aliconn, mek, m, { from, quoted, body, args, q, pushname, reply }) => {
         try {
             if (!quoted) {
                 return reply(`Reply to an image to enhance.\nUse *${prefix}hd*`);
@@ -1440,7 +1440,7 @@ gmd({
             const result = await giftedProcessImage(mediaBuffer, 4);
             if (result && result.data && result.data.downloadUrls && result.data.downloadUrls[0]) {
                 const enhancedImageUrl = result.data.downloadUrls[0];
-                await Gifted.sendMessage(
+                await Aliconn.sendMessage(
                     from,
                     {
                         image: { url: enhancedImageUrl },
@@ -1450,7 +1450,7 @@ gmd({
                 );
                 await m.react("✅");
             } else {
-                reply("No data found or the Gifted API response is incorrect.");
+                reply("No data found or the Aliconn API response is incorrect.");
             }
         } catch (e) {
             console.error(e);
@@ -1470,7 +1470,7 @@ gmd(
     react: '📡',
     filename: __filename,
   },
-  async (Gifted, mek, m, { from, quoted, reply, pushname }) => {
+  async (Aliconn, mek, m, { from, quoted, reply, pushname }) => {
     try {
       if (!quoted) return reply(`Reply to an image, video, audio, or document to upload.`);
 
@@ -1498,7 +1498,7 @@ gmd(
 
       const message = `*Hey ${pushname}, Here Is Your Catbox URL:*\n\n${catboxUrl}\n\n*File Size:* ${fileSize} MB\n*File Type:* ${fileType.ext.toUpperCase()}\n*Note:* URL has no expiry.`;
 
-      await Gifted.sendMessage(from, { text: message }, { quoted: mek });
+      await Aliconn.sendMessage(from, { text: message }, { quoted: mek });
       await m.react('✅');
       fs.unlinkSync(filePath);
     } catch (error) {
@@ -1519,7 +1519,7 @@ gmd(
     react: '📡',
     filename: __filename,
   },
-  async (Gifted, mek, m, { from, quoted, reply, pushname }) => {
+  async (Aliconn, mek, m, { from, quoted, reply, pushname }) => {
     try {
       if (!quoted) {
         return reply(`Reply to an image, video, audio, or document to upload.\nUse *${prefix}url*`);
@@ -1551,7 +1551,7 @@ gmd(
         2
       )} MB\n*File Type:* ${fileType.ext.toUpperCase()}\n*File Expiration:* No Expiry`;
       if (fileType.mime.startsWith('image/') || fileType.mime.startsWith('video/')) {
-        await Gifted.sendMessage(
+        await Aliconn.sendMessage(
           from,
           {
             [fileType.mime.startsWith('image/') ? 'image' : 'video']: { url: tempFilePath },
@@ -1560,7 +1560,7 @@ gmd(
           { quoted: mek }
         );
       } else if (fileType.mime.startsWith('audio/')) {
-        await Gifted.sendMessage(from, { text: message }, { quoted: mek });
+        await Aliconn.sendMessage(from, { text: message }, { quoted: mek });
       }
       await m.react('✅');
       fs.unlinkSync(tempFilePath);
@@ -1580,20 +1580,20 @@ gmd({
     react: "🤔",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         if (!q) {
-            await reply(`Hello *_${pushname}_,*\n Please use .fancy *_your_text_* ie ${prefix}fancy ali-Tech or ${prefix}fancy5 *_your_text_* ie ${prefix}fancy4 GiftedMd to get a specific style.`);
+            await reply(`Hello *_${pushname}_,*\n Please use .fancy *_your_text_* ie ${prefix}fancy ali-Tech or ${prefix}fancy5 *_your_text_* ie ${prefix}fancy4 AliconnMd to get a specific style.`);
             return;
         }
         const styleMatch = command.match(/fancy(\d+)/);
         const number = styleMatch ? parseInt(styleMatch[1], 10) : null;
-        const results = await GiftedFancy(q);  
+        const results = await AliconnFancy(q);  
         if (results && results.length > 0) {
             if (number !== null) {
                 if (number > 0 && number <= results.length) {
                     const selectedResult = results[number - 1].result;
-                    await Gifted.sendMessage(from, { text: `Fancy Text Style ${number}:\n\n${selectedResult}` }, { quoted: mek });
+                    await Aliconn.sendMessage(from, { text: `Fancy Text Style ${number}:\n\n${selectedResult}` }, { quoted: mek });
                 } else {
                     reply(`Invalid style number. Please choose a number between 1 and ${results.length}.`);
                 }
@@ -1607,7 +1607,7 @@ async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, s
                 if (formattedResults.trim() === 'Fancy Text Styles:') {
                     reply('No valid fancy text styles were generated.');
                 } else {
-                    await Gifted.sendMessage(from, { text: formattedResults.trim() }, { quoted: mek });
+                    await Aliconn.sendMessage(from, { text: formattedResults.trim() }, { quoted: mek });
                 }
             }
             await m.react("✅");
@@ -1628,7 +1628,7 @@ async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, s
     react: "🤔",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         if (!q) {
             return reply(`Hello *_${pushname}_,*\nPlease provide a WhatsApp Channel Url for stalking after the command, e.g., *${prefix}wachannel https://whatsapp.com/channel/0029VaYauR9ISTkHTj4xvi1l*`);
@@ -1642,7 +1642,7 @@ async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, s
 │▢ *🫂 Description:* ${res.result.description}
 │▢ *🔗 WaLink* : ${q}
 └────────────\n\n> ${global.caption}`;
-            await Gifted.sendMessage(from, { image: { url: res.result.img }, caption: txt }, { quoted: mek });
+            await Aliconn.sendMessage(from, { image: { url: res.result.img }, caption: txt }, { quoted: mek });
             await m.react("✅");
         } else {
             reply("No data found or the API response is incorrect.");
@@ -1661,7 +1661,7 @@ gmd({
     react: "🤔",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         if (!q) {
             return reply(`Hello *_${pushname}_,*\nPlease provide an Instagram Username for stalking after the command, e.g., *${prefix}igstalk giftedtechnexus*`);
@@ -1678,7 +1678,7 @@ async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, s
 │▢ *📌 Bio:* ${res.result.bio || 'No bio available'}
 │▢ *🔗 Link* : https://instagram.com/${res.result.username.replace('@', '')}
 └────────────\n\n> ${global.caption}`;
-            await Gifted.sendMessage(from, { image: { url: config.BOT_PIC }, caption: txt }, { quoted: mek });
+            await Aliconn.sendMessage(from, { image: { url: config.BOT_PIC }, caption: txt }, { quoted: mek });
             await m.react("✅");
         } else {
             reply("No data found or the API response is incorrect.");
@@ -1697,12 +1697,12 @@ gmd({
     react: "🤔",
     filename: __filename
 },
-async (Gifted, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
         if (!q) {
             return reply(`Hello *_${pushname}_,*\nPlease provide a Tiktok Username for stalking after the command, e.g., *${prefix}ttstalk giftedtechke*`);
         }
-let res = await Giftedttstalk(q);
+let res = await Aliconnttstalk(q);
       if (res && res.user.nickname && res.user.uniqueId && res.stats) {
         let txt = `
 ┌──「 *TIKTOK STALK* 」
@@ -1714,7 +1714,7 @@ let res = await Giftedttstalk(q);
 │▢ *❤️ Likes:* ${res.stats.heartCount}
 │▢ *🔗 Link* : https://tiktok.com/@${res.user.uniqueId}
 └────────────\n\n> ${global.caption}`;
-        await Gifted.sendMessage(from, { image: { url: res.user.avatarLarger }, caption: txt }, { quoted: mek });
+        await Aliconn.sendMessage(from, { image: { url: res.user.avatarLarger }, caption: txt }, { quoted: mek });
         await m.react("✅");
         } else {
             reply("No data found or the API response is incorrect.");
@@ -1734,7 +1734,7 @@ gmd({
         use: '<reply media or URL>',
         filename: __filename,
     },
-    async (Gifted, mek, m, { quoted, args, q, reply, from }) => {
+    async (Aliconn, mek, m, { quoted, args, q, reply, from }) => {
         if (!mek.quoted) return reply(`*Reply to any sticker.*`);
         if (!q) return reply(`*Please provide a pack name using .take <packname>*`);
 
@@ -1752,7 +1752,7 @@ gmd({
                 background: 'transparent',
             });
             const buffer = await sticker.toBuffer();
-            return Gifted.sendMessage(mek.chat, { sticker: buffer }, { quoted: mek });
+            return Aliconn.sendMessage(mek.chat, { sticker: buffer }, { quoted: mek });
         } else {
             return reply("*Uhh, Please reply to an sticker.*");
         }
