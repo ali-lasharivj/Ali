@@ -1398,6 +1398,7 @@ gmd({
 },
 async ( Gifted, mek, m,{ from, quoted, body, args, q, pushname, reply }) => {
     try {
+      console.log("work console log")
         if (!q) {
             return reply(`Hello *_${pushname}_,*\nPlease provide a text to convert to speech after the command, e.g., *!tts I am ali Md*`);
         }

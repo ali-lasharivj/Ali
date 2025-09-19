@@ -66,7 +66,7 @@ const {
         saveMessageCount, 
         getInactiveGroupMembers, 
         getGroupMembersMessageCount, 
-        saveMessage } = require('./data')
+        saveMessage } = require('./data');
 const {
       GiftedAnticall,
       GroupUpdate,
@@ -128,9 +128,9 @@ function formatBytes(bytes) {
 async function ConnectGiftedToWA() {
   await loadSession();
   eventlogger()
-console.log('⏱️ CONNETING ALI MD ⏱️')
-const { state, saveCreds } = await useMultiFileAuthState(__dirname + '/session/')
-var { version, isLatest } = await fetchLatestBaileysVersion()
+console.log('⏱️ CONNETING ALI MD ⏱️');
+const { state, saveCreds } = await useMultiFileAuthState(__dirname + '/session/');
+var { version, isLatest } = await fetchLatestBaileysVersion();
 
 const Gifted = GiftedConnect({
         logger: P({ level: 'silent' }),
@@ -144,13 +144,8 @@ const Gifted = GiftedConnect({
         keepAliveIntervalMs: 30_000,
         auth: state,
         version
-        })
-
-
-
-
-
-
+        });
+  
    Gifted.ev.on("connection.update", async ({ connection, lastDisconnect }) => {
     if (connection === 'close') {
      const statusCode = lastDisconnect?.error?.output?.statusCode || 0;
@@ -191,23 +186,8 @@ const Gifted = GiftedConnect({
       default:
         console.log(`❌ Unknown disconnect reason: ${statusCode}. Reconnecting...`);
         await sleep(3000);
-       ConnectGiftedToWA();
+       ConnectGiftedToWA();     
     }
-  
-
-
-    
- /*   
-Gifted.ev.on('connection.update', (update) => {
-const { connection, lastDisconnect } = update
-if (connection === 'close') {
-if (lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut) {
-ConnectGiftedToWA()
-}
-*/
-
-
-    
 } else if (connection === 'open') {
  fs.readdirSync("./plugins/").forEach((plugin) => {
 if (path.extname(plugin).toLowerCase() == ".js") {
@@ -246,7 +226,7 @@ Gifted.sendMessage(Gifted.user.id, startMess, { disappearingMessagesInChat: true
 console.log('ALI MD IS ACTIVE ✅')
 }
 })
-Gifted.ev.on('creds.update', saveCreds)   
+Gifted.ev.on('creds.update', saveCreds); 
 
         if (config.AUTO_REACT === "true") {
             Gifted.ev.on('messages.upsert', async (mek) => {
