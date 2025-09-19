@@ -732,10 +732,9 @@ async (Aliconn, mek, m, {
     }
 });
 
-
 gmd({
-  pattern: "play",
-  alias: ["music", "ytmp3", "ytmp3doc", "song", "audiodoc", "audio"],
+  pattern: "song",
+  alias: ["music", "ytmp3", "ytmp3doc", "audiodoc", "audio"],
   desc: "Download Youtube Songs(mp3)",
   category: "downloader",
   react: "🎶",
@@ -750,223 +749,179 @@ async (Aliconn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, 
       }
 
       let downloadUrl;
-      let buffer;
       let dataa;
+      let buffer;
 
-      if (q.startsWith("https://youtu")) {
+      // React with download indicator
+      await m.react("⬇️");
+
+      // Enhanced getBuffer function with better headers and error handling
+      const getBufferWithHeaders = async (url) => {
           try {
-                const down = await fetchJson(`${global.api}/download/yta?apikey=${global.myName}&url=${encodeURIComponent(q)}`);
-                downloadUrl = down.result.download_url;
-                const searchs = await fetchJson(`${global.api}/search/yts?apikey=${global.myName}&query=${encodeURIComponent(q)}`);
-                dataa = searchs.results[0];
-            } catch (err) {
-                console.error("First download path failed:", err);
-                try {
-                const down = await fetchJson(`${global.api}/download/ytmp3?apikey=${global.myName}&url=${encodeURIComponent(q)}`);
-                downloadUrl = down.result.download_url;
-                const searchs = await fetchJson(`${global.api}/search/yts?apikey=${global.myName}&query=${encodeURIComponent(q)}`);
-                dataa = searchs.results[0];
-                } catch (fallbackErr) {
-                    console.error("All Download Paths failedL:", fallbackErr);
-                    return reply("❌ Unable to fetch download URL. Please try again later.");
-                }
-            }
-          buffer = await getBuffer(downloadUrl);
-           const infoMess = {
-          image: { url: dataa.thumbnail },
-          caption: `\`「 PLAY DOWNLOADER 」\`
-╭─────────────────⳹
-│🎬 *ᴛɪᴛʟᴇ:* ${datas.title}
-│🎐 *ᴜᴘʟᴏᴀᴅᴇᴅ:* ${datas.ago}
-│⏳ *ᴅᴜʀᴀᴛɪᴏɴ:* ${datas.timestamp}
-│👀 *ᴠɪᴇᴡs:* ${datas.views}
-│🎙 *ᴀʀᴛɪsᴛ:* ${datas.author.name}
-╰─────────────────⳹
-
-*ʀᴇᴘʟʏ ᴡɪᴛʜ:*
-
-*𝟷 ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ ᴀᴜᴅɪᴏ 🎶*
-*𝟸 ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ ᴅᴏᴄᴜᴍᴇɴᴛ 📄*
-
-╭─────────────────⳹
-│ ${global.footer}
-╰─────────────────⳹`,
-          contextInfo: {
-              mentionedJid: [m.sender],
-              forwardingScore: 5,
-              isForwarded: false,
-              forwardedNewsletterMessageInfo: {
-                  newsletterJid: '120363318387454868@newsletter',
-          newsletterName: "𝐀𝐋𝐈-𝐌𝐃 𝐒𝐔𝐏𝐏𝐎𝐑𝐓¬💸",
-                  serverMessageId: 143
-              }
+              const response = await axios({
+                  method: 'GET',
+                  url: url,
+                  responseType: 'arraybuffer',
+                  timeout: 60000, // 60 seconds timeout
+                  headers: {
+                      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+                      'Accept': '*/*',
+                      'Accept-Language': 'en-US,en;q=0.9',
+                      'Accept-Encoding': 'gzip, deflate, br',
+                      'Connection': 'keep-alive',
+                      'Upgrade-Insecure-Requests': '1',
+                      'Sec-Fetch-Dest': 'audio',
+                      'Sec-Fetch-Mode': 'cors',
+                      'Sec-Fetch-Site': 'cross-site',
+                      'Referer': 'https://www.youtube.com/'
+                  }
+              });
+              return Buffer.from(response.data);
+          } catch (error) {
+              console.error(`Failed to fetch buffer from ${url}:`, error.message);
+              throw error;
           }
       };
 
-      const messageSent = await Aliconn.sendMessage(from, infoMess, { quoted: mek });
-      const messageId = messageSent.key.id;
-      Aliconn.ev.on("messages.upsert", async (event) => {
-          const messageData = event.messages[0];
-          if (!messageData.message) return;
-          const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
-          const isReplyToDownloadPrompt = messageData.message.extendedTextMessage?.contextInfo?.stanzaId === messageId;
+      if (q.startsWith("https://youtu")) {
+          // Get video info first
+          try {
+              const searchs = await fetchJson(`${global.api}/search/yts?apikey=${global.myName}&query=${encodeURIComponent(q)}`);
+              dataa = searchs.results[0];
+          } catch (err) {
+              console.error("Failed to get video info:", err);
+              return reply("❌ Unable to fetch video information. Please try again later.");
+          }
 
-          if (isReplyToDownloadPrompt) {
-              await m.react("⬇️");
-              switch (messageContent) {
-                  case "1": 
-                      await Aliconn.sendMessage(from, {
-                          audio: buffer,
-                          mimetype: "audio/mpeg",
-                          contextInfo: {
-                              externalAdReply: {
-                                  title: dataa.title,
-                                  body: 'ᴘσωєʀє∂ ву αℓι м∂',
-                                  mediaType: 1,
-                                  sourceUrl: 'https://whatsapp.com/channel/0029VaoRxGmJpe8lgCqT1T2h',
-                                  thumbnailUrl: dataa.thumbnail,
-                              }
-                          }
-                      }, { quoted: messageData });
-                      await m.react("✅");
+          // Try multiple download endpoints
+          const downloadMethods = [
+              () => fetchJson(`${global.api}/download/yta?apikey=${global.myName}&url=${encodeURIComponent(q)}`),
+              () => fetchJson(`${global.api}/download/ytmp3?apikey=${global.myName}&url=${encodeURIComponent(q)}`),
+              () => fetchJson(`${global.api}/download/ytmusic?apikey=${global.myName}&url=${encodeURIComponent(q)}`)
+          ];
+
+          let downloadSuccess = false;
+          for (const method of downloadMethods) {
+              try {
+                  const down = await method();
+                  downloadUrl = down.result.download_url;
+                  
+                  // Try to get buffer with enhanced headers
+                  try {
+                      buffer = await getBufferWithHeaders(downloadUrl);
+                      downloadSuccess = true;
                       break;
-
-                  case "2": 
-                      await Aliconn.sendMessage(from, {
-                          document: buffer,
-                          mimetype: "audio/mpeg",
-                          fileName: `${dataa.title}.mp3`,
-                          contextInfo: {
-                              externalAdReply: {
-                                  title: dataa.title,
-                                  body: 'ᴘσωєʀє∂ ву αℓι м∂',
-                                  mediaType: 1,
-                                  sourceUrl: 'https://whatsapp.com/channel/0029VaoRxGmJpe8lgCqT1T2h',
-                                  thumbnailUrl: dataa.thumbnail,
-                              }
-                          }
-                      }, { quoted: messageData });
-                      await m.react("✅");
-                      break;
-
-                  default:
-                await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
+                  } catch (bufferErr) {
+                      console.error("Buffer fetch failed, trying fallback:", bufferErr.message);
+                      // Try original getBuffer as fallback
+                      try {
+                          buffer = await getBuffer(downloadUrl);
+                          downloadSuccess = true;
+                          break;
+                      } catch (fallbackErr) {
+                          console.error("Fallback buffer fetch also failed:", fallbackErr.message);
+                          continue;
+                      }
+                  }
+              } catch (err) {
+                  console.error("Download method failed:", err.message);
+                  continue;
               }
           }
-      });
+
+          if (!downloadSuccess) {
+              return reply("❌ All download methods failed. The video might be restricted or temporarily unavailable.");
+          }
+          
+          // Send audio directly with song details
+          await Aliconn.sendMessage(from, {
+              audio: buffer,
+              mimetype: "audio/mpeg",
+              contextInfo: {
+                  externalAdReply: {
+                      title: dataa.title,
+                      body: 'ᴘσωєʀє∂ ву αℓι м∂',
+                      mediaType: 1,
+                      sourceUrl: 'https://youtube.com',
+                      thumbnailUrl: dataa.thumbnail
+                  }
+              }
+          }, { quoted: mek });
+          
+          await m.react("✅");
           return;
       }
 
+      // For search queries
       const search = await yts(q);
+      if (!search.videos || search.videos.length === 0) {
+          return reply("❌ No results found for your search query.");
+      }
+      
       const datas = search.videos[0];
       const videoUrl = datas.url;
 
-      try {
-            const down = await fetchJson(`${global.api}/download/yta?apikey=${global.myName}&url=${encodeURIComponent(videoUrl)}`);
-            downloadUrl = down.result.download_url;
-        } catch (err) {
-            console.error("First download path failed for search query:", err);
-            try {
-                const down = await fetchJson(`${global.api}/download/ytmp3?apikey=${global.myName}&url=${encodeURIComponent(videoUrl)}`);
-                downloadUrl = down.result.download_url;
-            } catch (err) {
-                console.error("Second download path failed for search query:", err);
-                try {
-                    const down = await fetchJson(`${global.api}/download/ytmusic?apikey=${global.myName}&url=${encodeURIComponent(videoUrl)}`);
-                    downloadUrl = down.result.download_url;
-                } catch (fallbackErr) {
-                    console.error("All download paths failed for search query:", fallbackErr);
-                    return reply("❌ Unable to fetch download URL. Please try again later.");
-                }
-            }
-        }
+      // Try multiple download endpoints for search results
+      const downloadMethods = [
+          () => fetchJson(`${global.api}/download/yta?apikey=${global.myName}&url=${encodeURIComponent(videoUrl)}`),
+          () => fetchJson(`${global.api}/download/ytmp3?apikey=${global.myName}&url=${encodeURIComponent(videoUrl)}`),
+          () => fetchJson(`${global.api}/download/ytmusic?apikey=${global.myName}&url=${encodeURIComponent(videoUrl)}`)
+      ];
 
-      buffer = await getBuffer(downloadUrl);
-      const infoMess = {
-          image: { url: datas.thumbnail },
-          caption: `\`「 PLAY DOWNLOADER 」\`
-╭─────────────────⳹
-│🎬 *ᴛɪᴛʟᴇ:* ${datas.title}
-│🎐 *ᴜᴘʟᴏᴀᴅᴇᴅ:* ${datas.ago}
-│⏳ *ᴅᴜʀᴀᴛɪᴏɴ:* ${datas.timestamp}
-│👀 *ᴠɪᴇᴡs:* ${datas.views}
-│🎙 *ᴀʀᴛɪsᴛ:* ${datas.author.name}
-╰─────────────────⳹
+      let downloadSuccess = false;
+      for (const method of downloadMethods) {
+          try {
+              const down = await method();
+              downloadUrl = down.result.download_url;
+              
+              // Try to get buffer with enhanced headers
+              try {
+                  buffer = await getBufferWithHeaders(downloadUrl);
+                  downloadSuccess = true;
+                  break;
+              } catch (bufferErr) {
+                  console.error("Buffer fetch failed, trying fallback:", bufferErr.message);
+                  // Try original getBuffer as fallback
+                  try {
+                      buffer = await getBuffer(downloadUrl);
+                      downloadSuccess = true;
+                      break;
+                  } catch (fallbackErr) {
+                      console.error("Fallback buffer fetch also failed:", fallbackErr.message);
+                      continue;
+                  }
+              }
+          } catch (err) {
+              console.error("Download method failed:", err.message);
+              continue;
+          }
+      }
 
-*ʀᴇᴘʟʏ ᴡɪᴛʜ:*
-
-*𝟷 ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ ᴀᴜᴅɪᴏ 🎶*
-*𝟸 ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ ᴅᴏᴄᴜᴍᴇɴᴛ 📄*
-
-╭─────────────────⳹
-│ ${global.footer}
-╰─────────────────⳹`,
+      if (!downloadSuccess) {
+          return reply("❌ All download methods failed. The video might be restricted or temporarily unavailable.");
+      }
+      
+      // Send audio directly with song details
+      await Aliconn.sendMessage(from, {
+          audio: buffer,
+          mimetype: "audio/mpeg",
           contextInfo: {
-              mentionedJid: [m.sender],
-              forwardingScore: 5,
-              isForwarded: false,
-              forwardedNewsletterMessageInfo: {
-                  newsletterJid: '120363318387454868@newsletter',
-                        newsletterName: "𝐀𝐋𝐈-𝐌𝐃 𝐒𝐔𝐏𝐏𝐎𝐑𝐓¬💸",
-                  serverMessageId: 143
+              externalAdReply: {
+                  title: `${datas.title}`,
+                  body: 'ᴘσωєʀє∂ ву αℓι м∂',
+                  mediaType: 1,
+                  sourceUrl: 'https://youtube.com',
+                  thumbnailUrl: datas.thumbnail
               }
           }
-      };
+      }, { quoted: mek });
+      
+      await m.react("✅");
 
-      const messageSent = await Aliconn.sendMessage(from, infoMess, { quoted: mek });
-      const messageId = messageSent.key.id;
-      Aliconn.ev.on("messages.upsert", async (event) => {
-          const messageData = event.messages[0];
-          if (!messageData.message) return;
-          const messageContent = messageData.message.conversation || messageData.message.extendedTextMessage?.text;
-          const isReplyToDownloadPrompt = messageData.message.extendedTextMessage?.contextInfo?.stanzaId === messageId;
-
-          if (isReplyToDownloadPrompt) {
-              await m.react("⬇️");
-              switch (messageContent) {
-                  case "1": 
-                      await Aliconn.sendMessage(from, {
-                          audio: buffer,
-                          mimetype: "audio/mpeg",
-                          contextInfo: {
-                              externalAdReply: {
-                                  title: datas.title,
-                                  body: 'ᴘσωєʀє∂ ву αℓι м∂',
-                                  mediaType: 1,
-                                  sourceUrl: 'https://whatsapp.com/channel/0029VaoRxGmJpe8lgCqT1T2h',
-                                  thumbnailUrl: datas.thumbnail,
-                              }
-                          }
-                      }, { quoted: messageData });
-                      await m.react("✅");
-                      break;
-
-                  case "2": 
-                      await Aliconn.sendMessage(from, {
-                          document: buffer,
-                          mimetype: "audio/mpeg",
-                          fileName: `${datas.title}.mp3`,
-                          contextInfo: {
-                              externalAdReply: {
-                                  title: datas.title,
-                                  body: 'ᴘσωєʀє∂ ву αℓι м∂',
-                                  mediaType: 1,
-                                  sourceUrl: 'https://whatsapp.com/channel/0029VaoRxGmJpe8lgCqT1T2h',
-                                  thumbnailUrl: datas.thumbnail,
-                              }
-                          }
-                      }, { quoted: messageData });
-                      await m.react("✅");
-                      break;
-
-                  default:
-                await Aliconn.sendMessage(from, { text: "Invalid option selected. Please reply with a valid number (1 or 2)." });
-              }
-          }
-      });
   } catch (err) {
-      console.error("Error:", err);
-      reply(`❌ Error: ${err.message}`);
+      console.error("Main Error:", err);
+      reply(`❌ Error: ${err.message || 'Unknown error occurred'}`);
+      await m.react("❌");
   }
 });
 
