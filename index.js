@@ -50,23 +50,6 @@ const {
       OWNER_NUMBER: ownerNumber,
       SUDO_NUMBERS } = config;
     const sudoNumbers = SUDO_NUMBERS && SUDO_NUMBERS.trim() ? SUDO_NUMBERS : "No Sudos set";
-
-  const { 
-        AntiDelDB, 
-        initializeAntiDeleteSettings, 
-        setAnti, 
-        getAnti, 
-        getAllAntiDeleteSettings, 
-        saveContact, 
-        loadMessage, 
-        getName, 
-        getChatSummary, 
-        saveGroupMetadata, 
-        getGroupMetadata, 
-        saveMessageCount, 
-        getInactiveGroupMembers, 
-        getGroupMembersMessageCount, 
-        saveMessage } = require('./data');
 const {
       GiftedAnticall,
       GroupUpdate,
@@ -361,7 +344,9 @@ Aliconn.ev.on("call", async (json) => {
     
 Aliconn.ev.on('messages.upsert', async(mek) => {
 mek = mek.messages[0];
-saveMessage(JSON.parse(JSON.stringify(mek, null, 2)))
+//saveMessage(JSON.parse(JSON.stringify(mek, null, 2)))
+ enhancedSaveMessage(JSON.parse(JSON.stringify(mek, null, 2)))
+  const deletedMessage = enhancedLoadMessage(update.key.id);
 const fromJid = mek.key.participant || mek.key.remoteJid;
 
 if (!mek || !mek.message) return;
@@ -369,6 +354,16 @@ if (!mek || !mek.message) return;
 mek.message = (getContentType(mek.message) === 'ephemeralMessage') 
     ? mek.message.ephemeralMessage.message 
     : mek.message;
+  if (config.ANTI_DELETE === "true") {
+    Aliconn.ev.on('messages.update', async updates => {
+        for (const update of updates) {
+            if (update.update.message === null) {
+                console.log("Delete Detected:", JSON.stringify(update, null, 2));
+                await AntiDelete(Aliconn, updates);
+            }
+        }
+    });
+  }
  
 if (mek.key && isJidBroadcast(mek.key.remoteJid)) {
     try {
