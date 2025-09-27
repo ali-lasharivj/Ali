@@ -227,7 +227,7 @@ Aliconn.ev.on('creds.update', saveCreds);
 
       Aliconn.ev.on('messages.update', async updates => {
     for (const update of updates) {
-      if (update.update.message === null) {
+      if (update.update.message === null && config.ANTI_DELETE === "true") {
         console.log("Delete Detected:", JSON.stringify(update, null, 2));
         await AntiDelete(Aliconn, updates);
       }
@@ -342,11 +342,250 @@ Aliconn.ev.on("call", async (json) => {
    }
 });  
     
+// Enhanced message saving functions
+const path = require('path');
+
+function enhancedSaveMessage(message) {
+    try {
+        // Save to the main database
+        const { saveMessage } = require('./lib/database');
+        saveMessage(message);
+        
+        // Create messages directory if it doesn't exist
+        const messagesDir = path.join(__dirname, 'lib', 'data', 'messages');
+        if (!fs.existsSync(messagesDir)) {
+            fs.mkdirSync(messagesDir, { recursive: true });
+        }
+        
+        // Also save with message ID as key for easy retrieval
+        if (message.key && message.key.id) {
+            const messageData = JSON.stringify(message, null, 2);
+            const messagePath = path.join(messagesDir, `${message.key.id}.json`);
+            fs.writeFileSync(messagePath, messageData);
+        }
+    } catch (error) {
+        console.error('Error saving message for anti-delete:', error);
+    }
+}
+
+function enhancedLoadMessage(messageId) {
+    try {
+        const messagesDir = path.join(__dirname, 'lib', 'data', 'messages');
+        const messagePath = path.join(messagesDir, `${messageId}.json`);
+        
+        if (fs.existsSync(messagePath)) {
+            const messageData = fs.readFileSync(messagePath, 'utf8');
+            return JSON.parse(messageData);
+        }
+        
+        // Fallback to original loadMessage
+        const { loadMessage } = require('./lib/database');
+        return loadMessage(messageId);
+    } catch (error) {
+        console.error('Error loading message for anti-delete:', error);
+        return null;
+    }
+}
+
+// Anti-delete function
+async function AntiDelete(Aliconn, updates) {
+    try {
+        for (const update of updates) {
+            if (update.update.message === null) {
+                // Get the deleted message from our saved messages
+                const deletedMessage = enhancedLoadMessage(update.key.id);
+
+                if (!deletedMessage) continue;
+
+                const chatId = update.key.remoteJid;
+                const isGroup = chatId.endsWith('@g.us');
+                const deleterId = update.key.fromMe ? Aliconn.user.id : update.key.participant || update.key.remoteJid;
+                const deleterName = deleterId === Aliconn.user.id ? 'Bot' : (deletedMessage.pushName || deleterId.split('@')[0]);
+
+                // Get message content
+                const messageType = Object.keys(deletedMessage.message || {})[0];
+                let messageContent = '';
+                let mediaBuffer = null;
+
+                if (messageType === 'conversation') {
+                    messageContent = deletedMessage.message.conversation;
+                } else if (messageType === 'extendedTextMessage') {
+                    messageContent = deletedMessage.message.extendedTextMessage.text;
+                } else if (messageType === 'imageMessage') {
+                    messageContent = deletedMessage.message.imageMessage.caption || '📸 Image';
+                    try {
+                        mediaBuffer = await downloadMediaMessage(deletedMessage);
+                    } catch (err) {
+                        console.log('Failed to download deleted image:', err);
+                    }
+                } else if (messageType === 'videoMessage') {
+                    messageContent = deletedMessage.message.videoMessage.caption || '🎥 Video';
+                    try {
+                        mediaBuffer = await downloadMediaMessage(deletedMessage);
+                    } catch (err) {
+                        console.log('Failed to download deleted video:', err);
+                    }
+                } else if (messageType === 'audioMessage') {
+                    messageContent = '🎵 Audio Message';
+                    try {
+                        mediaBuffer = await downloadMediaMessage(deletedMessage);
+                    } catch (err) {
+                        console.log('Failed to download deleted audio:', err);
+                    }
+                } else if (messageType === 'stickerMessage') {
+                    messageContent = '🌟 Sticker';
+                    try {
+                        mediaBuffer = await downloadMediaMessage(deletedMessage);
+                    } catch (err) {
+                        console.log('Failed to download deleted sticker:', err);
+                    }
+                } else if (messageType === 'documentMessage') {
+                    const fileName = deletedMessage.message.documentMessage.fileName || 'Document';
+                    messageContent = `📄 ${fileName}`;
+                    try {
+                        mediaBuffer = await downloadMediaMessage(deletedMessage);
+                    } catch (err) {
+                        console.log('Failed to download deleted document:', err);
+                    }
+                } else {
+                    messageContent = `${messageType.replace('Message', '')} message`;
+                }
+
+                // Format timestamp
+                const timestamp = new Date(deletedMessage.messageTimestamp * 1000).toLocaleString('en-US', {
+                    timeZone: config.TIME_ZONE || 'UTC',
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit'
+                });
+
+                // Create anti-delete message
+                const antiDeleteText = `*🗑️ ANTI-DELETE DETECTED 🗑️*
+
+*╭─────────────────────┄┈┈*
+*│👤 Deleter:* ${deleterName}
+*│📱 Number:* ${deleterId.split('@')[0]}
+*│⏰ Original Time:* ${timestamp}
+*│💬 ${isGroup ? 'Group' : 'Chat'}:* ${isGroup ? 'Group Chat' : 'Private Chat'}
+*│📝 Message Type:* ${messageType.replace('Message', '')}
+*╰─────────────────────┄┈┈*
+
+*📄 Deleted Content:*
+${messageContent || '_No text content_'}
+
+*⚠️ This message was deleted but captured by ALI MD*`;
+
+                // Determine where to send based on ANTI_DELETE_SET config
+                let targetJid;
+                if (config.ANTI_DELETE_SET === "inbox") {
+                    // Send to bot owner's inbox
+                    const ownerNumbers = config.OWNER_NUMBER.split(',');
+                    targetJid = ownerNumbers[0].trim() + '@s.whatsapp.net';
+                } else {
+                    // Send to the same chat where message was deleted
+                    targetJid = chatId;
+                }
+
+                // Send anti-delete message with media if available
+                if (mediaBuffer && ['imageMessage', 'videoMessage', 'stickerMessage'].includes(messageType)) {
+                    if (messageType === 'imageMessage') {
+                        await Aliconn.sendMessage(targetJid, {
+                            image: mediaBuffer,
+                            caption: antiDeleteText,
+                            contextInfo: {
+                                forwardingScore: 999,
+                                isForwarded: true,
+                                forwardedNewsletterMessageInfo: {
+                                    newsletterName: config.BOT_NAME,
+                                    newsletterJid: "120363318387454868@newsletter",
+                                }
+                            }
+                        });
+                    } else if (messageType === 'videoMessage') {
+                        await Aliconn.sendMessage(targetJid, {
+                            video: mediaBuffer,
+                            caption: antiDeleteText,
+                            contextInfo: {
+                                forwardingScore: 999,
+                                isForwarded: true,
+                                forwardedNewsletterMessageInfo: {
+                                    newsletterName: config.BOT_NAME,
+                                    newsletterJid: "120363318387454868@newsletter",
+                                }
+                            }
+                        });
+                    } else if (messageType === 'stickerMessage') {
+                        await Aliconn.sendMessage(targetJid, {
+                            text: antiDeleteText,
+                            contextInfo: {
+                                forwardingScore: 999,
+                                isForwarded: true,
+                                forwardedNewsletterMessageInfo: {
+                                    newsletterName: config.BOT_NAME,
+                                    newsletterJid: "120363318387454868@newsletter",
+                                }
+                            }
+                        });
+                        // Send sticker separately
+                        await Aliconn.sendMessage(targetJid, {
+                            sticker: mediaBuffer
+                        });
+                    }
+                } else if (mediaBuffer && ['audioMessage', 'documentMessage'].includes(messageType)) {
+                    await Aliconn.sendMessage(targetJid, {
+                        text: antiDeleteText,
+                        contextInfo: {
+                            forwardingScore: 999,
+                            isForwarded: true,
+                            forwardedNewsletterMessageInfo: {
+                                newsletterName: config.BOT_NAME,
+                                newsletterJid: "120363318387454868@newsletter",
+                            }
+                        }
+                    });
+
+                    // Send media separately
+                    if (messageType === 'audioMessage') {
+                        await Aliconn.sendMessage(targetJid, {
+                            audio: mediaBuffer,
+                            mimetype: 'audio/mpeg'
+                        });
+                    } else if (messageType === 'documentMessage') {
+                        const fileName = deletedMessage.message.documentMessage.fileName || 'deleted_document';
+                        await Aliconn.sendMessage(targetJid, {
+                            document: mediaBuffer,
+                            fileName: fileName,
+                            mimetype: deletedMessage.message.documentMessage.mimetype || 'application/octet-stream'
+                        });
+                    }
+                } else {
+                    // Text message or failed media
+                    await Aliconn.sendMessage(targetJid, {
+                        text: antiDeleteText,
+                        contextInfo: {
+                            forwardingScore: 999,
+                            isForwarded: true,
+                            forwardedNewsletterMessageInfo: {
+                                newsletterName: config.BOT_NAME,
+                                newsletterJid: "120363318387454868@newsletter",
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    } catch (error) {
+        console.error('Error in AntiDelete function:', error);
+    }
+}
+
 Aliconn.ev.on('messages.upsert', async(mek) => {
 mek = mek.messages[0];
-//saveMessage(JSON.parse(JSON.stringify(mek, null, 2)))
- enhancedSaveMessage(JSON.parse(JSON.stringify(mek, null, 2)))
-  const deletedMessage = enhancedLoadMessage(update.key.id);
+// Save message for anti-delete
+enhancedSaveMessage(JSON.parse(JSON.stringify(mek, null, 2)));
 const fromJid = mek.key.participant || mek.key.remoteJid;
 
 if (!mek || !mek.message) return;
@@ -354,16 +593,7 @@ if (!mek || !mek.message) return;
 mek.message = (getContentType(mek.message) === 'ephemeralMessage') 
     ? mek.message.ephemeralMessage.message 
     : mek.message;
-  if (config.ANTI_DELETE === "true") {
-    Aliconn.ev.on('messages.update', async updates => {
-        for (const update of updates) {
-            if (update.update.message === null) {
-                console.log("Delete Detected:", JSON.stringify(update, null, 2));
-                await AntiDelete(Aliconn, updates);
-            }
-        }
-    });
-  }
+  
  
 if (mek.key && isJidBroadcast(mek.key.remoteJid)) {
     try {
