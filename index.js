@@ -128,49 +128,13 @@ const Aliconn = Alisock({
         auth: state,
         version
         });
-  
-   Aliconn.ev.on("connection.update", async ({ connection, lastDisconnect }) => {
-    if (connection === 'close') {
-     const statusCode = lastDisconnect?.error?.output?.statusCode || 0;
-    console.log(`🛑 connection closed with status code: ${statusCode}`);
-      switch (statusCode) {
-      case DisconnectReason.badSession:
-        console.log("❌ Bad Session File. Delete session and rescan QR.");
-        break;
-      case DisconnectReason.connectionClosed:
-        console.log("⚠️ Connection closed. Reconnecting...");
-        await sleep(3000);
-      ConnectAliconnToWA();
-        break;
-      case DisconnectReason.connectionLost:
-        console.log("⚠️ Connection lost. Trying to reconnect...");
-        await sleep(3000);
-       ConnectAliconnToWA();
-        break;
-      case DisconnectReason.connectionReplaced:
-        console.log("⚠️ Connection replaced by a new session. You might be logged in elsewhere.");
-        break;
-      case DisconnectReason.loggedOut:
-        console.log("🛑 Logged out. Delete session and rescan QR.");
-        break;
-      case DisconnectReason.restartRequired:
-        console.log("🔁 Restart required. Reconnecting...");
-        await sleep(3000);
-       ConnectAliconnToWA();
-        break;
-      case DisconnectReason.timedOut:
-        console.log("⏱️ Connection timed out. Trying to reconnect...");
-        await sleep(3000);
-       ConnectAliconnToWA();
-        break;
-      case DisconnectReason.multideviceMismatch:
-        console.log("❌ Multi-device mismatch. Please re-login.");
-        break;
-      default:
-        console.log(`❌ Unknown disconnect reason: ${statusCode}. Reconnecting...`);
-        await sleep(3000);
-       ConnectAliconnToWA();     
-    }
+    
+Aliconn.ev.on('connection.update', (update) => {
+const { connection, lastDisconnect } = update
+if (connection === 'close') {
+if (lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut) {
+ConnectAliconnToWA()
+}
 } else if (connection === 'open') {
  fs.readdirSync("./plugins/").forEach((plugin) => {
 if (path.extname(plugin).toLowerCase() == ".js") {
